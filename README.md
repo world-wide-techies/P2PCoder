@@ -54,4 +54,4 @@ But can be approved by anyone.
 
 ### TEAM
 
-[Augustine](https://github.com/annonymousauthority) - Team
+[Augustine](https://github.com/annonymousauthority) - Team Lead
