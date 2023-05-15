@@ -5,7 +5,7 @@ A p2p code learning platform that connects developers to a single code editor ov
 The goal of the project is to utilize Nextjs and technologies to build this project by newbies. The project has a mid-level degree of complexity, so would be broken down into difficulty levels throughout the 8 weeks.
 
 This document is to help developers understand the platform and the development requirements of the project.
-The document will be updated from time to time to meet project exepectations and standards.
+The document will be updated from time to time to meet project expectations and standards.
 
 # DEVELOPMENT
 
