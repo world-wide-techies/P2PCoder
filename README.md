@@ -23,7 +23,7 @@ The folder structure is as follows
 - public/assets : `For images used in the project`
 - src/app `For route pages`
 - src/components `for app components`
-- src/composables `for app functions
+- src/composables `for app functions`
 
 Folder naming would be responsibility of Team Lead. [Augustine](https://github.com/annonymousauthority)
 
