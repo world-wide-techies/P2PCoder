@@ -1,7 +1,7 @@
 import { auth } from 'firebase';
 
-const IsAcctVerifiedFunc = () => {
+const IsAccountVerifiedFunc = () => {
   return auth.currentUser?.emailVerified;
 };
 
-export default IsAcctVerifiedFunc;
+export default IsAccountVerifiedFunc;
