@@ -13,7 +13,7 @@ During the development of the project, branches will be created for specific fea
 PR will be created against this issue and will be merged to the `development` branch of the repository.
 
 To find new issues please visit [Projects](https://github.com/annonymousauthority/Carai/projects?query=is%3Aopen) or visit the [Issue](https://github.com/annonymousauthority/Carai/issues) tab.
-A developer can request for clarification of an issue before going on so to ensure full compliance with developpment expectations and requirements.
+A developer can request for clarification of an issue before going on so to ensure full compliance with development expectations and requirements.
 
 ### FOLDERS AND NAMING STYLE
 
