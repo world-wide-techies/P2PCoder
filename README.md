@@ -59,3 +59,5 @@ But can be approved by anyone.
 - [Malik](https://github.com/7malikk) - Frontend Developer
 - [Taylor J](https://github.com/TaylorDJones11) - Software Engineer
 - [Ibraheem](https://github.com/Ibhassan01) - Frontend Developer
+- [Oyinbrakemi](https://github.com/Oyinbrakemigrace) - Frontend Developer
+
