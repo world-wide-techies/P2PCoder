@@ -1,5 +1,6 @@
-import { appAuth } from './firebaseConfig/config';
-
-export const IsAccountVerifiedFunc = () => {
-  return appAuth.currentUser?.emailVerified;
+export const IsAccountVerifiedFunc = (currentUser) => {
+  if (currentUser) {
+    return currentUser.emailVerified;
+  }
+  return false;
 };
