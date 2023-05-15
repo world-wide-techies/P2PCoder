@@ -60,4 +60,5 @@ But can be approved by anyone.
 - [Taylor J](https://github.com/TaylorDJones11) - Software Engineer
 - [Ibraheem](https://github.com/Ibhassan01) - Frontend Developer
 - [Oyinbrakemi](https://github.com/Oyinbrakemigrace) - Frontend Developer
+- [Chidera](https://github.com/zer0szn) - web developer
 
