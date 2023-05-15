@@ -54,5 +54,5 @@ But can be approved by anyone.
 
 ### TEAM
 
-[Augustine](https://github.com/annonymousauthority) - Team Lead
-[Oladipo](https://github.com/OladipoOmotosho) - Frontend Developer
+- [Augustine](https://github.com/annonymousauthority) - Team Lead
+- [Oladipo](https://github.com/OladipoOmotosho) - Frontend Developer
