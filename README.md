@@ -59,3 +59,4 @@ But can be approved by anyone.
 - [Remi](https://github.com/Remi-dee) - Frontend Developer
 - [Malik](https://github.com/7malikk) - Frontend Developer
 - [Taylor J](https://github.com/TaylorDJones11) - Software Engineer
+- [Ibraheem](https://github.com/Ibhassan01) - Frontend Developer
