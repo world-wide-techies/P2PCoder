@@ -5,7 +5,7 @@ A p2p code learning platform that connects developers to a single code editor ov
 The goal of the project is to utilize Nextjs and technologies to build this project by newbies. The project has a mid-level degree of complexity, so would be broken down into difficulty levels throughout the 8 weeks.
 
 This document is to help developers understand the platform and the development requirements of the project.
-The document will be updated from time to time to meet project exepectations and standards.
+The document will be updated from time to time to meet project expectations and standards.
 
 # DEVELOPMENT
 
@@ -13,7 +13,7 @@ During the development of the project, branches will be created for specific fea
 PR will be created against this issue and will be merged to the `development` branch of the repository.
 
 To find new issues please visit [Projects](https://github.com/annonymousauthority/Carai/projects?query=is%3Aopen) or visit the [Issue](https://github.com/annonymousauthority/Carai/issues) tab.
-A developer can request for clarification of an issue before going on so to ensure full compliance with developpment expectations and requirements.
+A developer can request for clarification of an issue before going on so to ensure full compliance with development expectations and requirements.
 
 ### FOLDERS AND NAMING STYLE
 
@@ -57,3 +57,5 @@ But can be approved by anyone.
 - [Augustine](https://github.com/annonymousauthority) - Team Lead
 - [Oladipo](https://github.com/OladipoOmotosho) - Frontend Developer
 - [Remi](https://github.com/Remi-dee) - Frontend Developer
+- [Malik](https://github.com/7malikk) - Frontend Developer
+- [Taylor J](https://github.com/TaylorDJones11) - Software Engineer
