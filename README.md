@@ -56,3 +56,4 @@ But can be approved by anyone.
 
 - [Augustine](https://github.com/annonymousauthority) - Team Lead
 - [Oladipo](https://github.com/OladipoOmotosho) - Frontend Developer
+- [Malik](https://github.com/7malikk) - Frontend Developer
