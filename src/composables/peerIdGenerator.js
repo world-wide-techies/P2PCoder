@@ -1,4 +1,4 @@
-export function generatePeerIdCharacter() {
+function generatePeerIdCharacter() {
   let characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -9,3 +9,5 @@ export function generatePeerIdCharacter() {
 
   return peerId;
 }
+
+export { generatePeerIdCharacter };
