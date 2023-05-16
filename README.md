@@ -61,4 +61,4 @@ But can be approved by anyone.
 - [Ibraheem](https://github.com/Ibhassan01) - Frontend Developer
 - [Oyinbrakemi](https://github.com/Oyinbrakemigrace) - Frontend Developer
 - [Chidera](https://github.com/zer0szn) - web developer
-- [Deborah](https://github.com/DeborahIhesiaba) - Software Engineer.
+- [Deborah](https://github.com/DeborahIhesiaba) - Software Engineer
