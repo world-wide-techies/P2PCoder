@@ -3,10 +3,10 @@ function startCounter() {
   const timer = setInterval(() => {
     if (counter == 0) {
       clearInterval(timer);
-      return true;
+      callback(true);
     } else {
       counter--;
-      return false;
+      callback(false);
     }
   }, 1000);
 }
