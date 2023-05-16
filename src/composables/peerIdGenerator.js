@@ -1,4 +1,4 @@
-export const generatePeerIdCharacter = () => {
+export function generatePeerIdCharacter() {
   let characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -8,4 +8,4 @@ export const generatePeerIdCharacter = () => {
     peerId += characters.charAt(Math.floor(Math.random() * characters.length));
 
   return peerId;
-};
+}
