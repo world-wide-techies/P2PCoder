@@ -10,3 +10,5 @@ function isUserSignedIn() {
   }
   
 };
+
+export { isUserSignedIn };
