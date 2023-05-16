@@ -33,7 +33,7 @@ const VerificationCounter = ({ onTimerComplete }) => {
       ) : (
         <p>
           Request a new verification link now.{" "}
-          {/* Replace this with your desired button or link */}
+          {/* This should be replaced with the desired button or link */}
         </p>
       )}
     </div>
