@@ -1,4 +1,4 @@
-const startCounter = () => {
+function startCounter() {
   let counter = 120;
   const timer = setInterval(() => {
     if (counter == 0) {
@@ -9,5 +9,5 @@ const startCounter = () => {
     }
   }, 1000);
   return false;
-};
+}
 export { startCounter };
