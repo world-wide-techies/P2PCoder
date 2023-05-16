@@ -1,12 +1,13 @@
 const startCounter = () => {
   let counter = 120;
-  const intervalID = setInterval(() => {
-    counter--;
+  const timer = setInterval(() => {
     if (counter == 0) {
-      clearInterval(intervalID);
+      clearInterval(timer);
       return true;
+    } else {
+      counter--;
     }
   }, 1000);
   return false;
 };
-startCounter();
+export { startCounter };
