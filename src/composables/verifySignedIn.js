@@ -1,14 +1,12 @@
-// A function to verify if user is singed in or not
+import { appAuth } from "./firebase";
 
-function SignedIn(){
+function isUserSignedIn() {
+  const user = appAuth.currentUser;
 
-//Fetches the current user from firebase 
-
-	const user = firebase.auth().currentUser;
-
-	if(user){
-		return true; //Returns true if user is signedd in
-	}
-	else{
-		return false; //Returns false if user is notsigned in
-	}
+  if (user) {
+	console.log("User is signed in");
+  } else {
+	console.log("User is not signed in");
+  }
+  
+};
