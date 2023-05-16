@@ -1,26 +1,24 @@
-import { getAuth, updateEmail, updatePassword } from "firebase/auth"
+import { updateEmail, updatePassword } from "firebase/auth"
+import { appAuth } from "./firebaseConfig/config"
 
-function resetAccount(email, newPassword) {
+import { appAuth, updatePassword } from "./firebaseConfig.js";
+
+function resetAccount(newPassword) {
     return new Promise((resolve, reject) => {
-        const auth = getAuth();
-        const user = auth.currentUser;
+        const user = appAuth.currentUser;
 
         if (!user) {
             reject(new Error('No user is currently authenticated'));
             return;
         }
 
-        updateEmail(user, email)
-            .then(() => {
-                console.log('Account email updated successfully');
-                return updatePassword(user, newPassword);
-            })
+        updatePassword(user, newPassword)
             .then(() => {
                 console.log('Account password updated successfully');
                 resolve(); // Account reset success
             })
             .catch((error) => {
-                console.error('Account reset failed:', error);
+                console.error('Failed to update account password:', error);
                 reject(error); // Account reset failure
             });
     });
