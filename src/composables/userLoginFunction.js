@@ -7,12 +7,12 @@ async function UserLogin(emailAddress, password){
     const userInfo = await signInWithEmailAndPassword(appAuth, emailAddress, password)
     const user = userInfo.user;
     if (user) {
-        return { LoggedIn: true, user };
+        return { loggedIn: true, message: user };
     }
     } 
     catch (error) {
         const errorMessage = error.message
-        return { LoggedIn: false, message: errorMessage }
+        return { loggedIn: false, message: errorMessage }
     }
 }  
 
