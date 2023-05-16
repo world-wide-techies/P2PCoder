@@ -9,7 +9,9 @@ async function authSignUp(name, email, password) {
       password
     );
     const user = userCredential.user;
-    await updateProfile(user, { displayName: name });
+    if (user) {
+      await updateProfile(user, { displayName: name });
+    }
     return user;
   } catch (error) {
     const errorCode = error.code;
@@ -18,5 +20,4 @@ async function authSignUp(name, email, password) {
   }
 }
 
-const user = await authSignUp("Jane Doe", "example@example.com", "password123");
-console.log(user);
+export { authSignUp };
