@@ -6,8 +6,8 @@ function startCounter() {
       return true;
     } else {
       counter--;
+      return false;
     }
   }, 1000);
-  return false;
 }
 export { startCounter };
