@@ -1,7 +1,7 @@
 import { sendPasswordResetEmail } from "firebase/auth";
 import { appAuth } from "./firebaseConfig/config";
 
-async function sendPasswordResetEmail() {
+async function sendAccountResetEmail() {
     try {
         await sendPasswordResetEmail(appAuth, email);
         return true;
@@ -11,4 +11,4 @@ async function sendPasswordResetEmail() {
         return errorMessage;
     }
 }
-export { sendPasswordResetEmail };
+export { sendAccountResetEmail };
