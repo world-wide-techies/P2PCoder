@@ -1,7 +1,7 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import localFont from "next/font/local";
-//import page from "../../public/assets/font/";
+
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const nohemi = localFont({
   src: [
