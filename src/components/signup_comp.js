@@ -25,9 +25,8 @@ function SignUpComponent() {
         <div className="border-b-2 border-gray-300 w-full relative flex justify-center"></div>
       </div>
 
-      {/* Signup Form */}
-      <div className="flex flex-wrap justify-between items-center ">
-        <div className="flex flex-col w-1/2">
+      <div className="flex justify-between space-x-3 w-full">
+        <div className="flex flex-col w-1/2 justify-start items-start">
           <label>First Name</label>
           <input
             type="text"
@@ -38,7 +37,7 @@ function SignUpComponent() {
           />
         </div>
 
-        <div className="flex flex-col w-1/2">
+        <div className="flex flex-col w-1/2 justify-start items-start">
           <label>Last Name</label>
           <input
             type="text"
@@ -48,7 +47,7 @@ function SignUpComponent() {
             className="border-[1px] border-gray p-3 rounded-lg bg-gray-100"
           />
         </div>
-        <div className="flex flex-col w-1/2">
+        <div className="flex flex-col w-1/2 justify-start items-start">
           <label>Email Address</label>
           <input
             type="text"
@@ -59,7 +58,7 @@ function SignUpComponent() {
           />
         </div>
 
-        <div className="flex flex-col w-1/2">
+        <div className="flex flex-col w-1/2 justify-start items-start">
           <label>Username</label>
           <input
             type="text"
@@ -70,7 +69,7 @@ function SignUpComponent() {
           />
         </div>
 
-        <div className="flex flex-col w-1/2">
+        <div className="flex flex-col w-1/2 justify-start items-start">
           <label>Password*</label>
           <input
             type="text"
@@ -81,7 +80,7 @@ function SignUpComponent() {
           />
         </div>
 
-        <div className="flex flex-col w-1/2">
+        <div className="flex flex-col w-1/2 justify-start items-start">
           <label>Confirm Password*</label>
           <input
             type="text"
@@ -93,7 +92,6 @@ function SignUpComponent() {
         </div>
       </div>
 
-      {/* Form Footer */}
       <div className="space-y-3">
         <Link
           href="/"
