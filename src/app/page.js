@@ -1,9 +1,7 @@
 "use client";
 import { OnboardingHeader } from "@/components/onboardingHeader";
-import UserLoginComp from "@/components/userLogin_comp";
 import React from "react";
 import { useEffect, useState } from "react";
-
 
 function Home() {
   const [theme, setTheme] = useState(
@@ -27,7 +25,7 @@ function Home() {
           : "flex items-center justify-center h-screen w-full "
       }
     >
-       <div className="w-1/3">
+      <div className="w-1/3">
         <OnboardingHeader
           h1={"Create an Account with us"}
           p={"Where your world becomes a better place"}
@@ -35,8 +33,7 @@ function Home() {
       </div>
       <button type="button" onClick={handleThemeChange}>
         Change Theme
-      </button> 
-      
+      </button>
     </div>
   );
 }
