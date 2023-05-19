@@ -1,7 +1,7 @@
 import React from "react";
 import reset from "../assets/Icons/Light Mode Icon/reset.png";
 import Image from "next/image";
-const ForgotPassword_comp = () => {
+const ForgotPassword = () => {
   return (
     <div className="w-full flex flex-col justify-center items-start bg-white rounded-3xl shadow-lg">
       <span>
@@ -31,4 +31,4 @@ const ForgotPassword_comp = () => {
   );
 };
 
-export { ForgotPassword_comp };
+export { ForgotPassword };
