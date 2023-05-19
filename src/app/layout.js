@@ -1,5 +1,5 @@
 import "./globals.css";
-import { nohemi } from "../../public/assets/localFont";
+import { nohemi } from "../../public/assets/font/localFont";
 
 export const metadata = {
   title: "Create Next App",
@@ -9,7 +9,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${nohemi.variable} `}>{children}</body>
+      <body className={`${nohemi.variable}`}>{children}</body>
     </html>
   );
 }
