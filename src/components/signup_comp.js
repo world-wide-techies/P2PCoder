@@ -37,6 +37,17 @@ function SignUpComponent() {
             className="border-[1px] border-gray p-3 rounded-lg bg-gray-100"
           />
         </div>
+
+        <div className="flex flex-col w-1/2">
+          <label>Last Name</label>
+          <input
+            type="text"
+            name="lastname"
+            id="lastname"
+            placeholder="Enter Last Name"
+            className="border-[1px] border-gray p-3 rounded-lg bg-gray-100"
+          />
+        </div>
         <div className="flex flex-col w-1/2">
           <label>Email Address</label>
           <input
@@ -55,17 +66,6 @@ function SignUpComponent() {
             name="username"
             id="username"
             placeholder="Enter User Name"
-            className="border-[1px] border-gray p-3 rounded-lg bg-gray-100"
-          />
-        </div>
-
-        <div className="flex flex-col w-1/2">
-          <label>Last Name</label>
-          <input
-            type="text"
-            name="lastname"
-            id="lastname"
-            placeholder="Enter Last Name"
             className="border-[1px] border-gray p-3 rounded-lg bg-gray-100"
           />
         </div>
