@@ -1,13 +1,4 @@
-"use client";
-
 const VerificationOverlay = ({ email }) => {
-  //testing callback for email
-  email = "kharunaking@gmail.com";
-  const redirectToEmail = () => {
-    const emailLink = `mailto:${email}`;
-
-    window.location.href = emailLink;
-  };
   return (
     <div className="absolute w-full p-2">
       <div className="space-y-6 w-full bg-neutral-100 p-9 rounded-2xl ">
@@ -26,8 +17,7 @@ const VerificationOverlay = ({ email }) => {
         <div className="flex flex-col space-y-3">
           <a
             className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-md text-center"
-            href="#"
-            onClick={redirectToEmail}
+            href={`mailto:${email}`}
           >
             Open mail app
           </a>
