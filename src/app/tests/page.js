@@ -1,4 +1,4 @@
-import EditorNavBar from "@/components/editorNavbar_comp";
+import EditorNavBar from "@/components/navbar_components/editorNavbar_comp";
 
 function TestPage() {
   return (
