@@ -15,7 +15,7 @@ const ForgotPassword = () => {
         <form className="w-full flex flex-col gap-y-4">
           <label
             className="text-base leading-5 text-blue-950 font-normal"
-            htmlFor="email"
+            for="email"
           >
             Email Address
           </label>
