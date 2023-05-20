@@ -9,7 +9,7 @@ function VerificationSuccessful(){
                     <button>cancel</button>
                 </div>
                 <p className="my-6 text-2xl font-semibold">Account has been successfully verified with Carai</p>
-                <Link href="/login" className="hover:bg-blue-500 bg-violet-800 text-white text-center font-bold block w-full p-2 rounded-sm">
+                <Link href="/login" className="hover:bg-blue-500 bg-violet-800 text-white text-center font-bold block w-full p-2 rounded-lg">
                 Log in
                 </Link>
             </div>
