@@ -1,7 +1,13 @@
+import EditorNavBar from "@/components/editorNavbar_comp";
+
 function TestPage() {
   return (
     <>
-      <main></main>
+      <main>
+        <div className="relative h-full">
+          <EditorNavBar />
+        </div>
+      </main>
     </>
   );
 }

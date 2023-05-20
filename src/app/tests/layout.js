@@ -1,14 +1,12 @@
-import { nohemi } from "@/data/localFont";
-
 export const metadata = {
   title: "Test Page",
   description: "Test components page",
 };
 
-export default function RootLayout({ children }) {
+export default function TestsLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${nohemi.variable} `}>{children}</body>
+    <html lang="en" className="dark">
+      <body className="font-nohemi">{children}</body>
     </html>
   );
 }

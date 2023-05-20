@@ -1,5 +1,5 @@
 import "./globals.css";
-import { nohemi } from "@/data/localFont";
+import { nohemi } from "@/app/localFont";
 
 export const metadata = {
   title: "Create Next App",
