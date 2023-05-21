@@ -1,10 +1,10 @@
 import React from "react";
 const ForgotPassword = () => {
   return (
-    <div className="flex flex-row justify-center items-center align-middle w-full">
-      <div className="w-full max-w-3xl flex flex-col justify-center items-start gap-y-4 bg-white rounded-3xl shadow-lg">
+    <div className="flex flex-row justify-center items-center w-full ">
+      <div className="w-full px-12 py-10 max-w-3xl flex flex-col justify-center items-start gap-y-4 bg-white rounded-3xl shadow-lg">
         <div className="flex justify-center">
-          <h3 className="text-indigo-500 text-3xl font-bold ">
+          <h3 className="text-indigo-500 text-3xl font-bold leading-4 ">
             Forgot Password
           </h3>
           <button></button>
@@ -24,7 +24,7 @@ const ForgotPassword = () => {
             name="email_address"
             type="email"
             placeholder="Enter Email Address"
-            className="max-w-3xl h-10 bg-neutral-100 rounded border-2 border-l-white-"
+            className="max-w-3xl h-10 bg-neutral-100 rounded border-2 border-white-1 px-1"
           />
           <button className="mt-4 w-full h-10 max-w-3xl text-white bg-indigo-500 rounded-lg text-sm text-center grow">
             Send recovery mail
