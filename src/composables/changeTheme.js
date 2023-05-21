@@ -1,11 +1,11 @@
-function useThemeChange() {
+function handleThemeChange() {
   if (theme == "light") {
     localStorage.setItem("appTheme", "dark");
-    () => "dark";
+    callback("dark");
   } else {
     localStorage.setItem("appTheme", "light");
-    () => "light";
+    callback("light");
   }
 }
 
-export { useThemeChange };
+export { handleThemeChange };
