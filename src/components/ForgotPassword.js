@@ -24,9 +24,9 @@ const ForgotPassword = () => {
             name="email_address"
             type="email"
             placeholder="Enter Email Address"
-            className="max-w-3xl bg-neutral-50 rounded border-2 border-gray-400"
+            className="max-w-3xl h-10 bg-neutral-100 rounded border-2 border-l-white-"
           />
-          <button className="w-full max-w-3xl text-white bg-indigo-500 rounded-lg text-sm text-center grow">
+          <button className="mt-4 w-full h-10 max-w-3xl text-white bg-indigo-500 rounded-lg text-sm text-center grow">
             Send recovery mail
           </button>
         </form>
