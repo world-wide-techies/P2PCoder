@@ -1,23 +1,12 @@
 "use client";
 import { OnboardingHeader } from "@/components/onboardingHeader";
 import UserLoginComp from "@/components/userLogin_comp";
+import { useThemeChange } from "@/composables/changeTheme";
 import React from "react";
-import { useEffect, useState } from "react";
 
 function Home() {
-  const [theme, setTheme] = useState(
-    localStorage.getItem("appTheme") || "light"
-  );
-  const handleThemeChange = () => {
-    if (theme == "light") {
-      localStorage.setItem("appTheme", "dark");
-      setTheme(localStorage.getItem("appTheme"));
-    } else {
-      localStorage.setItem("appTheme", "light");
-      setTheme(localStorage.getItem("appTheme"));
-    }
-  };
-  useEffect(() => {}, [theme]);
+const {theme,handleThemeChange} = useThemeChange()
+
   return (
     <div
       className={
