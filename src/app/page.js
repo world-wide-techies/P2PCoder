@@ -1,4 +1,5 @@
 "use client";
+
 import EditorNavBar from "@/components/navbar_components/editorNavbar_comp";
 import SideNavBarControl from "@/components/navbar_components/sidebar_components/sideBarNavControl";
 import TabBarControls from "@/components/navbar_components/tabbar_components/tabBarControls_comp";
