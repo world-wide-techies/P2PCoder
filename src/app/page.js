@@ -1,12 +1,4 @@
 "use client";
-<<<<<<< HEAD
-import { ForgotPassword } from "@/components/ForgotPassword";
-import { OnboardingHeader } from "@/components/onboardingHeader";
-import UserLoginComp from "@/components/userLogin_comp";
-import { useThemeChange } from "@/composables/changeTheme";
-import React from "react";
-=======
->>>>>>> ef3c448cd294978a847a2b16a13b54fc2d6db532
 
 import EditorNavBar from "@/components/navbar_components/editorNavbar_comp";
 import SideNavBarControl from "@/components/navbar_components/sidebar_components/sideBarNavControl";
@@ -15,11 +7,7 @@ import { useEffect, useState } from "react";
 
 const barItems = [{ id: 1, title: "Welcome", active: true }];
 function Home() {
-<<<<<<< HEAD
-  const { theme, handleThemeChange } = useThemeChange();
-=======
   const [items, setItems] = useState([]);
->>>>>>> ef3c448cd294978a847a2b16a13b54fc2d6db532
 
   useEffect(() => {
     const storedItems = window.localStorage.getItem("barItems");
