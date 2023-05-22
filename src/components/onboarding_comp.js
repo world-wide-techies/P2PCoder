@@ -1,10 +1,10 @@
 function Onboarding() {
   return (
     <div className="space-y-6">
-      <div className="text-blue-500 text-xl font-extrabold">
+      <div className="text-blue-500 dark:text-white text-xl font-extrabold">
         Get Started With Carai
       </div>
-      <ul className="marker:text-blue-500 list-disc px-6 space-y-6 font-bold text-lg">
+      <ul className="marker:text-blue-500 dark:marker:text-white dark:text-white list-disc px-6 space-y-6 font-bold text-lg">
         <li>Share, Review & Improve your Code.</li>
         <li>Connect with peers and code together.</li>
         <li>Communicate with peers and code together.</li>
