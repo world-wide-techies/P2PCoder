@@ -1,5 +1,5 @@
 "use client";
-function TabBarItems({ title, onClose, active, onClick }) {
+function TabBarItems({ title, onClose, active, onClick, onDoubleClick }) {
   return (
     <div
       onClick={onClick}
@@ -13,6 +13,7 @@ function TabBarItems({ title, onClose, active, onClick }) {
         className={
           active ? "text-black dark:text-black" : "text-black dark:text-white"
         }
+        onDoubleClick={onDoubleClick}
       >
         {title}
       </span>
