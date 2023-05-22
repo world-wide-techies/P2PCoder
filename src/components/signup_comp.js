@@ -92,8 +92,8 @@ function SignUpComponent() {
             />
             <Image
               src={eyeIcon}
-              alt="Github Icon"
-              className="absolute right-5  top-1/2 transform -translate-y-1 w-7 h-7 "
+              alt="Eye Icon"
+              className="absolute right-5 top-1/2 transform -translate-y-1 w-7 h-7"
             />
           </div>
 
@@ -108,7 +108,7 @@ function SignUpComponent() {
             />
             <Image
               src={eyeIcon}
-              alt="Github Icon"
+              alt="Eye Icon"
               className="absolute right-5 top-1/2 transform -translate-y-1 w-7 h-7 "
             />
           </div>
