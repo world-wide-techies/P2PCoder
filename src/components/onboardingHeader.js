@@ -6,7 +6,7 @@ export const OnboardingHeader = ({ h1, p }) => {
       </h1>
       <p className=" text-neutral-800 font-medium text-sm   dark:text-neutral-200">
         {p}
-      </p>t
+      </p>
     </div>
   );
 };
