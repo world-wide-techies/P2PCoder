@@ -1,5 +1,9 @@
+import React from "react";
 import { OnboardingHeader } from "./onboardingHeader";
 import Link from "next/link";
+import Image from "next/image";
+import googleIcon from "../../public/assets/onboardingIcons/google.png";
+import gitHubIcon from "../../public/assets/onboardingIcons/github_black.png";
 
 function UserLoginComp() {
   return (
@@ -12,9 +16,19 @@ function UserLoginComp() {
 
         <div className="flex justify-between items-center">
           <button className="bg-gray-200 flex items-center py-2 px-10 mx-3 rounded-md">
+            <Image
+              src={googleIcon}
+              alt="google_icon"
+              className="w-6 h-6 mr-4"
+            ></Image>{" "}
             Create Account with Google
           </button>
           <button className="bg-gray-200 flex items-center py-2 px-10 mx-3 rounded-md">
+            <Image
+              src={gitHubIcon}
+              alt="google_icon"
+              className="w-7 h-7 mr-4"
+            ></Image>
             Create Account with Github
           </button>
         </div>
