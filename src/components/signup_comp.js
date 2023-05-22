@@ -1,6 +1,10 @@
 import React from "react";
 import { OnboardingHeader } from "./onboardingHeader";
 import Link from "next/link";
+import Image from "next/image";
+import githubIcon from "../../public/assets/onboardingIcons/github.png";
+import googleIcon from "../../public/assets/onboardingIcons/google.png";
+import eyeIcon from "../../public/assets/onboardingIcons/eyes.svg";
 
 function SignUpComponent() {
   return (
@@ -11,10 +15,12 @@ function SignUpComponent() {
       />
 
       <div className="flex justify-between items-center space-x-3">
-        <button className="w-1/2 p-3 bg-gray-200 rounded-lg shadow-lg flex">
+        <button className="w-1/2 p-3 bg-gray-200 rounded-lg shadow-lg flex justify-center items-center">
+          <Image src={googleIcon} alt="Github Icon" className="w-5 h-5 mr-2" />
           <span>Create account with Google</span>
         </button>
-        <button className="w-1/2 p-3 bg-gray-200 rounded-lg shadow-lg flex">
+        <button className="w-1/2 p-3 bg-gray-200 rounded-lg shadow-lg flex justify-center items-center">
+          <Image src={githubIcon} alt="Github Icon" className="w-7 h-7 mr-2" />
           <span>Create account with Github</span>
         </button>
       </div>
@@ -75,7 +81,7 @@ function SignUpComponent() {
         </div>
 
         <div className="w-full flex space-x-3">
-          <div className="flex flex-col w-1/2 justify-start items-start">
+          <div className="flex flex-col w-1/2 justify-start items-start relative">
             <label>Password*</label>
             <input
               type="text"
@@ -84,9 +90,14 @@ function SignUpComponent() {
               placeholder="Enter Password"
               className="border-[1px] border-gray p-3 rounded-lg bg-gray-100 w-full"
             />
+            <Image
+              src={eyeIcon}
+              alt="Github Icon"
+              className="absolute right-5  top-1/2 transform -translate-y-1 w-7 h-7 "
+            />
           </div>
 
-          <div className="flex flex-col w-1/2 justify-start items-start">
+          <div className="flex flex-col w-1/2 justify-start items-start relative">
             <label>Confirm Password*</label>
             <input
               type="text"
@@ -94,6 +105,11 @@ function SignUpComponent() {
               id="lastname"
               placeholder="Re-enter Password"
               className="border-[1px] border-gray p-3 rounded-lg bg-gray-100 w-full"
+            />
+            <Image
+              src={eyeIcon}
+              alt="Github Icon"
+              className="absolute right-5 top-1/2 transform -translate-y-1 w-7 h-7 "
             />
           </div>
         </div>
