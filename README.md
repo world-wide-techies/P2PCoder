@@ -63,3 +63,4 @@ But can be approved by anyone.
 - [Chidera](https://github.com/zer0szn) - web developer
 - [Deborah](https://github.com/DeborahIhesiaba) - Software Engineer
 - [Ibimina](https://github.com/Ibimina) - Frontend Engineer
+- [James](https://github.com/JamesVictor-O)-Frontend developer
