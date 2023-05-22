@@ -6,6 +6,7 @@ import TabBarControls from "@/components/navbar_components/tabbar_components/tab
 import { useEffect, useState } from "react";
 
 const barItems = [{ id: 1, title: "Welcome", active: true }];
+
 function Home() {
   const [items, setItems] = useState([]);
 
@@ -18,7 +19,11 @@ function Home() {
     }
   }, []);
   useEffect(() => {
-    window.localStorage.setItem("barItems", JSON.stringify(items));
+    if (items.length == 0) {
+      setItems(barItems);
+    } else {
+      window.localStorage.setItem("barItems", JSON.stringify(items));
+    }
   }, [items]);
 
   const handleButtonClicks = (i) => {
@@ -60,8 +65,8 @@ function Home() {
   };
   return (
     <>
-      <main className="h-full">
-        <div className="relative h-full">
+      <main className="h-full bg-[#DCDCE5] dark:bg-[#2F2F3A]">
+        <div className="relative h-full border-gray-200 border-b-[1px] ">
           <EditorNavBar />
         </div>
         <div className="relative flex w-full">
@@ -85,6 +90,7 @@ function Home() {
               }}
             />
           </div>
+          <div className="bg-[#DCDCE5] dark:bg-[#2F2F3A]"></div>
         </div>
       </main>
     </>

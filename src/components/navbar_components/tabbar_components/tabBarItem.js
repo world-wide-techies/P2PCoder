@@ -25,8 +25,8 @@ function TabBarItems({ title, onClose, active, onClick }) {
           stroke="currentColor"
           className={
             active
-              ? "w-5 h-5 text-[#5F5BD7]  dark:text-black "
-              : "w-5 h-5 text-[#5F5BD7]  dark:text-white "
+              ? "w-5 h-5 text-[#5F5BD7] dark:text-black "
+              : "w-5 h-5 text-[#5F5BD7] dark:text-white "
           }
         >
           <path
