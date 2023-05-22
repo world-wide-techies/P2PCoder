@@ -5,8 +5,9 @@ import SideNavBarControl from "@/components/navbar_components/sidebar_components
 import TabBarControls from "@/components/navbar_components/tabbar_components/tabBarControls_comp";
 import { useEffect, useState } from "react";
 
+const barItems = [{ id: 1, title: "Welcome", active: true }];
+
 function Home() {
-  const barItems = [{ id: 1, title: "Welcome", active: true }];
 
   const [items, setItems] = useState([]);
 
@@ -18,6 +19,7 @@ function Home() {
       setItems(barItems);
     }
   }, []);
+
   useEffect(() => {
     if (items.length == 0) {
       setItems(barItems);
@@ -67,39 +69,40 @@ function Home() {
   const handleTabRename = (tab, event) => {
     const index = items.findIndex((i, k) => k === tab);
     const currentTab = event.target;
-    let currentName = currentTab.textContent;
+    const initialName = currentTab.textContent;
 
-    // Creating Form/Input to collect new tab name
-    let form = document.createElement('form');
+    const form = document.createElement('form');
     currentTab.replaceChildren(form);
-    let inputField = document.createElement('input');
-    inputField.value = currentName;
+    const inputField = document.createElement('input');
+    inputField.value = initialName;
     form.appendChild(inputField);
-    currentTab.firstChild[0].focus();
-    currentTab.firstChild[0].select();
+    const currentTabChild = currentTab.firstChild;
+    currentTabChild[0].focus();
+    currentTabChild[0].select();
 
-    // Add Submit Event
-    currentTab.firstChild.addEventListener('submit', tabRenameHandler)
+    currentTabChild.addEventListener('submit', tabRenameSubmitHandler, { once: true })
+    currentTabChild.addEventListener('focusout', tabRenameFocusHandler, { once: true })
 
-    // Rename Handler
-    function tabRenameHandler(e){
+    function tabRenameSubmitHandler(e){
+      currentTabChild.removeEventListener('focusout', tabRenameFocusHandler);
       e.preventDefault();
-      let newName = e.target[0].value;
-
-      const newItems = items.map((item, idx) => ({
-        ...item,
-        title: idx === index ? newName : item.title,
-      }));
-      setItems(newItems);
-      
-      currentTab.replaceChildren(newName);
+      const newName = e.target[0].value;
+      setTabName(newName);
     }
 
-    // On Click Away from Tab Renaming
-    window.addEventListener('click', () => {
-      currentTab.replaceChildren(currentName);
-      removeEventListener('submit', tabRenameHandler);
-    })
+    function tabRenameFocusHandler(e){
+      const currentName = e.target.value;
+      setTabName(currentName);
+    }
+
+    function setTabName(name){
+      const newItems = items.map((item, idx) => ({
+        ...item,
+        title: idx === index ? name : item.title,
+      }));
+      setItems(newItems);
+      currentTab.replaceChildren(name);
+    }
   }
 
   return (
