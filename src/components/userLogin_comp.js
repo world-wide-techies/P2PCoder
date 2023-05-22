@@ -7,23 +7,23 @@ import gitHubIcon from "../../public/assets/onboardingIcons/github_black.png";
 
 function UserLoginComp() {
   return (
-    <form className="space-y-6">
+    <form className="space-y-6 p-12">
       <div className="space-y-3">
         <OnboardingHeader
           h1={"Welcome back"}
           p={"Enjoy extra features when you create an account with us."}
         />
 
-        <div className="flex justify-between items-center">
-          <button className="bg-gray-200 flex items-center py-2 px-10 mx-3 rounded-md">
+        <div className="flex justify-center spaxe-x-12">
+          <button className="bg-gray-200 flex justify-center items-center py-2 px-10 mx-3 rounded-md w-1/3 shadow-md">
             <Image
               src={googleIcon}
               alt="google_icon"
               className="w-6 h-6 mr-4"
-            ></Image>{" "}
+            ></Image>
             Create Account with Google
           </button>
-          <button className="bg-gray-200 flex items-center py-2 px-10 mx-3 rounded-md">
+          <button className="bg-gray-200 flex justify-center items-center py-2 px-10 mx-3 rounded-md w-1/3 shadow-md">
             <Image
               src={gitHubIcon}
               alt="google_icon"
