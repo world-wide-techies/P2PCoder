@@ -91,6 +91,7 @@ function Home() {
     }
 
     function tabRenameFocusHandler(e){
+      currentTabChild.removeEventListener('submit', tabRenameSubmitHandler);
       const currentName = e.target.value;
       setTabName(currentName);
     }
