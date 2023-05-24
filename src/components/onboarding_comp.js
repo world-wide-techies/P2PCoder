@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import arrowIcon from '../../public/assets/onboardingIcons/arrow_light.png';
+import arrowIcon from '../../public/assets/onboardingIcons/arrow_dark.png';
 
 function Onboarding() {
   return (
