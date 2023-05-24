@@ -3,13 +3,16 @@
 import EditorNavBar from "@/components/navbar_components/editorNavbar_comp";
 import SideNavBarControl from "@/components/navbar_components/sidebar_components/sideBarNavControl";
 import TabBarControls from "@/components/navbar_components/tabbar_components/tabBarControls_comp";
+import UserLoginComp from "@/components/userLogin_comp";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const barItems = [{ id: 1, title: "Welcome", active: true }];
 
 function Home() {
   const [items, setItems] = useState([]);
-
+  const [logIn, setLogin] = useState(false);
+  const router = useRouter();
   useEffect(() => {
     const storedItems = window.localStorage.getItem("barItems");
     if (storedItems) {
@@ -39,6 +42,14 @@ function Home() {
     }
   };
 
+  const handleLoginClick = () => {
+    setLogin(true);
+  };
+
+  const handleLogoutClick = () => {
+    router.push("/");
+  };
+
   const handleTabActive = (tab) => {
     const index = items.findIndex((i, k) => k === tab);
     const newItems = items.map((item, idx) => ({
@@ -65,7 +76,7 @@ function Home() {
   };
   return (
     <>
-      <main className="h-full bg-[#DCDCE5] dark:bg-[#2F2F3A]">
+      <main className="relative h-full bg-[#DCDCE5] dark:bg-[#2F2F3A]">
         <div className="relative h-full border-gray-200 border-b-[1px] ">
           <EditorNavBar />
         </div>
@@ -74,6 +85,12 @@ function Home() {
             <SideNavBarControl
               handleTopNavClicks={(i) => {
                 handleButtonClicks(i);
+              }}
+              handleNavLoginClick={(i) => {
+                handleLoginClick(i);
+              }}
+              handleNavLogoutClick={(i) => {
+                handleLogoutClick(i);
               }}
             />
           </div>
@@ -90,6 +107,12 @@ function Home() {
               }}
             />
           </div>
+
+          {logIn && (
+            <div className="absolute sm:max-md:left-2  md:right-0  lg:mr-5 bg-white  ">
+              <UserLoginComp />
+            </div>
+          )}
           <div className="bg-[#DCDCE5] dark:bg-[#2F2F3A]"></div>
         </div>
       </main>
