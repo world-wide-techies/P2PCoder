@@ -1,16 +1,13 @@
-import { appAuth } from "./firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import { appAuth } from "./firebaseConfig/config";
 
 function isUserSignedIn() {
- 
-   const unsub = onAuthStateChanged(appAuth, (user) => {
-     if (user) {
-    callback(user);
-     } else {
-    callback("no user");
-     }
-   });
-   unsub(); 
-};
+  const user = appAuth.currentUser;
+
+  if (user) {
+    console.log("User is signed in");
+  } else {
+    console.log("User is not signed in");
+  }
+}
 
 export { isUserSignedIn };
