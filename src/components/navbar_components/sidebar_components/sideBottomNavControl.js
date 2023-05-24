@@ -1,5 +1,4 @@
 "use client";
-import UserLoginComp from "@/components/userLogin_comp";
 import { user } from "@/composables/verifySignedIn";
 import Image from "next/image";
 
@@ -25,9 +24,9 @@ function SideBottomNavControl({
             key={i}
             onClick={() => {
               i === 0
-                ? handleBottomNavLoginClick(i)
+                ? handleBottomNavLoginClick()
                 : i === 1
-                ? handleBottomNavLogoutClick(i)
+                ? handleBottomNavLogoutClick()
                 : () => {};
             }}
             className="hover:bg-gray-200 dark:hover:bg-gray-700 w-16 h-16 flex items-center justify-center hover:rounded-lg"

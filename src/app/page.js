@@ -109,7 +109,7 @@ function Home() {
           </div>
 
           {logIn && (
-            <div className="absolute sm:max-md:left-2  md:right-0  lg:mr-5 bg-white  ">
+            <div className="absolute sm:max-lg:mx-10  lg:mx-[270px] left-0 right-0 bg-white  ">
               <UserLoginComp />
             </div>
           )}
