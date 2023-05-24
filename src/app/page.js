@@ -27,7 +27,7 @@ function Home() {
   }, [items]);
 
   const handleButtonClicks = (i) => {
-    if (i == 0) {
+    if (i == 0 && items.length < 5) {
       const newItems = items.map((item) => ({
         ...item,
         active: false,
@@ -51,12 +51,10 @@ function Home() {
     const index = items.findIndex((i, k) => k === tab);
     const newItems = items.map((item, idx) => ({
       ...item,
-      active:
+      active: 
         idx === index
           ? false
-          : idx === index - 1 && items.length < index + 1
-          ? true
-          : idx === index + 1
+          : idx === index - 1 
           ? true
           : false,
     }));
