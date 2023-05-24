@@ -5,9 +5,9 @@ function isUserSignedIn() {
  
    const unsub = onAuthStateChanged(appAuth, (user) => {
      if (user) {
-     console.log(user)
+    callback(user);
      } else {
-          console.log("user is signed out");
+    callback("no user");
      }
    });
    unsub(); 
