@@ -27,7 +27,7 @@ function Home() {
   }, [items]);
 
   const handleButtonClicks = (i) => {
-    if (i == 0) {
+    if (i == 0 && items.length < 5) {
       const newItems = items.map((item) => ({
         ...item,
         active: false,
@@ -54,15 +54,18 @@ function Home() {
       active:
         idx === index
           ? false
-          : idx === index - 1 && items.length < index + 1
-          ? true
-          : idx === index + 1
+          : idx === index - 1 
+          ? index + 1 <= items.length - 1
+          ? false
+          : true
+          : idx === index + 1 
           ? true
           : false,
     }));
     newItems.splice(index, 1);
     setItems(newItems);
   };
+
   return (
     <>
       <main className="h-full bg-[#DCDCE5] dark:bg-[#2F2F3A]">
