@@ -1,13 +1,17 @@
+import Image from "next/image";
 import React from "react";
+import closeCircle from ".././../public/assets/forgotPasswordForm/closeCircle.png";
 const ForgotPassword = () => {
   return (
     <div className="flex flex-row justify-center items-center w-full ">
-      <div className="w-full px-12 py-10 max-w-3xl flex flex-col justify-center items-start gap-y-4 bg-white rounded-3xl shadow-lg">
-        <div className="flex justify-center">
+      <div className="w-full px-12 py-10 max-w-3xl flex flex-col justify-center gap-y-4 bg-white rounded-3xl shadow-lg">
+        <div className="flex flex-row justify-between">
           <h3 className="text-indigo-500 text-3xl font-bold leading-4 ">
             Forgot Password
           </h3>
-          <button></button>
+          <button>
+            <Image src={closeCircle} alt="closeBtn" width={24} height={24} />
+          </button>
         </div>
         <p className="text-base leading-5 text-blue-950 font-normal">
           Enter your email address to reset your password
