@@ -51,16 +51,21 @@ function Home() {
     const index = items.findIndex((i, k) => k === tab);
     const newItems = items.map((item, idx) => ({
       ...item,
-      active: 
+      active:
         idx === index
           ? false
           : idx === index - 1 
+          ? index + 1 <= items.length - 1
+          ? false
+          : true
+          : idx === index + 1 
           ? true
           : false,
     }));
     newItems.splice(index, 1);
     setItems(newItems);
   };
+
   return (
     <>
       <main className="h-full bg-[#DCDCE5] dark:bg-[#2F2F3A]">
