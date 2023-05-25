@@ -34,7 +34,11 @@ function Home() {
       }));
       setItems([
         ...newItems,
-        { id: items.length + 1, title: "untitled", active: true },
+        {
+          id: items.length + 1,
+          title: "untitled",
+          active: true,
+        },
       ]);
     }
   };
@@ -51,19 +55,22 @@ function Home() {
     const index = items.findIndex((i, k) => k === tab);
     const newItems = items.map((item, idx) => ({
       ...item,
-      active:
-        idx === index
-          ? false
-          : idx === index - 1 
-          ? index + 1 <= items.length - 1
-          ? false
-          : true
-          : idx === index + 1 
-          ? true
-          : false,
+      active: setActive(idx, index),
     }));
     newItems.splice(index, 1);
     setItems(newItems);
+  };
+
+  const setActive = (idx, index) => {
+    if (idx === index) {
+      return false;
+    } else if (idx === index - 1) {
+      return index + 1 <= items.length - 1 ? false : true;
+    } else if (idx === index + 1) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   return (
