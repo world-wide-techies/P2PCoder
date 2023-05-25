@@ -1,16 +1,28 @@
+import Link from "next/link";
+
 const VerificationOverlay = ({ email }) => {
   return (
-    <div className="absolute w-full p-2">
-      <div className="space-y-6 w-full bg-neutral-100 p-9 rounded-2xl ">
+    <div className="w-full p-3 bg-white">
+      <div className="space-y-6 w-full  bg-neutral-100 dark:bg-[#2F2F3A] p-9 rounded-2xl drop-shadow-md ">
         <div className="text-blue-600 dark:text-white text-3xl font-extrabold">
-          Account Verification
+          <h1>
+            Account Verification{" "}
+            <span className="absolute right-6 w-5 m-3">
+              <link href="#">
+                <img
+                  src="assets/onboardingIcons/close_black.png"
+                  alt="close button icon"
+                ></img>
+              </link>
+            </span>
+          </h1>
         </div>
 
-        <p>
+        <p className="dark:text-white">
           A verification link has been sent to{" "}
           <span className="text-blue-600">{email}.</span>
         </p>
-        <p>
+        <p className="dark:text-white">
           Please check your inbox and click on the link to complete your
           registration.
         </p>
