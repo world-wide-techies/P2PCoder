@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import githubIcon from "../../public/assets/onboardingIcons/github.png";
 import googleIcon from "../../public/assets/onboardingIcons/google.png";
-import { PasswordToggle } from "@/composables/passwordToggleFunction";
+import { PasswordToggle } from "./passwordToggleFunction";
 
 function SignUpComponent() {
   return (
