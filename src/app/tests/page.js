@@ -1,3 +1,3 @@
-import HtmlScreen from '@components/HtmlScreen_comp.js';
+import HtmlScreen from "@components/HtmlScreen_comp";
 
 export default HtmlScreen;
