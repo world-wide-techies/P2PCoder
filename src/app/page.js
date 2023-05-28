@@ -1,5 +1,6 @@
 "use client";
 
+import Welcome from "@/components/welcome_comp";
 import EditorNavBar from "@/components/navbar_components/editorNavbar_comp";
 import SideNavBarControl from "@/components/navbar_components/sidebar_components/sideBarNavControl";
 import TabBarControls from "@/components/navbar_components/tabbar_components/tabBarControls_comp";
@@ -101,6 +102,15 @@ function Home() {
             />
           </div>
           <div className="bg-[#DCDCE5] dark:bg-[#2F2F3A]"></div>
+        </div>
+        <div className="ml-24 w-[90%] h-4/5 p-11">
+          {items[0]?.active && items[0].title === "Welcome" ? (
+            <Welcome />
+          ) : items.filter((e) => e.active)[0] ? (
+            <div className="text-black">Terminal</div>
+          ) : (
+            <Welcome />
+          )}
         </div>
       </main>
     </>
