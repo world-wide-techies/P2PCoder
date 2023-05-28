@@ -3,15 +3,18 @@
 import EditorNavBar from "@/components/navbar_components/editorNavbar_comp";
 import SideNavBarControl from "@/components/navbar_components/sidebar_components/sideBarNavControl";
 import TabBarControls from "@/components/navbar_components/tabbar_components/tabBarControls_comp";
-import UserLoginComp from "@/components/userLogin_comp";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import Login from "../app/login/page";
+
+import Modal from "react-modal";
+Modal.setAppElement("div");
 const barItems = [{ id: 1, title: "Welcome", active: true }];
 
 function Home() {
   const [items, setItems] = useState([]);
-  const [logIn, setLogin] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const router = useRouter();
   useEffect(() => {
     const storedItems = window.localStorage.getItem("barItems");
@@ -43,7 +46,11 @@ function Home() {
   };
 
   const handleLoginClick = () => {
-    setLogin(true);
+    setModalIsOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalIsOpen(false);
   };
 
   const handleLogoutClick = () => {
@@ -86,11 +93,11 @@ function Home() {
               handleTopNavClicks={(i) => {
                 handleButtonClicks(i);
               }}
-              handleNavLoginClick={(i) => {
-                handleLoginClick(i);
+              handleNavLoginClick={() => {
+                handleLoginClick();
               }}
-              handleNavLogoutClick={(i) => {
-                handleLogoutClick(i);
+              handleNavLogoutClick={() => {
+                handleLogoutClick();
               }}
             />
           </div>
@@ -108,11 +115,29 @@ function Home() {
             />
           </div>
 
-          {logIn && (
-            <div className="absolute sm:max-lg:mx-10  lg:mx-[270px] left-0 right-0 bg-white  ">
-              <UserLoginComp />
-            </div>
-          )}
+          <Modal
+            style={{
+              overlay: {
+                position: "fixed",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: "transparent",
+              },
+
+              content: {
+                marginInline: "auto",
+                width: "700px",
+                height: "650px",
+              },
+            }}
+            isOpen={modalIsOpen}
+            onRequestClose={handleCloseModal}
+          >
+            <Login></Login>
+          </Modal>
+
           <div className="bg-[#DCDCE5] dark:bg-[#2F2F3A]"></div>
         </div>
       </main>

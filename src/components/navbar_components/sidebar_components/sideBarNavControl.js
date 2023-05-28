@@ -18,11 +18,11 @@ function SideNavBarControl({
         </div>
         <div className="flex flex-col mt-20">
           <SideBottomNavControl
-            handleBottomNavLoginClick={(i) => {
-              handleNavLoginClick(i);
+            handleBottomNavLoginClick={() => {
+              handleNavLoginClick();
             }}
-            handleBottomNavLogoutClick={(i) => {
-              handleNavLogoutClick(i);
+            handleBottomNavLogoutClick={() => {
+              handleNavLogoutClick();
             }}
           />
         </div>
