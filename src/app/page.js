@@ -41,7 +41,6 @@ function Home() {
         },
       ];
       setItems(newItems);
-      // sortTabs(newItems)
     }
   };
 
@@ -61,7 +60,6 @@ function Home() {
     }));
     newItems.splice(index, 1);
     setItems(newItems);
-    // sortTabs(newItems)
   };
 
   const setActive = (idx, index) => {
