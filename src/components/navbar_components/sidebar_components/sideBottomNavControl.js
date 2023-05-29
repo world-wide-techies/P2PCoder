@@ -1,7 +1,6 @@
 "use client";
 import { user } from "@/composables/verifySignedIn";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
 const btnNav = [
   "/assets/sideBottomNavControls/settings.png",
@@ -9,16 +8,6 @@ const btnNav = [
   "/assets/sideBottomNavControls/settings.png",
 ];
 function SideBottomNavControl() {
-  const router = useRouter();
-
-  const handleLoginClick = () => {
-    router.push("/login");
-  };
-
-  const handleLogoutClick = () => {
-    router.push("/");
-  };
-
   return (
     <div className="flex flex-col justify-start items-center space-y-6 mt-12">
       {btnNav.map((e, i) => {
