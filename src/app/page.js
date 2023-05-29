@@ -1,25 +1,30 @@
-"use client";
+'use client';
 
-import Welcome from "@/components/welcome_comp";
-import EditorNavBar from "@/components/navbar_components/editorNavbar_comp";
-import SideNavBarControl from "@/components/navbar_components/sidebar_components/sideBarNavControl";
-import TabBarControls from "@/components/navbar_components/tabbar_components/tabBarControls_comp";
-import { useEffect, useState } from "react";
+import Welcome from '@/components/welcome_comp';
+import EditorNavBar from '@/components/navbar_components/editorNavbar_comp';
+import SideNavBarControl from '@/components/navbar_components/sidebar_components/sideBarNavControl';
+import TabBarControls from '@/components/navbar_components/tabbar_components/tabBarControls_comp';
+import { useEffect, useState } from 'react';
+import { handleThemeChange } from '@/composables/changeTheme';
 
-const barItems = [{ id: 1, title: "Welcome", active: true }];
+const barItems = [{ id: 1, title: 'Welcome', active: true }];
 
 function Home() {
   const [items, setItems] = useState([]);
+  const [theme, setTheme] = useState(
+    window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  );
+
   useEffect(() => {
     if (items.length == 0) {
       setItems(barItems);
     } else {
       console.log(items);
-      window.localStorage.setItem("barItems", JSON.stringify(items));
+      window.localStorage.setItem('barItems', JSON.stringify(items));
     }
   }, [items]);
   useEffect(() => {
-    const storedItems = window.localStorage.getItem("barItems");
+    const storedItems = window.localStorage.getItem('barItems');
     if (storedItems) {
       setItems(JSON.parse(storedItems));
     } else {
@@ -37,7 +42,7 @@ function Home() {
         ...oldItems,
         {
           id: items.length + 1,
-          title: "untitled",
+          title: 'untitled',
           active: true,
         },
       ];
@@ -77,42 +82,44 @@ function Home() {
 
   return (
     <>
-      <main className="h-full bg-[#DCDCE5] dark:bg-[#2F2F3A]">
-        <div className="relative h-full border-gray-200 border-b-[1px] ">
-          <EditorNavBar />
-        </div>
-        <div className="relative flex w-full">
-          <div className="">
-            <SideNavBarControl
-              handleTopNavClicks={(i) => {
-                handleButtonClicks(i);
-              }}
-            />
+      <main className={theme}>
+        <section className="h-full bg-[#DCDCE5] dark:bg-[#2F2F3A]">
+          <div className="relative h-full border-gray-200 border-b-[1px] ">
+            <EditorNavBar />
           </div>
-          <div className="ml-[96px] w-full">
-            <TabBarControls
-              items={items}
-              handleActiveTab={(i, event) => {
-                event.stopPropagation();
-                handleTabActive(i);
-              }}
-              handleCloseTab={(i, event) => {
-                event.stopPropagation();
-                handleTabClose(i);
-              }}
-            />
+          <div className="relative flex w-full">
+            <div className="">
+              <SideNavBarControl
+                handleTopNavClicks={(i) => {
+                  handleButtonClicks(i);
+                }}
+              />
+            </div>
+            <div className="ml-[96px] w-full">
+              <TabBarControls
+                items={items}
+                handleActiveTab={(i, event) => {
+                  event.stopPropagation();
+                  handleTabActive(i);
+                }}
+                handleCloseTab={(i, event) => {
+                  event.stopPropagation();
+                  handleTabClose(i);
+                }}
+              />
+            </div>
+            <div className="bg-[#DCDCE5] dark:bg-[#2F2F3A]"></div>
           </div>
-          <div className="bg-[#DCDCE5] dark:bg-[#2F2F3A]"></div>
-        </div>
-        <div className="ml-24 w-[90%] h-4/5 p-11">
-          {items[0]?.active && items[0].title === "Welcome" ? (
-            <Welcome />
-          ) : items.filter((e) => e.active)[0] ? (
-            <div className="text-black">Terminal</div>
-          ) : (
-            <Welcome />
-          )}
-        </div>
+          <div className="ml-24 w-[90%] h-4/5 p-11">
+            {items[0]?.active && items[0].title === 'Welcome' ? (
+              <Welcome />
+            ) : items.filter((e) => e.active)[0] ? (
+              <div className="text-black">Terminal</div>
+            ) : (
+              <Welcome />
+            )}
+          </div>
+        </section>
       </main>
     </>
   );

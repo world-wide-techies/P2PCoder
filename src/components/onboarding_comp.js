@@ -1,24 +1,26 @@
 import Image from 'next/image';
-import arrowIcon from '../../public/assets/onboardingIcons/arrow_dark.png';
+import arrowIconDark from '../../public/assets/onboardingIcons/arrow_dark.png';
+import arrowIconLight from '../../public/assets/onboardingIcons/arrow_light.png';
 
 function Onboarding() {
+  const theme = localStorage.getItem('appTheme');
   return (
-    <div className="space-y-6">
-      <div className="text-blue-500 dark:text-white  text-5xl font-extrabold">
+    <div className="space-y-6 font-nohemi">
+      <div className="text-blue-500 dark:text-white  text-5xl font-semibold">
         Get Started With Carai
       </div>
-      <ul className="dark:text-gray-400 space-y-6 font-bold ">
+      <ul className="dark:text-gray-400 space-y-6 font-semibold ">
         <li className="flex w-fit  dark:hover:text-white group items-center transition ease-in-out scale-100 translate-x-0 hover:translate-x-12 hover:scale-150  duration-500  ">
           <Image
-            src={arrowIcon}
-            alt="arrowIconarrowIcon"
+            src={theme === 'dark' ? arrowIconLight : arrowIconDark}
+            alt="arrowIcon"
             className=" hidden transition ease-in-out group-hover:translate-x-0  duration-500 group-hover:block"
           />{' '}
           <p> Share, Review & Improve your Code.</p>
         </li>
         <li className="flex w-fit dark:hover:text-white  group items-center transition ease-in-out scale-100 translate-x-0 hover:translate-x-12 hover:scale-150  duration-500  ">
           <Image
-            src={arrowIcon}
+            src={theme === 'dark' ? arrowIconLight : arrowIconDark}
             alt="arrowIcon"
             className=" hidden transition ease-in-out group-hover:translate-x-0  duration-500 group-hover:block"
           />{' '}
@@ -26,7 +28,7 @@ function Onboarding() {
         </li>
         <li className="flex w-fit dark:hover:text-white group items-center transition ease-in-out scale-100 translate-x-0 hover:translate-x-12 hover:scale-150  duration-500  ">
           <Image
-            src={arrowIcon}
+            src={theme === 'dark' ? arrowIconLight : arrowIconDark}
             alt="arrowIcon"
             className=" hidden transition ease-in-out group-hover:translate-x-0  duration-500 group-hover:block"
           />{' '}
@@ -34,7 +36,7 @@ function Onboarding() {
         </li>
         <li className="flex w-fit dark:hover:text-white group items-center transition ease-in-out scale-100 translate-x-0 hover:translate-x-12 hover:scale-150  duration-500  ">
           <Image
-            src={arrowIcon}
+            src={theme === 'dark' ? arrowIconLight : arrowIconDark}
             alt="arrowIcon"
             className=" hidden transition ease-in-out group-hover:translate-x-0  duration-500 group-hover:block"
           />{' '}
@@ -42,7 +44,7 @@ function Onboarding() {
         </li>
         <li className="flex w-fit dark:hover:text-white group items-center transition ease-in-out scale-100 translate-x-0 hover:translate-x-14 hover:scale-150  duration-500  ">
           <Image
-            src={arrowIcon}
+            src={theme === 'dark' ? arrowIconLight : arrowIconDark}
             alt="arrowIcon"
             className=" hidden transition ease-in-out group-hover:translate-x-0  duration-500 group-hover:block"
           />{' '}

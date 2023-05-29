@@ -1,10 +1,10 @@
-function handleThemeChange() {
-  if (theme == "light") {
-    localStorage.setItem("appTheme", "dark");
-    callback("dark");
+function handleThemeChange(theme, setTheme) {
+  if (theme == 'light') {
+    localStorage.setItem('appTheme', 'dark');
+    setTheme('dark');
   } else {
-    localStorage.setItem("appTheme", "light");
-    callback("light");
+    localStorage.setItem('appTheme', 'light');
+    setTheme('light');
   }
 }
 
