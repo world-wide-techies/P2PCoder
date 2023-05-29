@@ -1,25 +1,14 @@
 function trackSession() {
-  let sessionId = localStorage.getItem("sessionId");
+  let sessionCount = sessionStorage.getItem("sessionCount");
 
-  if (sessionId) {
-    return sessionId;
+  if (sessionCount) {
+    sessionCount = parseInt(sessionCount) + 1;
   } else {
-    sessionId = generateSessionId();
-    localStorage.setItem("sessionId", sessionId);
-    return sessionId;
-  }
-}
-
-function generateSessionId() {
-  const chars =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let sessionId = "";
-
-  for (let i = 0; i < 10; i++) {
-    sessionId += chars.charAt(Math.floor(Math.random() * chars.length));
+    sessionCount = 1;
   }
 
-  return sessionId;
+  sessionStorage.setItem("sessionCount", sessionCount.toString());
+  return sessionCount;
 }
 
 export { trackSession };
