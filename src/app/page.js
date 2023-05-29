@@ -5,6 +5,7 @@ import EditorNavBar from "@/components/navbar_components/editorNavbar_comp";
 import SideNavBarControl from "@/components/navbar_components/sidebar_components/sideBarNavControl";
 import TabBarControls from "@/components/navbar_components/tabbar_components/tabBarControls_comp";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const barItems = [{ id: 1, title: "Welcome", active: true }];
 
@@ -14,7 +15,6 @@ function Home() {
     if (items.length == 0) {
       setItems(barItems);
     } else {
-      console.log(items);
       window.localStorage.setItem("barItems", JSON.stringify(items));
     }
   }, [items]);
@@ -102,13 +102,14 @@ function Home() {
               }}
             />
           </div>
-          <div className="bg-[#DCDCE5] dark:bg-[#2F2F3A]"></div>
         </div>
-        <div className="ml-24 w-[90%] h-4/5 p-11">
+        <div className="ml-24 w-[90%] p-11 h-screen flex flex-col justify-start">
           {items[0]?.active && items[0].title === "Welcome" ? (
-            <Welcome />
+            <div>
+              <Welcome />
+            </div>
           ) : items.filter((e) => e.active)[0] ? (
-            <div className="text-black">Terminal</div>
+            <div className="text-black"></div>
           ) : (
             <Welcome />
           )}
