@@ -8,19 +8,19 @@ import { PasswordToggle } from "./passwordToggleFunction";
 
 function SignUpComponent() {
   return (
-    <form className="space-y-5 p-6 dark:bg-[#1E1E2A]">
+    <form className="space-y-5 p-6 dark:bg-[#1E1E2A] w-auto min-w-[600px]">
       <OnboardingHeader
         h1={"Create an account with us"}
         p={"Enjoy extra features when you create an account with us."}
       />
 
-      <div className="flex justify-between items-center space-x-3">
+      <div className="flex justify-between items-center space-x-3 w-full">
         <button className="w-1/2 p-3 bg-gray-200 rounded-lg shadow-lg flex justify-center items-center">
           <Image src={googleIcon} alt="Github Icon" className="w-5 h-5 mr-2" />
           <span>Create account with Google</span>
         </button>
         <button className="w-1/2 p-3 bg-gray-200 rounded-lg shadow-lg flex justify-center items-center">
-          <Image src={githubIcon} alt="Github Icon" className="w-7 h-7 mr-2" />
+          <Image src={githubIcon} alt="Github Icon" className="w-5 h-5 mr-2" />
           <span>Create account with Github</span>
         </button>
       </div>
