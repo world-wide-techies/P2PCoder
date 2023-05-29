@@ -103,7 +103,7 @@ function SignUpComponent() {
 
         <p className="text-center font-semibold ">
           Already have an account?
-          <Link href="/" className="text-violet-800 ml-1.5">
+          <Link href="/?view=login" className="text-violet-800 ml-1.5">
             Log in
           </Link>
         </p>

@@ -7,7 +7,7 @@ import gitHubIcon from "../../public/assets/onboardingIcons/github_black.png";
 
 function UserLoginComp() {
   return (
-    <form className="space-y-6 p-10">
+    <form className="space-y-6 p-10 dark:bg-[#1E1E2A] dark:text-white">
       <div className="space-y-3">
         <OnboardingHeader
           h1={"Welcome back"}
@@ -62,16 +62,16 @@ function UserLoginComp() {
         </div>
 
         <div className="space-y-3">
-          <Link
-            href="#"
+          <button
+            type="submit"
             className="bg-violet-800 text-white text-center font-bold block w-full p-3 rounded-md"
           >
             Log in
-          </Link>
+          </button>
 
           <p className="text-center font-semibold">
-            Don't have an account with us?
-            <Link href="#" className="text-violet-800 mx-1.5">
+            {"Don't have an account with us?"}
+            <Link href="/?view=signup" className="text-violet-800 mx-1.5">
               Create your account
             </Link>
           </p>

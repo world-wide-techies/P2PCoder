@@ -1,5 +1,6 @@
 import Image from "next/image";
 import arrowIcon from "../../public/assets/onboardingIcons/arrow_dark.png";
+import Link from "next/link";
 
 function Onboarding() {
   return (
@@ -50,12 +51,18 @@ function Onboarding() {
         </li>
       </ul>
       <div className="flex flex-col  space-y-3 w-1/3">
-        <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-md">
+        <Link
+          href={"/?view=signup"}
+          className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-md flex justify-center"
+        >
           Create an Account
-        </button>
-        <button className="px-6 py-3 hover:bg-blue-600 hover:text-white dark:bg-white dark:hover:bg-gray-200 dark:hover:text-blue-500 dark:border-0 rounded-md border">
+        </Link>
+        <Link
+          href={"/?view=login"}
+          className="px-6 py-3 hover:bg-blue-600 hover:text-white dark:bg-white dark:hover:bg-gray-200 dark:hover:text-blue-500 dark:border-0 rounded-md border flex justify-center"
+        >
           Log In
-        </button>
+        </Link>
       </div>
     </div>
   );

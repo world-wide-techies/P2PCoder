@@ -8,15 +8,24 @@ import { useEffect } from "react";
 import UserLoginComp from "./userLogin_comp";
 
 const Welcome = () => {
+  const router = useRouter();
   const view = useSearchParams().get("view");
   return (
     <main className="">
       {view == "login" ? (
-        <Modal>
+        <Modal
+          onClose={() => {
+            router.push("/");
+          }}
+        >
           <UserLoginComp />
         </Modal>
       ) : view == "signup" ? (
-        <Modal>
+        <Modal
+          onClose={() => {
+            router.push("/");
+          }}
+        >
           <SignUpComponent />
         </Modal>
       ) : (
