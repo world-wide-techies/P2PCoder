@@ -1,5 +1,6 @@
 "use client";
 
+import Welcome from "@/components/welcome_comp";
 import EditorNavBar from "@/components/navbar_components/editorNavbar_comp";
 import SideNavBarControl from "@/components/navbar_components/sidebar_components/sideBarNavControl";
 import TabBarControls from "@/components/navbar_components/tabbar_components/tabBarControls_comp";
@@ -27,14 +28,18 @@ function Home() {
   }, [items]);
 
   const handleButtonClicks = (i) => {
-    if (i == 0) {
+    if (i == 0 && items.length < 5) {
       const newItems = items.map((item) => ({
         ...item,
         active: false,
       }));
       setItems([
         ...newItems,
-        { id: items.length + 1, title: "untitled", active: true },
+        {
+          id: items.length + 1,
+          title: "untitled",
+          active: true,
+        },
       ]);
     }
   };
@@ -51,18 +56,24 @@ function Home() {
     const index = items.findIndex((i, k) => k === tab);
     const newItems = items.map((item, idx) => ({
       ...item,
-      active:
-        idx === index
-          ? false
-          : idx === index - 1 && items.length < index + 1
-          ? true
-          : idx === index + 1
-          ? true
-          : false,
+      active: setActive(idx, index),
     }));
     newItems.splice(index, 1);
     setItems(newItems);
   };
+
+  const setActive = (idx, index) => {
+    if (idx === index) {
+      return false;
+    } else if (idx === index - 1) {
+      return index + 1 <= items.length - 1 ? false : true;
+    } else if (idx === index + 1) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <>
       <main className="h-full bg-[#DCDCE5] dark:bg-[#2F2F3A]">
@@ -91,6 +102,15 @@ function Home() {
             />
           </div>
           <div className="bg-[#DCDCE5] dark:bg-[#2F2F3A]"></div>
+        </div>
+        <div className="ml-24 w-[90%] h-4/5 p-11">
+          {items[0]?.active && items[0].title === "Welcome" ? (
+            <Welcome />
+          ) : items.filter((e) => e.active)[0] ? (
+            <div className="text-black">Terminal</div>
+          ) : (
+            <Welcome />
+          )}
         </div>
       </main>
     </>

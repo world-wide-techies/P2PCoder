@@ -1,3 +1,5 @@
+import SignUpComponent from "@/components/signup_comp";
+
 function TestPage() {
   return (
     <>
