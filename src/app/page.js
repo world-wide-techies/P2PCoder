@@ -10,7 +10,14 @@ const barItems = [{ id: 1, title: "Welcome", active: true }];
 
 function Home() {
   const [items, setItems] = useState([]);
-
+  useEffect(() => {
+    if (items.length == 0) {
+      setItems(barItems);
+    } else {
+      console.log(items);
+      window.localStorage.setItem("barItems", JSON.stringify(items));
+    }
+  }, [items]);
   useEffect(() => {
     const storedItems = window.localStorage.getItem("barItems");
     if (storedItems) {
@@ -19,28 +26,22 @@ function Home() {
       setItems(barItems);
     }
   }, []);
-  useEffect(() => {
-    if (items.length == 0) {
-      setItems(barItems);
-    } else {
-      window.localStorage.setItem("barItems", JSON.stringify(items));
-    }
-  }, [items]);
 
   const handleButtonClicks = (i) => {
     if (i == 0 && items.length < 5) {
-      const newItems = items.map((item) => ({
+      const oldItems = items.map((item) => ({
         ...item,
         active: false,
       }));
-      setItems([
-        ...newItems,
+      const newItems = [
+        ...oldItems,
         {
           id: items.length + 1,
           title: "untitled",
           active: true,
         },
-      ]);
+      ];
+      setItems(newItems);
     }
   };
 
