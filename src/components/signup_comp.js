@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { OnboardingHeader } from "./onboardingHeader";
 import Link from "next/link";
 import Image from "next/image";
@@ -7,6 +8,17 @@ import googleIcon from "../../public/assets/onboardingIcons/google.png";
 import { PasswordToggle } from "./passwordToggleFunction";
 
 function SignUpComponent() {
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+  };
+
   return (
     <form className="space-y-5 p-6 dark:bg-[#1E1E2A]">
       <OnboardingHeader
@@ -83,12 +95,24 @@ function SignUpComponent() {
         <div className="w-full flex space-x-3">
           <div className="flex flex-col w-1/2 justify-start items-start relative">
             <label>Password*</label>
-            <PasswordToggle />
+            <PasswordToggle
+              inputId="password"
+              inputValue={password}
+              setInputValue={setPassword}
+              handleInputChange={handlePasswordChange}
+              placeholder="Enter Password"
+            />
           </div>
 
           <div className="flex flex-col w-1/2 justify-start items-start relative">
             <label>Confirm Password*</label>
-            <PasswordToggle />
+            <PasswordToggle
+              inputId="confirm password"
+              inputValue={confirmPassword}
+              setInputValue={setConfirmPassword}
+              handleInputChange={handleConfirmPasswordChange}
+              placeholder="Re-enter Password"
+            />
           </div>
         </div>
       </div>
