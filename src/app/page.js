@@ -5,12 +5,19 @@ import EditorNavBar from "@/components/navbar_components/editorNavbar_comp";
 import SideNavBarControl from "@/components/navbar_components/sidebar_components/sideBarNavControl";
 import TabBarControls from "@/components/navbar_components/tabbar_components/tabBarControls_comp";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const barItems = [{ id: 1, title: "Welcome", active: true }];
 
 function Home() {
   const [items, setItems] = useState([]);
-
+  useEffect(() => {
+    if (items.length == 0) {
+      setItems(barItems);
+    } else {
+      window.localStorage.setItem("barItems", JSON.stringify(items));
+    }
+  }, [items]);
   useEffect(() => {
     const storedItems = window.localStorage.getItem("barItems");
     if (storedItems) {
@@ -19,28 +26,22 @@ function Home() {
       setItems(barItems);
     }
   }, []);
-  useEffect(() => {
-    if (items.length == 0) {
-      setItems(barItems);
-    } else {
-      window.localStorage.setItem("barItems", JSON.stringify(items));
-    }
-  }, [items]);
 
   const handleButtonClicks = (i) => {
     if (i == 0 && items.length < 5) {
-      const newItems = items.map((item) => ({
+      const oldItems = items.map((item) => ({
         ...item,
         active: false,
       }));
-      setItems([
-        ...newItems,
+      const newItems = [
+        ...oldItems,
         {
           id: items.length + 1,
           title: "untitled",
           active: true,
         },
-      ]);
+      ];
+      setItems(newItems);
     }
   };
 
@@ -101,13 +102,14 @@ function Home() {
               }}
             />
           </div>
-          <div className="bg-[#DCDCE5] dark:bg-[#2F2F3A]"></div>
         </div>
-        <div className="ml-24 w-[90%] h-4/5 p-11">
+        <div className="ml-24 w-[90%] p-11 h-screen flex flex-col justify-start">
           {items[0]?.active && items[0].title === "Welcome" ? (
-            <Welcome />
+            <div>
+              <Welcome />
+            </div>
           ) : items.filter((e) => e.active)[0] ? (
-            <div className="text-black">Terminal</div>
+            <div className="text-black"></div>
           ) : (
             <Welcome />
           )}
