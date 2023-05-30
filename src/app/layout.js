@@ -1,5 +1,8 @@
+'use client';
+
 import './globals.css';
 import { nohemi } from '@/app/localFont';
+import { useState } from 'react';
 
 export const metadata = {
   title: 'Create Next App',
@@ -7,8 +10,11 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const [theme, setTheme] = useState(
+    window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  );
   return (
-    <html lang="en">
+    <html className={theme} lang="en">
       <body className={`${nohemi.variable} `}>{children}</body>
     </html>
   );
