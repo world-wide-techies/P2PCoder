@@ -22,7 +22,10 @@ function SignUpComponent() {
           <Image src={googleIcon} alt="Github Icon" className="w-5 h-5 mr-2" />
           <span>Create account with Google</span>
         </button>
-        <button className="w-1/2 p-3 bg-gray-200 rounded-lg shadow-lg flex justify-center items-center">
+        <button
+          onClick={signInWithGithub}
+          className="w-1/2 p-3 bg-gray-200 rounded-lg shadow-lg flex justify-center items-center"
+        >
           <Image src={githubIcon} alt="Github Icon" className="w-5 h-5 mr-2" />
           <span>Create account with Github</span>
         </button>

@@ -11,10 +11,6 @@ function SideBottomNavControl() {
   return (
     <div className="flex flex-col justify-start items-center space-y-6 mt-12">
       {btnNav.map((e, i) => {
-        if ((i === 0 && user) || (i === 1 && !user)) {
-          return null;
-        }
-
         return (
           <button
             key={i}
