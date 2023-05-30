@@ -107,7 +107,7 @@ function SignUpComponent() {
           <div className="flex flex-col w-1/2 justify-start items-start relative">
             <label>Confirm Password*</label>
             <PasswordToggle
-              inputId="confirm password"
+              inputId="confirm_password"
               inputValue={confirmPassword}
               setInputValue={setConfirmPassword}
               handleInputChange={handleConfirmPasswordChange}
