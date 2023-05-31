@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import googleIcon from "../../public/assets/onboardingIcons/google.png";
 import gitHubIcon from "../../public/assets/onboardingIcons/github_black.png";
+import { signInWithGithub } from "@/composables/auth_github_signin_popup";
 
 function UserLoginComp() {
   return (
@@ -23,7 +24,10 @@ function UserLoginComp() {
             ></Image>
             Create Account with Google
           </button>
-          <button className="bg-gray-200 flex justify-center items-center p-3 rounded-md w-full shadow-md">
+          <button
+            onClick={signInWithGithub}
+            className="bg-gray-200 flex justify-center items-center p-3 rounded-md w-full shadow-md"
+          >
             <Image
               src={gitHubIcon}
               alt="GitHub icon"

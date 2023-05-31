@@ -2,7 +2,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const btnNav = [
-  "/assets/sideBottomNavControls/settings.png",
   "/assets/sideBottomNavControls/logout.png",
   "/assets/sideBottomNavControls/settings.png",
 ];

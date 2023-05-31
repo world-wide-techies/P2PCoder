@@ -3,20 +3,22 @@ import { appAuth } from "./firebaseConfig/config";
 
 const provider = new GithubAuthProvider();
 
-function signInWithGithub() {
-  signInWithPopup(appAuth, provider)
-    .then((result) => {
-      const credential = GithubAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-
-      const user = result.user;
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      const email = error.customData.email;
-      const credential = GithubAuthProvider.credentialFromError(error);
-    });
+async function signInWithGithub() {
+  try {
+    const res = await signInWithPopup(appAuth, provider);
+    if (!res) {
+      throw new Error("Couldn't complete signup");
+    }
+    const user = res.user;
+    return res.user
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    const credential = GithubAuthProvider.credentialFromError(error);
+    throw new Error(errorMessage);
+  }
 }
+
+
 
 export { signInWithGithub };
