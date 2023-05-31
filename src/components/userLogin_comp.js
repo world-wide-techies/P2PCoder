@@ -25,7 +25,9 @@ function UserLoginComp() {
             Create Account with Google
           </button>
           <button
-            onClick={signInWithGithub}
+            onClick={() => {
+              signInWithGithub();
+            }}
             className="bg-gray-200 flex justify-center items-center p-3 rounded-md w-full shadow-md"
           >
             <Image
