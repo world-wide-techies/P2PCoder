@@ -37,7 +37,7 @@ function formValidation(user) {
   if (!user.password) {
     errors.password = "Please enter a password";
   } else if (user.password.length < 8 || user.password.length > 20) {
-    errors.password = "Please enter a password between 8 and 20 characters";
+    errors.password = "Please enter a password between 8 and 15 characters";
   } else if (!user.password.match(regxPassword)) {
     errors.password =
       "Password must contain one digit, one lowercase letter, one uppercase letter, and one special character";
