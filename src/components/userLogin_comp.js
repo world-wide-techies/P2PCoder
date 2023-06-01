@@ -4,11 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import googleIcon from "../../public/assets/onboardingIcons/google.png";
 import gitHubIcon from "../../public/assets/onboardingIcons/github_black.png";
-import {
-  emailValidator,
-  passwordValidator,
-} from "@/composables/emailPasswordValidator";
-import UserLogin from "@/composables/userLoginFunction";
 
 function UserLoginComp() {
   const [emailAddress, setEmailAddress] = useState("");
@@ -52,7 +47,7 @@ function UserLoginComp() {
   };
 
   return (
-    <form className="space-y-6 p-10" onSubmit={loginUser}>
+    <form className="space-y-6 p-10">
       <div className="space-y-3">
         <OnboardingHeader
           h1={"Welcome back"}
@@ -68,7 +63,12 @@ function UserLoginComp() {
             ></Image>
             Create Account with Google
           </button>
-          <button className="bg-gray-200 flex justify-center items-center p-3 rounded-md w-full shadow-md">
+          <button
+            onClick={() => {
+              signInWithGithub();
+            }}
+            className="bg-gray-200 flex justify-center items-center p-3 rounded-md w-full shadow-md"
+          >
             <Image
               src={gitHubIcon}
               alt="GitHub icon"
@@ -123,8 +123,8 @@ function UserLoginComp() {
           </button>
 
           <p className="text-center font-semibold">
-            Don't have an account with us?
-            <Link href="#" className="text-violet-800 mx-1.5">
+            {"Don't have an account with us?"}
+            <Link href="/?view=signup" className="text-violet-800 mx-1.5">
               Create your account
             </Link>
           </p>
