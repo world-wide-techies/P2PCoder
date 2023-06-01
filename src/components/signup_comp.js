@@ -8,6 +8,7 @@ import googleIcon from "../../public/assets/onboardingIcons/google.png";
 import { PasswordToggle } from "./passwordToggleFunction";
 import { formValidation } from "@/composables/emailPasswordValidator";
 import { authSignUp } from "@/composables/authSignupFunction";
+import { signInWithGithub } from "@/composables/auth_github_signin_popup";
 
 function SignUpComponent() {
   const [user, setUser] = useState({
@@ -61,7 +62,12 @@ function SignUpComponent() {
           <Image src={googleIcon} alt="Github Icon" className="w-5 h-5 mr-2" />
           <span>Create account with Google</span>
         </button>
-        <button className="w-1/2 p-3 bg-gray-200 rounded-lg shadow-lg flex justify-center items-center">
+        <button
+          onClick={() => {
+            signInWithGithub();
+          }}
+          className="w-1/2 p-3 bg-gray-200 rounded-lg shadow-lg flex justify-center items-center"
+        >
           <Image src={githubIcon} alt="Github Icon" className="w-5 h-5 mr-2" />
           <span>Create account with Github</span>
         </button>
