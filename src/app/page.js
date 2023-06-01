@@ -6,6 +6,7 @@ import SideNavBarControl from "@/components/navbar_components/sidebar_components
 import TabBarControls from "@/components/navbar_components/tabbar_components/tabBarControls_comp";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import SignUpComponent from "@/components/signup_comp";
 
 const barItems = [{ id: 1, title: "Welcome", active: true }];
 
