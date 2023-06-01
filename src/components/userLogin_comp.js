@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import googleIcon from "../../public/assets/onboardingIcons/google.png";
 import gitHubIcon from "../../public/assets/onboardingIcons/github_black.png";
-import { signInWithGithub } from "@/composables/auth_github_signin_popup";
+import { signInWithGithub } from "@/composables/authGithubSigninPopup";
 
 function UserLoginComp() {
   return (
