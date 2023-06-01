@@ -6,7 +6,7 @@ import Image from "next/image";
 import githubIcon from "../../public/assets/onboardingIcons/github.png";
 import googleIcon from "../../public/assets/onboardingIcons/google.png";
 import { PasswordToggle } from "./passwordToggleFunction";
-import { signInWithGithub } from "@/composables/auth_github_signin_popup";
+import { signInWithGithub } from "@/composables/authGithubSigninPopup";
 
 function SignUpComponent() {
   const [password, setPassword] = useState("");
