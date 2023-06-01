@@ -6,7 +6,7 @@ import Image from "next/image";
 import githubIcon from "../../public/assets/onboardingIcons/github.png";
 import googleIcon from "../../public/assets/onboardingIcons/google.png";
 import { PasswordToggle } from "./passwordToggleFunction";
-import { signupFormValidation } from "@/composables/signupFormValidation";
+import { formValidation } from "@/composables/emailPasswordValidator";
 import { authSignUp } from "@/composables/authSignupFunction";
 
 function SignUpComponent() {
@@ -28,7 +28,7 @@ function SignUpComponent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formErrors = signupFormValidation(user);
+    const formErrors = formValidation(user);
 
     if (Object.keys(formErrors).length === 0) {
       try {
