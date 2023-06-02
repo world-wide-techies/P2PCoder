@@ -49,7 +49,7 @@ function SignUpComponent() {
 
   return (
     <form
-      className="space-y-5 p-6 dark:bg-[#1E1E2A] w-auto min-w-[600px]"
+      className="space-y-5 p-6 dark:bg-[#1E1E2A] w-auto min-w-[600px] font-nohemi"
       onSubmit={handleSubmit}
     >
       <OnboardingHeader
@@ -68,7 +68,7 @@ function SignUpComponent() {
           }}
           className="w-1/2 p-3 bg-gray-200 rounded-lg shadow-lg flex justify-center items-center"
         >
-          <Image src={githubIcon} alt="Github Icon" className="w-5 h-5 mr-2" />
+          <Image src={githubIcon} alt="Github Icon" className="w-6 h-6 mr-2" />
           <span>Create account with Github</span>
         </button>
       </div>
@@ -91,10 +91,15 @@ function SignUpComponent() {
               onChange={handleChange}
               aria-label="firstname"
               placeholder="Enter First Name"
-              className="border-[1px] border-gray p-3 rounded-lg bg-gray-100 w-full"
+              className={`border ${
+                errors.name ? "border-[#ec6d6a]" : "border-gray-300"
+              } p-3 rounded-lg bg-gray-100 w-full`}
             />
             {errors.name && (
-              <span className="text-red-700 text-xs"> {errors.name} </span>
+              <span className="text-[#ec6d6a] text-sm mt-2 font-light">
+                {" "}
+                {errors.name}{" "}
+              </span>
             )}
           </div>
 
@@ -108,10 +113,15 @@ function SignUpComponent() {
               onChange={handleChange}
               aria-label="lastname"
               placeholder="Enter Last Name"
-              className="border-[1px] border-gray p-3 rounded-lg bg-gray-100 w-full"
+              className={`border ${
+                errors.name ? "border-[#ec6d6a]" : "border-gray-300"
+              } p-3 rounded-lg bg-gray-100 w-full`}
             />
             {errors.name && (
-              <span className="text-red-700 text-xs"> {errors.name} </span>
+              <span className="text-[#ec6d6a] text-sm mt-2 font-light">
+                {" "}
+                {errors.name}{" "}
+              </span>
             )}
           </div>
         </div>
@@ -127,10 +137,15 @@ function SignUpComponent() {
               onChange={handleChange}
               aria-label="email"
               placeholder="Enter Email Address"
-              className="border-[1px] border-gray p-3 rounded-lg bg-gray-100 w-full"
+              className={`border ${
+                errors.name ? "border-[#ec6d6a]" : "border-gray-300"
+              } p-3 rounded-lg bg-gray-100 w-full`}
             />
             {errors.email && (
-              <span className="text-red-700 text-xs"> {errors.email} </span>
+              <span className="text-[#ec6d6a] text-sm mt-2 font-light">
+                {" "}
+                {errors.email}{" "}
+              </span>
             )}
           </div>
 
@@ -144,16 +159,25 @@ function SignUpComponent() {
               onChange={handleChange}
               aria-label="username"
               placeholder="Enter User Name"
-              className="border-[1px] border-gray p-3 rounded-lg bg-gray-100 w-full"
+              className={`border ${
+                errors.name ? "border-[#ec6d6a]" : "border-gray-300"
+              } p-3 rounded-lg bg-gray-100 w-full`}
             />
             {errors.username && (
-              <span className="text-red-700 text-xs"> {errors.username} </span>
+              <span className="text-[#ec6d6a] text-sm mt-2 font-light">
+                {" "}
+                {errors.username}{" "}
+              </span>
             )}
           </div>
         </div>
 
         <div className="w-full flex space-x-3">
-          <div className="flex flex-col w-1/2 justify-start items-start relative">
+          <div
+            className={`flex flex-col w-1/2 justify-start items-start relative ${
+              errors.password ? "border-[#ec6d6a]" : ""
+            }`}
+          >
             <label htmlFor="password">Password*</label>
             <PasswordToggle
               inputId="password"
@@ -162,9 +186,14 @@ function SignUpComponent() {
               inputValue={user.password}
               handleInputChange={handleChange}
               placeholder="Enter Password"
+              customClass={`border ${
+                errors.name ? "border-[#ec6d6a]" : "border-gray-300"
+              } p-3 rounded-lg bg-gray-100 w-full`}
             />
             {errors.password && (
-              <span className="text-red-700 text-xs"> {errors.password} </span>
+              <span className="text-[#ec6d6a] text-sm mt-2 font-light">
+                {errors.password}
+              </span>
             )}
           </div>
 
@@ -176,9 +205,12 @@ function SignUpComponent() {
               inputValue={user.confirm_password}
               handleInputChange={handleChange}
               placeholder="Re-enter Password"
+              customClass={`border ${
+                errors.name ? "border-[#ec6d6a]" : "border-gray-300"
+              } p-3 rounded-lg bg-gray-100 w-full`}
             />
             {errors.confirm_password && (
-              <span className="text-red-700 text-xs">
+              <span className="text-[#ec6d6a] text-sm mt-2 font-light">
                 {errors.confirm_password}
               </span>
             )}
@@ -189,7 +221,7 @@ function SignUpComponent() {
       <div className="space-y-3">
         <button
           type="submit"
-          className="bg-violet-800 text-white text-center font-bold block w-full p-3 rounded-md"
+          className="bg-[#5f5bd7] text-white text-center font-bold block w-full p-3 rounded-md"
         >
           Create Account
         </button>
