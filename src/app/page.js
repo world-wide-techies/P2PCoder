@@ -1,11 +1,13 @@
 'use client';
 
-import Welcome from '@/components/welcome_comp';
-import EditorNavBar from '@/components/navbar_components/editorNavbar_comp';
-import SideNavBarControl from '@/components/navbar_components/sidebar_components/sideBarNavControl';
-import TabBarControls from '@/components/navbar_components/tabbar_components/tabBarControls_comp';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+
+import Welcome from "@/components/welcome_comp";
+import EditorNavBar from "@/components/navbar_components/editorNavbar_comp";
+import SideNavBarControl from "@/components/navbar_components/sidebar_components/sideBarNavControl";
+import TabBarControls from "@/components/navbar_components/tabbar_components/tabBarControls_comp";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import SignUpComponent from "@/components/signup_comp";
 
 const barItems = [{ id: 1, title: 'Welcome', active: true }];
 

@@ -1,11 +1,13 @@
-import React from 'react';
-import { OnboardingHeader } from './onboardingHeader';
-import Link from 'next/link';
-import Image from 'next/image';
-import googleIcon from '../../public/assets/onboardingIcons/google.png';
+import React from "react";
+import { OnboardingHeader } from "./onboardingHeader";
+import Link from "next/link";
+import Image from "next/image";
+import googleIcon from "../../public/assets/onboardingIcons/google.png";
 import githubIcon from '../../public/assets/onboardingIcons/github.png';
 import githubDark from '../../public/assets/onboardingIcons/github_black.png';
 import { useTheme } from 'next-themes';
+import { signInWithGithub } from "@/composables/authGithubSigninPopup";
+
 
 function UserLoginComp() {
   const { theme, setTheme } = useTheme();
@@ -26,7 +28,13 @@ function UserLoginComp() {
             />
             Create Account with Google
           </button>
-          <button className="bg-gray-200 dark:bg-[#363647]  flex justify-center items-center p-3 rounded-md w-full shadow-md">
+
+          <button
+            onClick={() => {
+              signInWithGithub();
+            }}
+            className="bg-gray-200 dark:bg-[#363647]  flex justify-center items-center p-3 rounded-md w-full shadow-md"
+          >
             <Image
               src={theme === 'dark' ? githubIcon : githubDark}
               alt="GitHub icon"

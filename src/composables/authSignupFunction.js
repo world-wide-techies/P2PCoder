@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { appAuth } from "@/firebase/config";
+import { appAuth } from "./firebaseConfig/config";
 
 async function authSignUp(name, email, password) {
   try {
