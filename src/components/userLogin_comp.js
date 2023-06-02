@@ -100,7 +100,7 @@ function UserLoginComp() {
 
       <div className="space-y-8">
         <div>
-          <label>Email Address</label>
+          <label htmlFor="email address">Email Address</label>
           <input
             type="email"
             name="email"
@@ -114,7 +114,7 @@ function UserLoginComp() {
         </div>
 
         <div>
-          <label>Password*</label>
+          <label htmlFor="Password">Password*</label>
           <PasswordToggle
             inputId="password"
             placeholder="Enter password"
