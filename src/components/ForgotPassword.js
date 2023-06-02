@@ -14,7 +14,7 @@ const ForgotPassword = () => {
     {
       emailValidator(emailAddress)
         ? resetPassword(emailAddress)
-        : console.log("Please enter a valid email address");
+        : "Please enter a valid email address";
     }
   }
 
