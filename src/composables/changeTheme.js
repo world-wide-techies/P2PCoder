@@ -1,10 +1,8 @@
-function handleThemeChange(theme, setTheme) {
+function handleThemeChange(theme) {
   if (theme == 'light') {
     localStorage.setItem('appTheme', 'dark');
-    setTheme('dark');
   } else {
     localStorage.setItem('appTheme', 'light');
-    setTheme('light');
   }
 }
 

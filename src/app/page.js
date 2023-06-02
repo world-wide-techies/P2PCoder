@@ -83,7 +83,7 @@ function Home() {
           <EditorNavBar />
         </div>
         <div className="relative flex w-full">
-          <div className="">
+          <div>
             <SideNavBarControl
               handleTopNavClicks={(i) => {
                 handleButtonClicks(i);
@@ -104,11 +104,9 @@ function Home() {
             />
           </div>
         </div>
-        <div className="ml-24 w-[90%] p-11 h-screen flex flex-col justify-start">
+        <div className="bg-white dark:bg-[#1E1E2A]  ml-24 w-[92%] p-11 h-screen flex flex-col justify-start  ">
           {items[0]?.active && items[0].title === 'Welcome' ? (
-            <div>
-              <Welcome />
-            </div>
+            <Welcome />
           ) : items.filter((e) => e.active)[0] ? (
             <div className="text-black"></div>
           ) : (

@@ -1,34 +1,37 @@
-import React from "react";
-import { OnboardingHeader } from "./onboardingHeader";
-import Link from "next/link";
-import Image from "next/image";
-import googleIcon from "../../public/assets/onboardingIcons/google.png";
-import gitHubIcon from "../../public/assets/onboardingIcons/github_black.png";
+import React from 'react';
+import { OnboardingHeader } from './onboardingHeader';
+import Link from 'next/link';
+import Image from 'next/image';
+import googleIcon from '../../public/assets/onboardingIcons/google.png';
+import githubIcon from '../../public/assets/onboardingIcons/github.png';
+import githubDark from '../../public/assets/onboardingIcons/github_black.png';
+import { useTheme } from 'next-themes';
 
 function UserLoginComp() {
+  const { theme, setTheme } = useTheme();
   return (
-    <form className="space-y-6 p-10 dark:bg-[#1E1E2A] dark:text-white">
+    <form className="space-y-6 p-10 bg-white dark:bg-[#1E1E2A] dark:text-white">
       <div className="space-y-3">
         <OnboardingHeader
-          h1={"Welcome back"}
-          p={"Enjoy extra features when you create an account with us."}
+          h1={'Welcome back'}
+          p={'Enjoy extra features when you create an account with us.'}
         />
 
         <div className="flex justify-center space-x-5">
-          <button className="bg-gray-200 flex justify-center items-center p-3 rounded-md w-full shadow-md">
+          <button className="bg-gray-200 dark:bg-[#363647] flex justify-center items-center p-3 rounded-md w-full shadow-md">
             <Image
               src={googleIcon}
               alt="google_icon"
               className="w-6 h-6 mr-4"
-            ></Image>
+            />
             Create Account with Google
           </button>
-          <button className="bg-gray-200 flex justify-center items-center p-3 rounded-md w-full shadow-md">
+          <button className="bg-gray-200 dark:bg-[#363647]  flex justify-center items-center p-3 rounded-md w-full shadow-md">
             <Image
-              src={gitHubIcon}
+              src={theme === 'dark' ? githubIcon : githubDark}
               alt="GitHub icon"
               className="w-7 h-7 mr-4"
-            ></Image>
+            />
             Create Account with Github
           </button>
         </div>
@@ -45,7 +48,7 @@ function UserLoginComp() {
           <label htmlFor="email address">Email Address</label>
           <input
             type="email"
-            className="w-full shadow-sm bg-gray-200 border-2 border-gray-300 rounded-md p-3"
+            className="w-full shadow-sm bg-gray-200 dark:bg-[#363647] rounded-md p-3"
             placeholder="Enter Email Address"
           />
         </div>
@@ -54,7 +57,7 @@ function UserLoginComp() {
           <label htmlFor="email address">Password*</label>
           <input
             type="email"
-            className="w-full shadow-sm bg-gray-200 border-2 border-gray-300 rounded-md p-3"
+            className="w-full shadow-sm bg-gray-200 dark:bg-[#363647] rounded-md p-3"
             placeholder="Enter password"
           />
 
@@ -64,14 +67,15 @@ function UserLoginComp() {
         <div className="space-y-3">
           <button
             type="submit"
-            className="bg-violet-800 text-white text-center font-bold block w-full p-3 rounded-md"
-          >
+            className="bg-violet-800 text-white text-center font-bold block w-full p-3 rounded-md">
             Log in
           </button>
 
           <p className="text-center font-semibold">
             {"Don't have an account with us?"}
-            <Link href="/?view=signup" className="text-violet-800 mx-1.5">
+            <Link
+              href="/?view=signup"
+              className="text-violet-800 mx-1.5 dark:text-white">
               Create your account
             </Link>
           </p>
