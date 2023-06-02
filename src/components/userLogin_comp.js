@@ -60,7 +60,10 @@ function UserLoginComp() {
   };
 
   return (
-    <form className="space-y-6 p-10" onSubmit={loginUser}>
+    <form
+      className="space-y-6 p-10 dark:bg-[#1E1E2A] dark:text-white"
+      onSubmit={loginUser}
+    >
       <div className="space-y-3">
         <OnboardingHeader
           h1={"Welcome back"}
