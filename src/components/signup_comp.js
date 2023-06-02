@@ -7,7 +7,7 @@ import githubIcon from "../../public/assets/onboardingIcons/github.png";
 import googleIcon from "../../public/assets/onboardingIcons/google.png";
 import { PasswordToggle } from "./passwordToggleFunction";
 import { signInWithGithub } from "@/composables/authGithubSigninPopup";
-import { formValidation } from "@/composables/emailPasswordValidator";
+import { signupFormValidation } from "@/composables/signupFormValidation";
 import { authSignUp } from "@/composables/authSignupFunction";
 
 function SignUpComponent() {
@@ -29,7 +29,7 @@ function SignUpComponent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formErrors = formValidation(user);
+    const formErrors = signupFormValidation(user);
 
     if (Object.keys(formErrors).length === 0) {
       try {
