@@ -1,14 +1,23 @@
+"use client";
 import React, { useState } from "react";
 import { OnboardingHeader } from "./onboardingHeader";
 import Link from "next/link";
 import Image from "next/image";
 import googleIcon from "../../public/assets/onboardingIcons/google.png";
 import gitHubIcon from "../../public/assets/onboardingIcons/github_black.png";
+import UserLogin from "@/composables/userLoginFunction";
+import {
+  emailValidator,
+  passwordValidator,
+} from "@/composables/emailPasswordValidator";
+import { signInWithGithub } from "@/composables/authGithubSigninPopup";
+import { PasswordToggle } from "./passwordToggleFunction";
 
 function UserLoginComp() {
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const emailChange = (e) => {
     setEmailAddress(e.target.value);
@@ -28,26 +37,30 @@ function UserLoginComp() {
       try {
         const result = await UserLogin(emailAddress, password);
         if (result.loggedIn) {
-          return result.message;
+          console.log("Logged in", result.message);
         } else {
-          setErrorMsg(result.message);
+          console.log("user does not exist", result.message);
         }
-      } catch {
-        (error) => {
-          setErrorMsg(error.message);
-        };
+      } catch (error) {
+        console.log("error", error);
       }
-    } else if (validEmail !== true) {
-      setErrorMsg(validEmail);
-    } else if (validPassword !== true) {
-      setErrorMsg(validPassword);
     } else {
-      setErrorMsg(validEmail || validPassword);
+      if (validEmail !== true) {
+        setEmailError(validEmail);
+      } else {
+        setEmailError("");
+      }
+
+      if (validPassword !== true) {
+        setPasswordError(validPassword);
+      } else {
+        setPasswordError("");
+      }
     }
   };
 
   return (
-    <form className="space-y-6 p-10">
+    <form className="space-y-6 p-10" onSubmit={loginUser}>
       <div className="space-y-3">
         <OnboardingHeader
           h1={"Welcome back"}
@@ -84,7 +97,6 @@ function UserLoginComp() {
         <p className="flex justify-center w-1/12">OR</p>
         <div className="border-b-2 border-gray-200 w-full relative flex justify-center"></div>
       </div>
-      {errorMsg && <p className="font-bold text-red-500">{errorMsg}</p>}
 
       <div className="space-y-8">
         <div>
@@ -93,24 +105,25 @@ function UserLoginComp() {
             type="email"
             name="email"
             id="email"
-            className="w-full shadow-sm bg-gray-200 border-2 border-gray-300 rounded-md p-3"
+            className="border-[1px] border-gray p-3 rounded-lg bg-gray-100 w-full"
             placeholder="Enter Email Address"
             onChange={emailChange}
             value={emailAddress}
           />
+          {emailError && <p className="text-sm text-red-500">{emailError}</p>}
         </div>
 
         <div>
           <label>Password*</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            className="w-full shadow-sm bg-gray-200 border-2 border-gray-300 rounded-md p-3"
+          <PasswordToggle
+            inputId="password"
             placeholder="Enter password"
-            onChange={passwordChange}
-            value={password}
+            handleInputChange={passwordChange}
+            inputValue={password}
           />
+          {passwordError && (
+            <p className="text-sm text-red-500">{passwordError}</p>
+          )}
           <button className="float-right">Forgot password?</button>
         </div>
 
