@@ -4,26 +4,12 @@ import { useEffect, useState } from "react";
 const PasswordToggle = ({
   inputId,
   inputValue,
-  setInputValue,
+  handleInputChange,
   placeholder,
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isDefaultPassword, setIsDefaultPassword] = useState(true);
   const [eyeIcon, setEyeIcon] = useState(null);
-
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setInputValue(value);
-
-    if (value === "") {
-      setIsDefaultPassword(true);
-      if (isPasswordVisible) {
-        setIsPasswordVisible(false);
-      }
-    } else {
-      setIsDefaultPassword(false);
-    }
-  };
 
   const handleToggleClick = () => {
     if (inputValue !== "") {
@@ -32,8 +18,6 @@ const PasswordToggle = ({
     } else if (isPasswordVisible) {
       setIsPasswordVisible(false);
       setIsDefaultPassword(true);
-    } else {
-      setInputValue("");
     }
   };
 
