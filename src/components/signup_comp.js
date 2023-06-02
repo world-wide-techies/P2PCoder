@@ -7,6 +7,7 @@ import githubIcon from "../../public/assets/onboardingIcons/github.png";
 import googleIcon from "../../public/assets/onboardingIcons/google.png";
 import { PasswordToggle } from "./passwordToggleFunction";
 import { signInWithGithub } from "@/composables/authGithubSigninPopup";
+import { signInWithGoogle } from "@/composables/authGoogleSigninPoppup";
 
 function SignUpComponent() {
   const [password, setPassword] = useState("");
@@ -28,12 +29,19 @@ function SignUpComponent() {
       />
 
       <div className="flex justify-between items-center space-x-3 w-full">
-        <button className="w-1/2 p-3 bg-gray-200 rounded-lg shadow-lg flex justify-center items-center">
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            signInWithGoogle();
+          }}
+          className="w-1/2 p-3 bg-gray-200 rounded-lg shadow-lg flex justify-center items-center"
+        >
           <Image src={googleIcon} alt="Github Icon" className="w-5 h-5 mr-2" />
           <span>Create account with Google</span>
         </button>
         <button
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
             signInWithGithub();
           }}
           className="w-1/2 p-3 bg-gray-200 rounded-lg shadow-lg flex justify-center items-center"

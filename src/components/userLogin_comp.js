@@ -5,8 +5,11 @@ import Image from "next/image";
 import googleIcon from "../../public/assets/onboardingIcons/google.png";
 import gitHubIcon from "../../public/assets/onboardingIcons/github_black.png";
 import { signInWithGithub } from "@/composables/authGithubSigninPopup";
+import { signInWithGoogle } from "@/composables/authGoogleSigninPoppup";
 
 function UserLoginComp() {
+ 
+
   return (
     <form className="space-y-6 p-10 dark:bg-[#1E1E2A] dark:text-white">
       <div className="space-y-3">
@@ -16,7 +19,13 @@ function UserLoginComp() {
         />
 
         <div className="flex justify-center space-x-5">
-          <button className="bg-gray-200 flex justify-center items-center p-3 rounded-md w-full shadow-md">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              signInWithGoogle();
+            }}
+            className="bg-gray-200 flex justify-center items-center p-3 rounded-md w-full shadow-md"
+          >
             <Image
               src={googleIcon}
               alt="google_icon"
@@ -25,7 +34,8 @@ function UserLoginComp() {
             Create Account with Google
           </button>
           <button
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
               signInWithGithub();
             }}
             className="bg-gray-200 flex justify-center items-center p-3 rounded-md w-full shadow-md"
