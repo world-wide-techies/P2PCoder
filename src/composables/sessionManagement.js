@@ -10,7 +10,7 @@ function getSessionData() {
   return users;
 }
 
-function startTimer(joinTime) {
+function initializeTime(joinTime) {
   const currentTime = new Date();
   const currentMinutes = currentTime.getMinutes();
   const currentSeconds = currentTime.getSeconds();
@@ -24,7 +24,7 @@ function startTimer(joinTime) {
     localStorage.removeItem("users");
     return;
   } else {
-    setTimeout(() => startTimer(joinTime), 1000);
+    setTimeout(() => initializeTime(joinTime), 1000);
   }
 }
 
