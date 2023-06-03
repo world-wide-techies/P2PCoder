@@ -12,6 +12,7 @@ import {
 } from "@/composables/emailPasswordValidator";
 import { signInWithGithub } from "@/composables/authGithubSigninPopup";
 import { PasswordToggle } from "./passwordToggleFunction";
+import { signInWithGoogle } from "@/composables/authGoogleSigninPoppup";
 
 function UserLoginComp() {
   const [emailAddress, setEmailAddress] = useState("");
@@ -71,7 +72,13 @@ function UserLoginComp() {
         />
 
         <div className="flex justify-center space-x-5">
-          <button className="bg-gray-200 flex justify-center items-center p-3 rounded-md w-full shadow-md">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              signInWithGoogle();
+            }}
+            className="bg-gray-200 flex justify-center items-center p-3 rounded-md w-full shadow-md"
+          >
             <Image
               src={googleIcon}
               alt="google_icon"
@@ -80,7 +87,8 @@ function UserLoginComp() {
             Create Account with Google
           </button>
           <button
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
               signInWithGithub();
             }}
             className="bg-gray-200 flex justify-center items-center p-3 rounded-md w-full shadow-md"
