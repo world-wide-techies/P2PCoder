@@ -1,5 +1,5 @@
-"use client";
-import { useEffect, useState } from "react";
+'use client';
+import { useEffect, useState } from 'react';
 
 const PasswordToggle = ({
   inputId,
@@ -12,12 +12,13 @@ const PasswordToggle = ({
   const [eyeIcon, setEyeIcon] = useState(null);
 
   const handleToggleClick = () => {
-    if (inputValue !== "") {
+    if (inputValue !== '') {
       setIsPasswordVisible(!isPasswordVisible);
       setIsDefaultPassword(false);
     } else if (isPasswordVisible) {
       setIsPasswordVisible(false);
       setIsDefaultPassword(true);
+
     }
   };
 
@@ -31,8 +32,7 @@ const PasswordToggle = ({
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="w-6 h-6 dark:text-[#5F5BD7]"
-          >
+            className="w-6 h-6 dark:text-[#5F5BD7]">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -48,8 +48,7 @@ const PasswordToggle = ({
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="w-6 h-6 dark:text-[#DCDCE5] text-[#5F5BD7]"
-          >
+            className="w-6 h-6 dark:text-[#DCDCE5] text-[#5F5BD7]">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -67,10 +66,10 @@ const PasswordToggle = ({
   }, [isPasswordVisible]);
 
   const passwordInputType = isDefaultPassword
-    ? "password"
+    ? 'password'
     : isPasswordVisible
-    ? "text"
-    : "password";
+    ? 'text'
+    : 'password';
 
   return (
     <div className="relative w-full">
@@ -81,14 +80,13 @@ const PasswordToggle = ({
         value={inputValue}
         onChange={handleInputChange}
         placeholder={placeholder}
-        className="border-[1px] border-gray p-3 rounded-lg bg-gray-100 w-full"
+        className="dark:bg-[#363647] p-3 rounded-lg bg-gray-100 w-full"
       />
       <div className="absolute right-5 top-1/2 transform -translate-y-1/2">
         <button
           type="button"
           onClick={handleToggleClick}
-          disabled={!inputValue}
-        >
+          disabled={!inputValue}>
           {eyeIcon}
         </button>
       </div>
