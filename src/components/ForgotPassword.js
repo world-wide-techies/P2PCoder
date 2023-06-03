@@ -6,15 +6,11 @@ import { resetPassword } from "@/composables/sendPasswordResetFunction";
 
 const ForgotPassword = () => {
   const [emailAddress, setEmailAddress] = useState("");
-  const emailRef = useRef(null);
-
+  const [error, setError] = useState(false);
   function resetPasswordClick(e) {
     e.preventDefault();
-    setEmailAddress(emailRef.current.value);
-    {
-      emailValidator(emailAddress)
-        ? resetPassword(emailAddress)
-        : "Please enter a valid email address";
+    if (!error) {
+      resetPassword(emailAddress);
     }
   }
 
@@ -32,7 +28,10 @@ const ForgotPassword = () => {
         <p className="text-base leading-5 text-blue-950 font-normal">
           Enter your email address to reset your password
         </p>
-        <form className="w-full flex flex-col gap-y-4">
+        <form
+          className="w-full flex flex-col gap-y-4"
+          onSubmit={resetPasswordClick}
+        >
           <label
             className="text-base leading-5 text-blue-950 font-normal"
             htmlFor="email"
@@ -44,13 +43,27 @@ const ForgotPassword = () => {
             name="email_address"
             type="email"
             placeholder="Enter Email Address"
-            className="max-w-3xl h-10 bg-neutral-100 rounded border-2 border-white-1 px-1"
+            className={`max-w-3xl h-10 bg-neutral-100 rounded border-2 border-white-1 px-1 outline-none ${
+              error && "border border-red-500 "
+            }`}
             aria-label="email"
-            ref={emailRef}
+            onChange={(e) => {
+              if (emailValidator(e.target.value)) {
+                setError(false);
+                setEmailAddress(e.target.value);
+              } else {
+                setError(true);
+              }
+            }}
           />
+          {error && (
+            <span className="text-red-700 text-xs">
+              Enter a valid email address
+            </span>
+          )}
           <button
             className="mt-4 w-full h-10 max-w-3xl text-white bg-indigo-500 rounded-lg text-sm text-center grow"
-            onClick={resetPasswordClick}
+            type="submit"
           >
             Send recovery mail
           </button>
