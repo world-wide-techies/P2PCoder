@@ -1,32 +1,24 @@
-"use client";
-import { useEffect, useState } from "react";
+'use client';
+import { useEffect, useState } from 'react';
 
-const PasswordToggle = () => {
+const PasswordToggle = ({
+  inputId,
+  inputValue,
+  handleInputChange,
+  placeholder,
+}) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [inputValue, setInputValue] = useState("");
   const [isDefaultPassword, setIsDefaultPassword] = useState(true);
   const [eyeIcon, setEyeIcon] = useState(null);
 
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setInputValue(value);
-    if (value === "") {
-      setIsDefaultPassword(true);
-      if (isPasswordVisible) {
-        setIsPasswordVisible(false);
-      }
-    } else {
-      setIsDefaultPassword(false);
-    }
-  };
-
   const handleToggleClick = () => {
-    if (inputValue !== "") {
+    if (inputValue !== '') {
       setIsPasswordVisible(!isPasswordVisible);
       setIsDefaultPassword(false);
-    } else {
+    } else if (isPasswordVisible) {
       setIsPasswordVisible(false);
       setIsDefaultPassword(true);
+
     }
   };
 
@@ -40,8 +32,7 @@ const PasswordToggle = () => {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="w-6 h-6 dark:text-[#5F5BD7]"
-          >
+            className="w-6 h-6 dark:text-[#5F5BD7]">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -57,8 +48,7 @@ const PasswordToggle = () => {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="w-6 h-6 dark:text-[#DCDCE5] text-[#5F5BD7]"
-          >
+            className="w-6 h-6 dark:text-[#DCDCE5] text-[#5F5BD7]">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -76,28 +66,27 @@ const PasswordToggle = () => {
   }, [isPasswordVisible]);
 
   const passwordInputType = isDefaultPassword
-    ? "password"
+    ? 'password'
     : isPasswordVisible
-    ? "text"
-    : "password";
+    ? 'text'
+    : 'password';
 
   return (
     <div className="relative w-full">
       <input
         type={passwordInputType}
-        name="confirmPassword"
-        id="confirmPassword"
+        name={inputId}
+        id={inputId}
         value={inputValue}
         onChange={handleInputChange}
-        placeholder="Enter Password"
-        className="border-[1px] border-gray p-3 rounded-lg bg-gray-100 w-full"
+        placeholder={placeholder}
+        className="dark:bg-[#363647] p-3 rounded-lg bg-gray-100 w-full"
       />
       <div className="absolute right-5 top-1/2 transform -translate-y-1/2">
         <button
           type="button"
           onClick={handleToggleClick}
-          disabled={!inputValue}
-        >
+          disabled={!inputValue}>
           {eyeIcon}
         </button>
       </div>
