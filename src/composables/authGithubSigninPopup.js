@@ -10,7 +10,7 @@ async function signInWithGithub() {
       throw new Error("Couldn't complete signup");
     }
     const user = res.user;
-    return res.user
+    return user
   } catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;

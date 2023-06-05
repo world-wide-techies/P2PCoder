@@ -1,4 +1,5 @@
-"use client";
+'use client';
+
 
 import Welcome from "@/components/welcome_comp";
 import EditorNavBar from "@/components/navbar_components/editorNavbar_comp";
@@ -8,19 +9,20 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import SignUpComponent from "@/components/signup_comp";
 
-const barItems = [{ id: 1, title: "Welcome", active: true }];
+const barItems = [{ id: 1, title: 'Welcome', active: true }];
 
 function Home() {
   const [items, setItems] = useState([]);
+
   useEffect(() => {
     if (items.length == 0) {
       setItems(barItems);
     } else {
-      window.localStorage.setItem("barItems", JSON.stringify(items));
+      window.localStorage.setItem('barItems', JSON.stringify(items));
     }
   }, [items]);
   useEffect(() => {
-    const storedItems = window.localStorage.getItem("barItems");
+    const storedItems = window.localStorage.getItem('barItems');
     if (storedItems) {
       setItems(JSON.parse(storedItems));
     } else {
@@ -38,7 +40,7 @@ function Home() {
         ...oldItems,
         {
           id: items.length + 1,
-          title: "untitled",
+          title: 'untitled',
           active: true,
         },
       ];
@@ -83,7 +85,7 @@ function Home() {
           <EditorNavBar />
         </div>
         <div className="relative flex w-full">
-          <div className="">
+          <div>
             <SideNavBarControl
               handleTopNavClicks={(i) => {
                 handleButtonClicks(i);
@@ -104,11 +106,9 @@ function Home() {
             />
           </div>
         </div>
-        <div className="ml-24 w-[90%] p-11 h-screen flex flex-col justify-start">
-          {items[0]?.active && items[0].title === "Welcome" ? (
-            <div>
-              <Welcome />
-            </div>
+        <div className="bg-white dark:bg-[#1E1E2A]  ml-24 w-[92%] p-11 h-screen flex flex-col justify-start  ">
+          {items[0]?.active && items[0].title === 'Welcome' ? (
+            <Welcome />
           ) : items.filter((e) => e.active)[0] ? (
             <div className="text-black"></div>
           ) : (
