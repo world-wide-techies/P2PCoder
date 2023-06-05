@@ -136,7 +136,7 @@ function SignUpComponent() {
               placeholder="Enter First Name"
               className={`border ${
                 errors.firstname ? "border-[#ec6d6a]" : "border-none"
-              } p-3 rounded-lg bg-[#2F2F3A] w-full`}
+              } p-3 rounded-lg dark:bg-[#363647] w-full`}
             />
             {errors.firstname && (
               <span className="text-[#ec6d6a] text-sm mt-2 font-light">
@@ -157,7 +157,7 @@ function SignUpComponent() {
               placeholder="Enter Last Name"
               className={`border ${
                 errors.lastname ? "border-[#ec6d6a]" : "border-none"
-              } p-3 rounded-lg bg-[#2F2F3A] w-full`}
+              } p-3 rounded-lg dark:bg-[#363647] w-full`}
             />
             {errors.lastname && (
               <span className="text-[#ec6d6a] text-sm mt-2 font-light">
@@ -180,7 +180,7 @@ function SignUpComponent() {
               placeholder="Enter Email Address"
               className={`border ${
                 errors.email ? "border-[#ec6d6a]" : "border-none"
-              } p-3 rounded-lg bg-[#2F2F3A] w-full`}
+              } p-3 rounded-lg dark:bg-[#363647] w-full`}
             />
             {errors.email && (
               <span className="text-[#ec6d6a] text-sm mt-2 font-light">
@@ -213,7 +213,7 @@ function SignUpComponent() {
                     !errors.username
                   ? "border-green-500"
                   : "border-none"
-              } p-3 rounded-lg bg-[#2F2F3A] w-full`}
+              } p-3 rounded-lg dark:bg-[#363647] w-full`}
             />
             {errors.username && (
               <span className="text-[#ec6d6a] text-sm mt-2 font-light">
@@ -249,7 +249,7 @@ function SignUpComponent() {
               placeholder="Enter Password"
               customClass={`border ${
                 errors.password ? "border-[#ec6d6a]" : "border-none"
-              } p-3 rounded-lg bg-[#2F2F3A] w-full`}
+              } p-3 rounded-lg dark:bg-[#363647] w-full`}
             />
             {errors.password && (
               <span className="text-[#ec6d6a] text-sm mt-2 font-light">
@@ -268,7 +268,7 @@ function SignUpComponent() {
               placeholder="Re-enter Password"
               customClass={`border ${
                 errors.confirm_password ? "border-[#ec6d6a]" : "border-none"
-              } p-3 rounded-lg bg-[#2F2F3A] w-full`}
+              } p-3 rounded-lg dark:bg-[#363647] w-full`}
             />
             {errors.confirm_password && (
               <span className="text-[#ec6d6a] text-sm mt-2 font-light">
