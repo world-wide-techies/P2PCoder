@@ -24,7 +24,7 @@ export const LanguageModal = ({ onClose }) => {
         <div className="flex gap-3 text-[#5F5BD7] dark:text-white">
           <div
             onClick={() => setActiveLanguage('html')}
-            className={` w-32 h-32 flex justify-center items-center flex-col  rounded-md ${
+            className={` w-32 h-32 flex justify-center items-center flex-col  rounded-md hover:cursor-pointer ${
               activeLanguage === 'html'
                 ? 'bg-blue-500 text-white'
                 : '  bg-gray-200 dark:bg-[#3D3D48]'
@@ -34,7 +34,7 @@ export const LanguageModal = ({ onClose }) => {
           </div>
           <div
             onClick={() => setActiveLanguage('css')}
-            className={` w-32 h-32 flex justify-center items-center flex-col rounded-md ${
+            className={` w-32 h-32 flex justify-center items-center flex-col rounded-md hover:cursor-pointer ${
               activeLanguage === 'css'
                 ? 'bg-blue-500 text-white '
                 : ' bg-gray-200 dark:bg-[#3D3D48]'
@@ -44,7 +44,7 @@ export const LanguageModal = ({ onClose }) => {
           </div>
           <div
             onClick={() => setActiveLanguage('js')}
-            className={` w-32 h-32 flex justify-center items-center flex-col rounded-md ${
+            className={` w-32 h-32 flex justify-center items-center flex-col rounded-md hover:cursor-pointer ${
               activeLanguage === 'js'
                 ? 'bg-blue-500 text-white'
                 : ' bg-gray-200 dark:bg-[#3D3D48]'
