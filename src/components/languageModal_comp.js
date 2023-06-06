@@ -23,7 +23,7 @@ export const LanguageModal = () => {
             onClick={() => setActiveLanguage('html')}
             className={` w-32 h-32 flex justify-center items-center flex-col  rounded-md ${
               activeLanguage === 'html'
-                ? 'bg-blue-500'
+                ? 'bg-blue-500 text-white'
                 : '  bg-gray-200 dark:bg-[#3D3D48]'
             }`}>
             <Image src={HTML} alt="language-icon" className="mb-4" />
@@ -33,7 +33,7 @@ export const LanguageModal = () => {
             onClick={() => setActiveLanguage('css')}
             className={` w-32 h-32 flex justify-center items-center flex-col rounded-md ${
               activeLanguage === 'css'
-                ? 'bg-blue-500'
+                ? 'bg-blue-500 text-white '
                 : ' bg-gray-200 dark:bg-[#3D3D48]'
             }`}>
             <Image src={CSS} alt="language-icon" className="mb-4" />
@@ -43,7 +43,7 @@ export const LanguageModal = () => {
             onClick={() => setActiveLanguage('js')}
             className={` w-32 h-32 flex justify-center items-center flex-col rounded-md ${
               activeLanguage === 'js'
-                ? 'bg-blue-500'
+                ? 'bg-blue-500 text-white'
                 : ' bg-gray-200 dark:bg-[#3D3D48]'
             }`}>
             <Image src={JS} alt="language-icon" className="mb-4" />

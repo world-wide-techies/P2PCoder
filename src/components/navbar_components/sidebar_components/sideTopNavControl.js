@@ -1,25 +1,23 @@
-"use client";
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+'use client';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const btnNav = [
-  "/assets/sideTopNavBar/code.png",
-  "/assets/sideTopNavBar/add.png",
-  "/assets/sideTopNavBar/user.png",
+  '/assets/sideTopNavBar/add.png',
+  '/assets/sideTopNavBar/user.png',
 ];
 
 function SideTopNavControl({ handleTopNavigationClicks }) {
   return (
     <div className="flex flex-col justify-start items-center space-y-6">
       {btnNav.map((e, i) => {
-        if (e.includes("add")) {
+        if (e.includes('add')) {
           return (
             <Link
-              href={"/?view=chooseLanguage"}
+              href={'/?view=chooseLanguage'}
               key={i}
-              className="hover:bg-gray-200 dark:hover:bg-gray-700 w-16 h-16 flex items-center justify-center hover:rounded-lg"
-            >
+              className="hover:bg-gray-200 dark:hover:bg-gray-700 w-16 h-16 flex items-center justify-center hover:rounded-lg">
               <Image src={e} width={35} height={35} alt={`nav_btn_icon${i}`} />
             </Link>
           );
@@ -30,8 +28,7 @@ function SideTopNavControl({ handleTopNavigationClicks }) {
               onClick={() => {
                 handleTopNavigationClicks(i);
               }}
-              className="hover:bg-gray-200 dark:hover:bg-gray-700 w-16 h-16 flex items-center justify-center hover:rounded-lg"
-            >
+              className="hover:bg-gray-200 dark:hover:bg-gray-700 w-16 h-16 flex items-center justify-center hover:rounded-lg">
               <Image src={e} width={35} height={35} alt={`nav_btn_icon${i}`} />
             </button>
           );
