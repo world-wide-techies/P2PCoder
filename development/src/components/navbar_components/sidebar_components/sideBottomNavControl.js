@@ -8,7 +8,7 @@ const btnNav = [
 function SideBottomNavControl() {
   const router = useRouter();
   return (
-    <div className="flex flex-col justify-start items-center space-y-6 mt-12">
+    <div className="flex flex-col justify-start items-center space-y-2">
       {btnNav.map((e, i) => {
         return (
           <button

@@ -10,7 +10,7 @@ const btnNav = [
 
 function SideTopNavControl({ handleTopNavigationClicks }) {
   return (
-    <div className="flex flex-col justify-start items-center space-y-6">
+    <div className="flex flex-col justify-start items-center space-y-2">
       {btnNav.map((e, i) => {
         return (
           <button

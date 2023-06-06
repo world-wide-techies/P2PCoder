@@ -1,10 +1,10 @@
-'use client';
-import { useState, useContext } from 'react';
-import AuthNavControls from './authNavControls_comp';
-import Image from 'next/image';
-import moon from '../../../public/assets/onboardingIcons/moon.png';
-import sun from '../../../public/assets/onboardingIcons/sun.png';
-import { useTheme } from 'next-themes';
+"use client";
+import { useState, useContext } from "react";
+import AuthNavControls from "./authNavControls_comp";
+import Image from "next/image";
+import moon from "../../../public/assets/onboardingIcons/moon.png";
+import sun from "../../../public/assets/onboardingIcons/sun.png";
+import { useTheme } from "next-themes";
 
 function EditorNavBar() {
   const [auth, setAuth] = useState(false);
@@ -13,7 +13,7 @@ function EditorNavBar() {
   return (
     <main className="font-nohemi">
       <div className="w-full  top-0 p-3 bg-[#DCDCE5] dark:bg-[#2F2F3A]">
-        <div className="flex w-[95%] mx-auto justify-between items-center">
+        <div className="flex w-[98%] mx-auto justify-between items-center">
           <h1 className="dark:text-white text-[#5F5BD7] uppercase font-bold text-4xl">
             Carai
           </h1>
@@ -24,8 +24,9 @@ function EditorNavBar() {
           ) : (
             <div className="flex justify-end">
               <button
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
-                {theme === 'dark' ? (
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              >
+                {theme === "dark" ? (
                   <Image alt="moon" src={moon} width={18} height={18} />
                 ) : (
                   <Image alt="sun" src={sun} width={20} height={20} />

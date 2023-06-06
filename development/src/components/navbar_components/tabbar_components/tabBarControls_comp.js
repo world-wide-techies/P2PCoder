@@ -9,7 +9,7 @@ function TabBarControls({ items, handleActiveTab, handleCloseTab }) {
 
   return (
     <main className="font-nohemi">
-      <div className="flex w-full bg-[#DCDCE5] dark:bg-[#2F2F3A] h-full items-center pl-4">
+      <div className="flex w-full bg-[#DCDCE5] dark:bg-[#2F2F3A] h-full items-center">
         <div className="flex space-x-1">
           {items.map((e, l) => {
             return (

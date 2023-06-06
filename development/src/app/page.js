@@ -81,7 +81,7 @@ function Home() {
   return (
     <>
       <main className="h-full bg-[#DCDCE5] dark:bg-[#2F2F3A]">
-        <div className="relative h-full border-gray-200 border-b-[1px] ">
+        <div className="relative h-full border-gray-300 border-b-[1px] dark:border-gray-700 ">
           <EditorNavBar />
         </div>
         <div className="relative flex w-full">
@@ -106,7 +106,7 @@ function Home() {
             />
           </div>
         </div>
-        <div className="bg-white dark:bg-[#1E1E2A]  ml-24 w-[92%] p-11 h-screen flex flex-col justify-start  ">
+        <div className="bg-white dark:bg-[#1E1E2A]  ml-24 w-[92.9%] p-11 h-screen flex flex-col justify-start  ">
           {items[0]?.active && items[0].title === 'Welcome' ? (
             <Welcome />
           ) : items.filter((e) => e.active)[0] ? (
