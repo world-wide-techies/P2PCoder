@@ -91,7 +91,11 @@ function Home() {
                 onClose={() => {
                   router.push('/');
                 }}>
-                <LanguageModal />
+                <LanguageModal
+                  onClose={() => {
+                    router.push('/');
+                  }}
+                />
               </Modal>
             ) : (
               <div></div>

@@ -5,14 +5,17 @@ import CSS from '../../public/assets/languageIcons/CSS3.png';
 import JS from '../../public/assets/languageIcons/Javascript.png';
 import { useTabContext } from '@/composables/tabContext';
 
-export const LanguageModal = () => {
+export const LanguageModal = ({ onClose }) => {
   const { handleLanguage } = useTabContext();
   const [activeLanguage, setActiveLanguage] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleLanguage(activeLanguage);
-    setActiveLanguage('');
+    if (activeLanguage) {
+      handleLanguage(activeLanguage);
+      setActiveLanguage('');
+      onClose();
+    }
   };
   return (
     <div className="w-[456px] h-[328px] bg-white  dark:bg-[#2F2F3A] rounded-2xl border-[#504F5F] border-solid font-bold ">
