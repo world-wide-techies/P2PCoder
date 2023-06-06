@@ -1,25 +1,35 @@
-"use client";
+'use client';
 
+
+import Welcome from "@/components/welcome_comp";
 import EditorNavBar from "@/components/navbar_components/editorNavbar_comp";
 import SideNavBarControl from "@/components/navbar_components/sidebar_components/sideBarNavControl";
 import TabBarControls from "@/components/navbar_components/tabbar_components/tabBarControls_comp";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import SignUpComponent from "@/components/signup_comp";
 
-const barItems = [{ id: 1, title: "Welcome", active: true }];
+const barItems = [{ id: 1, title: 'Welcome', active: true }];
 
 function Home() {
 
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const storedItems = window.localStorage.getItem("barItems");
+    if (items.length == 0) {
+      setItems(barItems);
+    } else {
+      window.localStorage.setItem('barItems', JSON.stringify(items));
+    }
+  }, [items]);
+  useEffect(() => {
+    const storedItems = window.localStorage.getItem('barItems');
     if (storedItems) {
       setItems(JSON.parse(storedItems));
     } else {
       setItems(barItems);
     }
   }, []);
-
   useEffect(() => {
     if (items.length == 0) {
       setItems(barItems);
@@ -30,18 +40,19 @@ function Home() {
 
   const handleButtonClicks = (i) => {
     if (i == 0 && items.length < 5) {
-      const newItems = items.map((item) => ({
+      const oldItems = items.map((item) => ({
         ...item,
         active: false,
       }));
-      setItems([
-        ...newItems,
+      const newItems = [
+        ...oldItems,
         {
           id: items.length + 1,
-          title: "untitled",
+          title: 'untitled',
           active: true,
         },
-      ]);
+      ];
+      setItems(newItems);
     }
   };
 
@@ -122,7 +133,7 @@ function Home() {
           <EditorNavBar />
         </div>
         <div className="relative flex w-full">
-          <div className="">
+          <div>
             <SideNavBarControl
               handleTopNavClicks={(i) => {
                 handleButtonClicks(i);
@@ -146,7 +157,15 @@ function Home() {
               }}
             />
           </div>
-          <div className="bg-[#DCDCE5] dark:bg-[#2F2F3A]"></div>
+        </div>
+        <div className="bg-white dark:bg-[#1E1E2A]  ml-24 w-[92%] p-11 h-screen flex flex-col justify-start  ">
+          {items[0]?.active && items[0].title === 'Welcome' ? (
+            <Welcome />
+          ) : items.filter((e) => e.active)[0] ? (
+            <div className="text-black"></div>
+          ) : (
+            <Welcome />
+          )}
         </div>
       </main>
     </>
