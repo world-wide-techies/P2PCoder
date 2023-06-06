@@ -1,11 +1,4 @@
-function TestPage() {
-    return (
-        <>
-            <div className="flex items-center justify-center h-screen">
-                <h1 className="text-6xl font-bold">Test Page {"==>"} Visit /tests</h1>
-            </div>
-        </>
-    );
-}
+import PeerSession from '@/components/PeerSession_comp.js';
 
-export default TestPage;
+
+export default PeerSession;
