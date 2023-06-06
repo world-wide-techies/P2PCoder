@@ -1,8 +1,8 @@
 import link from 'next/link'
 import Image from 'next/image'
-import htmlSymbol from '../../public/assets/codeEditorIcons/symbol.png'
-import cssSymbol from '../../public/assets/codeEditorIcons/CSS3.png'
-import jsSymbol from '../../public/assets/codeEditorIcons/Group.png'
+import HTML from '../../public/assets/codeEditorIcons/symbol.png'
+import CSS from '../../public/assets/codeEditorIcons/CSS3.png'
+import JS from '../../public/assets/codeEditorIcons/Group.png'
 import closeIconWhite from '../../public/assets/onboardingIcons/close_light.png';
 import Link from 'next/link';
 
@@ -28,16 +28,17 @@ function PeerSession(){
                         Select Language
                     </div>
                     <div className="flex justify-between ">
-                        <div className= "flex flex-col justify-center items-center w-36 h-32 shadow-md shadow-black rounded-lg bg-[#3D3D48]">
-                        <Image src={htmlSymbol} className="w-8 h-9"/>
+                        <div  onClick={() => setActiveLanguage('html')} 
+                        className= "flex flex-col justify-center items-center w-36 h-32 shadow-md shadow-black rounded-lg bg-[#3D3D48]">
+                        <Image src={HTML} className="w-8 h-9"/>
                         <div className="text-white font-nohemi font-bold text-xl">HTML</div>
                         </div>
                         <div className= "flex flex-col justify-center items-center w-36 h-32 shadow-md shadow-black rounded-lg bg-[#3D3D48]">
-                        <Image src={cssSymbol} className="w-8 h-9"/>
+                        <Image src={CSS} className="w-8 h-9"/>
                         <div className="text-white font-nohemi font-bold text-xl">CSS</div>
                         </div>
                         <div className= "flex flex-col justify-center items-center w-36 h-32 shadow-md shadow-black rounded-lg bg-[#3D3D48]">
-                        <Image src={jsSymbol} className="w-8 h-9"/>
+                        <Image src={JS} className="w-8 h-9"/>
                         <div className="text-white font-nohemi font-bold text-xl">JAVASCRIPT</div>
                         </div>
                     </div>
