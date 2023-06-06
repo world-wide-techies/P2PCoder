@@ -1,10 +1,10 @@
-'use client';
-import { useState, useContext } from 'react';
-import AuthNavControls from './authNavControls_comp';
-import Image from 'next/image';
-import moon from '../../../public/assets/onboardingIcons/moon.png';
-import sun from '../../../public/assets/onboardingIcons/sun.png';
-import { useTheme } from 'next-themes';
+"use client";
+import { useState, useContext } from "react";
+import AuthNavControls from "./authNavControls_comp";
+import Image from "next/image";
+import moon from "../../../public/assets/onboardingIcons/moon.png";
+import sun from "../../../public/assets/onboardingIcons/sun.png";
+import { useTheme } from "next-themes";
 
 function EditorNavBar() {
   const [auth, setAuth] = useState(false);
@@ -24,12 +24,19 @@ function EditorNavBar() {
           ) : (
             <div className="flex justify-end">
               <button
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
-                {theme === 'dark' ? (
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              >
+                {theme === "dark" ? (
                   <Image alt="moon" src={moon} width={18} height={18} />
                 ) : (
                   <Image alt="sun" src={sun} width={20} height={20} />
                 )}
+              </button>
+              <button className="ml-6 mr-3 py-3 px-6 rounded-lg bg-[#5F5BD7] text-lg font-normal flex items-center">
+                Sign Up
+              </button>
+              <button className=" py-3 px-6 rounded-lg  text-lg font-normal flex items-center text-[#121212] bg-[#CDCDDA]">
+                Log In
               </button>
             </div>
           )}
