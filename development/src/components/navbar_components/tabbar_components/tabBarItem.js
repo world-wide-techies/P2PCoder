@@ -1,8 +1,9 @@
 'use client';
-function TabBarItems({ title, onClose, active, onClick }) {
+function TabBarItems({ title, onClose, active, onClick, onDoubleClick }) {
   return (
     <div
       onClick={onClick}
+      onDoubleClick={onDoubleClick}
       className={
         active
           ? 'flex justify-between items-center bg-white border-[#5F5BD7] dark:border-gray-400 dark:bg-[#1E1E2A] border-t-2 space-x-6 h-14 p-3 cursor-pointer'

@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import TabBarItems from "./tabBarItem";
 
-function TabBarControls({ items, handleActiveTab, handleCloseTab }) {
+function TabBarControls({ items, handleActiveTab, handleCloseTab, handleRenameTab }) {
   if (!Array.isArray(items)) {
     return null;
   }
@@ -22,6 +22,9 @@ function TabBarControls({ items, handleActiveTab, handleCloseTab }) {
                 }}
                 onClick={(event) => {
                   handleActiveTab(l, event);
+                }}
+                onDoubleClick={(event) => {
+                  handleRenameTab(l, event);
                 }}
               />
             );
