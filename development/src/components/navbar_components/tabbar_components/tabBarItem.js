@@ -1,5 +1,10 @@
 'use client';
-function TabBarItems({ title, onClose, active, onClick }) {
+import Image from 'next/image';
+import css from '../../../../public/assets/languageIcons/CSS3.png';
+import html from '../../../../public/assets/languageIcons/HTML.png';
+import js from '../../../../public/assets/languageIcons/Javascript.png';
+
+function TabBarItems({ title, ext, onClose, active, onClick, onDoubleClick }) {
   return (
     <div
       onClick={onClick}
