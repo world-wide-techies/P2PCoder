@@ -5,7 +5,7 @@ import closeIcon from "../../public/assets/githubGoogleError/closecircle.svg";
 import Image from "next/image";
 import errorIcons from "../../public/assets/githubGoogleError/error.svg";
 
-function GithubGoogleComponent() {
+function GithubGoogleErrorModalComponent() {
   return (
     <>
       <div className="w-full bg-[#FCE9E9] font-nohemi flex items-center justify-center border border-[#E42721] h-14 rounded-md">
@@ -20,4 +20,4 @@ function GithubGoogleComponent() {
   );
 }
 
-export default GithubGoogleComponent;
+export default GithubGoogleErrorModalComponent;
