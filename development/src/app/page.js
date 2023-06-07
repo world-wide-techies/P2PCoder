@@ -13,7 +13,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import runIcon from '../../public/assets/languageIcons/runIcon.svg';
 import Image from 'next/image';
-import PeerSession from '@/components/PeerOverlay_comp';
 
 function Home() {
   const { items, setItems } = useTabContext();
