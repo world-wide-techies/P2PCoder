@@ -62,5 +62,3 @@ But can be approved by anyone.
 - [Oyinbrakemi](https://github.com/Oyinbrakemigrace) - Frontend Developer
 - [Chidera](https://github.com/zer0szn) - web developer
 - [Deborah](https://github.com/DeborahIhesiaba) - Software Engineer
-- [Ibimina](https://github.com/Ibimina) - Frontend Engineer
-- [James](https://github.com/JamesVictor-O)-Frontend developer
