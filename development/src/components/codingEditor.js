@@ -1,10 +1,12 @@
-"use client";
-import { useState } from "react";
-import MonacoEditor from "react-monaco-editor/lib/editor";
+'use client';
+import { useState } from 'react';
+import MonacoEditor from 'react-monaco-editor/lib/editor';
+import { useTheme } from 'next-themes';
 
-function CodingEditor({}) {
+function CodingEditor({ language }) {
+  const { theme, setTheme } = useTheme();
   const [code, setCode] = useState(
-    "// Welcome to P2P Coder, a Community Prepared Platform..."
+    '// Welcome to P2P Coder, a Community Prepared Platform...'
   );
 
   const editorDidMount = (editor, monaco) => {
@@ -19,10 +21,18 @@ function CodingEditor({}) {
   return (
     <div>
       <MonacoEditor
-        width="600"
-        height="800"
-        language="javascript"
-        theme="vs-dark"
+        width="91vw"
+        height="98vh"
+        language={
+          language === '.js'
+            ? 'javascript'
+            : language === '.css'
+            ? 'css'
+            : language === '.html'
+            ? 'html'
+            : 'javascript'
+        }
+        theme={theme == 'dark' ? 'vs-dark' : 'vs-light'}
         value={code}
         options={options}
         onChange={onChange}

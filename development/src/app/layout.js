@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import "./globals.css";
-import { nohemi } from "@/app/localFont";
-import { ThemeProvider } from "next-themes";
-import { TabProvider } from "@/composables/tabContext";
+import './globals.css';
+import { nohemi } from '@/app/localFont';
+import { ThemeProvider } from 'next-themes';
+import { TabProvider } from '@/composables/tabContext';
 
 export default function RootLayout({ children }) {
   return (
