@@ -78,6 +78,46 @@ function Home() {
     }
   };
 
+  const handleTabRename = (tab, event) => {
+    const index = items.findIndex((i, k) => k === tab);
+    const currentTab = event.target;
+    const initialName = currentTab.textContent;
+
+    const form = document.createElement('form');
+    currentTab.replaceChildren(form);
+    const inputField = document.createElement('input');
+    inputField.value = initialName;
+    form.appendChild(inputField);
+    const currentTabChild = currentTab.firstChild;
+    currentTabChild[0].focus();
+    currentTabChild[0].select();
+
+    currentTabChild.addEventListener('submit', tabRenameSubmitHandler, { once: true })
+    currentTabChild.addEventListener('focusout', tabRenameFocusHandler, { once: true })
+
+    function tabRenameSubmitHandler(e){
+      currentTabChild.removeEventListener('focusout', tabRenameFocusHandler);
+      e.preventDefault();
+      const newName = e.target[0].value;
+      setTabName(newName);
+    }
+
+    function tabRenameFocusHandler(e){
+      currentTabChild.removeEventListener('submit', tabRenameSubmitHandler);
+      const currentName = e.target.value;
+      setTabName(currentName);
+    }
+
+    function setTabName(name){
+      const newItems = items.map((item, idx) => ({
+        ...item,
+        title: idx === index ? name : item.title,
+      }));
+      setItems(newItems);
+      currentTab.replaceChildren(name);
+    }
+  }
+
   return (
     <>
       <main className="h-full bg-[#DCDCE5] dark:bg-[#2F2F3A]">
@@ -102,6 +142,10 @@ function Home() {
               handleCloseTab={(i, event) => {
                 event.stopPropagation();
                 handleTabClose(i);
+              }}
+              handleRenameTab={(i, event) => {
+                event.stopPropagation();
+                handleTabRename(i, event);
               }}
             />
           </div>
