@@ -13,6 +13,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import runIcon from '../../public/assets/languageIcons/runIcon.svg';
 import Image from 'next/image';
+import PeerSession from '@/components/PeerOverlay_comp';
 
 function Home() {
   const { items, setItems } = useTabContext();
@@ -105,7 +106,8 @@ function Home() {
                 <Welcome />
               </div>
             ) : items.filter((e) => e.active)[0] ? (
-              <CodingEditor language={items.filter((e) => e.active)[0].ext} />
+              //<CodingEditor language={items.filter((e) => e.active)[0].ext} />
+              <PeerSession />
             ) : (
               <div className="p-11">
                 <Welcome />
