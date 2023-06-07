@@ -106,8 +106,7 @@ function Home() {
                 <Welcome />
               </div>
             ) : items.filter((e) => e.active)[0] ? (
-              //<CodingEditor language={items.filter((e) => e.active)[0].ext} />
-              <PeerSession />
+              <CodingEditor language={items.filter((e) => e.active)[0].ext} />
             ) : (
               <div className="p-11">
                 <Welcome />
