@@ -5,10 +5,12 @@ import Image from 'next/image';
 import moon from '../../../public/assets/onboardingIcons/moon.png';
 import sun from '../../../public/assets/onboardingIcons/sun.png';
 import { useTheme } from 'next-themes';
+import { useTabContext } from '@/composables/tabContext';
 
 function EditorNavBar() {
   const [auth, setAuth] = useState(false);
   const { theme, setTheme } = useTheme();
+  const { items } = useTabContext();
 
   return (
     <main className="font-nohemi">
@@ -31,6 +33,16 @@ function EditorNavBar() {
                   <Image alt="sun" src={sun} width={20} height={20} />
                 )}
               </button>
+              {(items.length > 1 || items[0]?.title !== 'Welcome') && (
+                <>
+                  <button className="ml-6 mr-3 py-3 px-6 rounded-lg bg-[#5F5BD7] text-white text-lg font-normal flex items-center">
+                    Sign Up
+                  </button>
+                  <button className=" py-3 px-6 rounded-lg  text-lg font-normal flex items-center text-[#121212] bg-[#CDCDDA]">
+                    Log In
+                  </button>
+                </>
+              )}
             </div>
           )}
         </div>

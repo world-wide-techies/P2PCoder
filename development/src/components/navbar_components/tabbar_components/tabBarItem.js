@@ -1,18 +1,52 @@
 'use client';
-function TabBarItems({ title, onClose, active, onClick }) {
+import Image from 'next/image';
+import css from '../../../../public/assets/languageIcons/CSS3.png';
+import html from '../../../../public/assets/languageIcons/HTML.png';
+import js from '../../../../public/assets/languageIcons/Javascript.png';
+
+function TabBarItems({ title, ext, onClose, active, onClick }) {
   return (
     <div
       onClick={onClick}
       className={
         active
-          ? 'flex justify-between items-center bg-white border-[#5F5BD7] dark:border-gray-400 dark:bg-[#1E1E2A] border-t-2 space-x-6 h-14 p-3 cursor-pointer'
-          : 'flex justify-between items-center  dark:bg-black dark:text-white space-x-6 h-14 p-3 cursor-pointer'
+          ? 'flex justify-between items-center bg-white border-[#5F5BD7] dark:border-gray-400 dark:bg-[#1E1E2A] border-t-2 space-x-4 h-14 p-3 cursor-pointer'
+          : 'flex justify-between items-center  dark:bg-black dark:text-white space-x-4 h-14 p-3 cursor-pointer'
       }>
+      {ext && (
+        <Image
+          src={
+            ext === '.js'
+              ? js
+              : ext === '.css'
+              ? css
+              : ext === '.html'
+              ? html
+              : ''
+          }
+          width={20}
+          height={20}
+          priority
+          alt={ext}
+        />
+      )}
       <span
         className={
           active ? 'text-black dark:text-white' : 'text-black dark:text-white'
         }>
         {title}
+        <span
+          className={
+            ext === '.js'
+              ? 'text-yellow-500'
+              : ext === '.css'
+              ? 'text-blue-500'
+              : ext === '.html'
+              ? 'text-orange-500'
+              : 'untitled'
+          }>
+          {ext}
+        </span>
       </span>
       <button onClick={onClose} type="button">
         <svg

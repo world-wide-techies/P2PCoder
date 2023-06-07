@@ -1,10 +1,10 @@
-import { sendPasswordResetEmail } from "firebase/auth";
-import { appAuth } from "./firebaseConfig/config";
+import { sendPasswordResetEmail } from 'firebase/auth';
+import { appAuth } from './firebaseConfig/config';
 
 async function resetPassword(email) {
   sendPasswordResetEmail(appAuth, email)
     .then(() => {
-      return "Password reset email sent!";
+      return 'Password reset email sent!';
     })
     .catch((error) => {
       const errorCode = error.code;

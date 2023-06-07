@@ -1,29 +1,31 @@
-import Onboarding from './onboarding_comp';
-import Image from 'next/image';
-import welcome from '../../public/assets/dashboard/welcome_comp.svg';
-import { Modal } from './modal';
-import SignUpComponent from './signup_comp';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
-import UserLoginComp from './userLogin_comp';
+import Onboarding from "./onboarding_comp";
+import Image from "next/image";
+import welcome from "../../public/assets/dashboard/welcome_comp.svg";
+import { Modal } from "./modal";
+import SignUpComponent from "./signup_comp";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import UserLoginComp from "./userLogin_comp";
 
 const Welcome = () => {
   const router = useRouter();
-  const view = useSearchParams().get('view');
+  const view = useSearchParams().get("view");
   return (
-    <main>
-      {view == 'login' ? (
+    <div>
+      {view == "login" ? (
         <Modal
           onClose={() => {
-            router.push('/');
-          }}>
+            router.push("/");
+          }}
+        >
           <UserLoginComp />
         </Modal>
-      ) : view == 'signup' ? (
+      ) : view == "signup" ? (
         <Modal
           onClose={() => {
-            router.push('/');
-          }}>
+            router.push("/");
+          }}
+        >
           <SignUpComponent />
         </Modal>
       ) : (
@@ -43,7 +45,7 @@ const Welcome = () => {
           />
         </div>
       </div>
-    </main>
+    </div>
   );
 };
 

@@ -1,52 +1,23 @@
 'use client';
 
-
-import Welcome from "@/components/welcome_comp";
-import EditorNavBar from "@/components/navbar_components/editorNavbar_comp";
-import SideNavBarControl from "@/components/navbar_components/sidebar_components/sideBarNavControl";
-import TabBarControls from "@/components/navbar_components/tabbar_components/tabBarControls_comp";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import SignUpComponent from "@/components/signup_comp";
-
-const barItems = [{ id: 1, title: 'Welcome', active: true }];
+import Welcome from '@/components/welcome_comp';
+import EditorNavBar from '@/components/navbar_components/editorNavbar_comp';
+import SideNavBarControl from '@/components/navbar_components/sidebar_components/sideBarNavControl';
+import TabBarControls from '@/components/navbar_components/tabbar_components/tabBarControls_comp';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { Modal } from '@/components/modal';
+import { LanguageModal } from '@/components/languageModal_comp';
+import { useTabContext } from '@/composables/tabContext';
+import CodingEditor from '@/components/codingEditor';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import runIcon from '../../public/assets/languageIcons/runIcon.svg';
+import Image from 'next/image';
 
 function Home() {
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    if (items.length == 0) {
-      setItems(barItems);
-    } else {
-      window.localStorage.setItem('barItems', JSON.stringify(items));
-    }
-  }, [items]);
-  useEffect(() => {
-    const storedItems = window.localStorage.getItem('barItems');
-    if (storedItems) {
-      setItems(JSON.parse(storedItems));
-    } else {
-      setItems(barItems);
-    }
-  }, []);
-
-  const handleButtonClicks = (i) => {
-    if (i == 0 && items.length < 5) {
-      const oldItems = items.map((item) => ({
-        ...item,
-        active: false,
-      }));
-      const newItems = [
-        ...oldItems,
-        {
-          id: items.length + 1,
-          title: 'untitled',
-          active: true,
-        },
-      ];
-      setItems(newItems);
-    }
-  };
+  const { items, setItems } = useTabContext();
+  const view = useSearchParams().get('view');
+  const router = useRouter();
 
   const handleTabActive = (tab) => {
     const index = items.findIndex((i, k) => k === tab);
@@ -81,6 +52,7 @@ function Home() {
   return (
     <>
       <main className="h-full bg-[#DCDCE5] dark:bg-[#2F2F3A]">
+        <ToastContainer />
         <div className="relative h-full border-gray-200 border-b-[1px] ">
           <EditorNavBar />
         </div>
@@ -92,7 +64,7 @@ function Home() {
               }}
             />
           </div>
-          <div className="ml-[96px] w-full">
+          <div className="ml-24 w-[80%]">
             <TabBarControls
               items={items}
               handleActiveTab={(i, event) => {
@@ -105,15 +77,41 @@ function Home() {
               }}
             />
           </div>
-        </div>
-        <div className="bg-white dark:bg-[#1E1E2A]  ml-24 w-[92%] p-11 h-screen flex flex-col justify-start  ">
-          {items[0]?.active && items[0].title === 'Welcome' ? (
-            <Welcome />
-          ) : items.filter((e) => e.active)[0] ? (
-            <div className="text-black"></div>
-          ) : (
-            <Welcome />
+          {(items.length > 1 || items[0]?.title !== 'Welcome') && (
+            <button className="bg-green-700 flex  items-center my-1 px-4 rounded-md text-white space-x-3">
+              <Image src={runIcon} alt="run" />
+              <p>Run</p>
+            </button>
           )}
+        </div>
+        <div className="bg-white dark:bg-[#1E1E2A]  ml-24 w-[92%]  h-screen flex flex-col justify-start  ">
+          <>
+            {view == 'chooseLanguage' ? (
+              <Modal
+                onClose={() => {
+                  router.push('/');
+                }}>
+                <LanguageModal
+                  onClose={() => {
+                    router.push('/');
+                  }}
+                />
+              </Modal>
+            ) : (
+              <div></div>
+            )}
+            {items[0]?.active && items[0].title === 'Welcome' ? (
+              <div className="p-11">
+                <Welcome />
+              </div>
+            ) : items.filter((e) => e.active)[0] ? (
+              <CodingEditor language={items.filter((e) => e.active)[0].ext} />
+            ) : (
+              <div className="p-11">
+                <Welcome />
+              </div>
+            )}
+          </>
         </div>
       </main>
     </>

@@ -1,10 +1,10 @@
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { appAuth, appFirestore } from "./firebaseConfig/config";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { appAuth, appFirestore } from './firebaseConfig/config';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 async function isUsernameAvailable(username) {
   try {
-    const useRef = doc(appFirestore, "users", username);
+    const useRef = doc(appFirestore, 'users', username);
     const userSnapshot = await getDoc(useRef);
     return !userSnapshot.exists();
   } catch (error) {
@@ -24,7 +24,7 @@ async function authSignUp(name, email, password, username) {
     const user = userCredential.user;
     if (user) {
       await updateProfile(user, { displayName: name });
-      await setDoc(doc(appFirestore, "users", username), { userId: user.uid });
+      await setDoc(doc(appFirestore, 'users', username), { userId: user.uid });
     }
     return user;
   } catch (error) {
