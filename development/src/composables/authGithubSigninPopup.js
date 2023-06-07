@@ -1,5 +1,5 @@
-import { signInWithPopup, GithubAuthProvider } from "firebase/auth";
-import { appAuth } from "./firebaseConfig/config";
+import { signInWithPopup, GithubAuthProvider } from 'firebase/auth';
+import { appAuth } from './firebaseConfig/config';
 
 const provider = new GithubAuthProvider();
 
@@ -10,7 +10,7 @@ async function signInWithGithub() {
       throw new Error("Couldn't complete signup");
     }
     const user = res.user;
-    return user
+    return user;
   } catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;
@@ -18,7 +18,5 @@ async function signInWithGithub() {
     throw new Error(errorMessage);
   }
 }
-
-
 
 export { signInWithGithub };

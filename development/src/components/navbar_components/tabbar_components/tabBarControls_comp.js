@@ -1,6 +1,6 @@
-"use client";
-import { useEffect } from "react";
-import TabBarItems from "./tabBarItem";
+'use client';
+import { useEffect } from 'react';
+import TabBarItems from './tabBarItem';
 
 function TabBarControls({ items, handleActiveTab, handleCloseTab, handleRenameTab }) {
   if (!Array.isArray(items)) {
@@ -15,6 +15,7 @@ function TabBarControls({ items, handleActiveTab, handleCloseTab, handleRenameTa
             return (
               <TabBarItems
                 title={e.title}
+                ext={e.ext}
                 active={e.active}
                 key={l}
                 onClose={(event) => {
