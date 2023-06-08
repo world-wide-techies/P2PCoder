@@ -12,7 +12,7 @@ function TabBarItems({ title, ext, onClose, active, onClick, onDoubleClick }) {
       className={
         active
           ? 'flex justify-between items-center bg-white border-[#5F5BD7] dark:border-gray-400 dark:bg-[#1E1E2A] border-t-2 space-x-4 h-14 p-3 cursor-pointer'
-          : 'flex justify-between items-center  dark:bg-black dark:text-white space-x-4 h-14 p-3 cursor-pointer'
+          : 'flex justify-between items-center  dark:bg-[#2F2F3A] dark:text-white space-x-4 h-14 p-3 cursor-pointer'
       }>
       {ext && (
         <Image
@@ -33,8 +33,9 @@ function TabBarItems({ title, ext, onClose, active, onClick, onDoubleClick }) {
       )}
       <span
         className={
-          active ? 'text-black dark:text-white' : 'text-black dark:text-white'
-        }>
+          active ? "text-black dark:text-white" : "text-black dark:text-white"
+        }
+      >
         {title}
         <span
           className={
@@ -58,9 +59,10 @@ function TabBarItems({ title, ext, onClose, active, onClick, onDoubleClick }) {
           stroke="currentColor"
           className={
             active
-              ? 'w-5 h-5 text-[#5F5BD7] dark:text-white '
-              : 'w-5 h-5 text-[#5F5BD7] dark:text-white '
-          }>
+              ? "w-5 h-5 text-[#5F5BD7] dark:text-white "
+              : "w-5 h-5 text-[#5F5BD7] dark:text-white "
+          }
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"

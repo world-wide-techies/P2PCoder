@@ -93,7 +93,7 @@ function Home() {
     <>
       <main className="h-full bg-[#DCDCE5] dark:bg-[#2F2F3A]">
         <ToastContainer />
-        <div className="relative h-full border-gray-200 border-b-[1px] ">
+        <div className="relative h-full border-gray-300 border-b-[1px] dark:border-gray-700 ">
           <EditorNavBar />
         </div>
         <div className="relative flex w-full">
@@ -121,30 +121,31 @@ function Home() {
               }}
             />
           </div>
-          {(items.length > 1 || items[0]?.title !== 'Welcome') && (
+          {(items.length > 1 || items[0]?.title !== "Welcome") && (
             <button className="bg-green-700 flex  items-center my-1 px-4 rounded-md text-white space-x-3">
               <Image src={runIcon} alt="run" />
               <p>Run</p>
             </button>
           )}
         </div>
-        <div className="bg-white dark:bg-[#1E1E2A]  ml-24 w-[92%]  h-screen flex flex-col justify-start  ">
+        <div className="bg-white dark:bg-[#1E1E2A]  ml-24 w-[92.9%] p-11 h-screen flex flex-col justify-start">
           <>
-            {view == 'chooseLanguage' ? (
+            {view == "chooseLanguage" ? (
               <Modal
                 onClose={() => {
-                  router.push('/');
-                }}>
+                  router.push("/");
+                }}
+              >
                 <LanguageModal
                   onClose={() => {
-                    router.push('/');
+                    router.push("/");
                   }}
                 />
               </Modal>
             ) : (
               <div></div>
             )}
-            {items[0]?.active && items[0].title === 'Welcome' ? (
+            {items[0]?.active && items[0].title === "Welcome" ? (
               <div className="p-11">
                 <Welcome />
               </div>
