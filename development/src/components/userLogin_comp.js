@@ -4,9 +4,9 @@ import { OnboardingHeader } from "./onboardingHeader";
 import Link from "next/link";
 import Image from "next/image";
 import googleIcon from "../../public/assets/onboardingIcons/google.png";
-import githubIcon from '../../public/assets/onboardingIcons/github.png';
-import githubDark from '../../public/assets/onboardingIcons/github_black.png';
-import { useTheme } from 'next-themes';
+import github_lightMode from "../../public/assets/onboardingIcons/github_lightMode.png";
+import github_darkMode from "../../public/assets/onboardingIcons/github_darkMode.png";
+import { useTheme } from "next-themes";
 import UserLogin from "@/composables/userLoginFunction";
 import {
   emailValidator,
@@ -17,9 +17,8 @@ import { signInWithGithub } from "@/composables/authGithubSigninPopup";
 import { PasswordToggle } from "./passwordToggleFunction";
 import { signInWithGoogle } from "@/composables/authGoogleSigninPoppup";
 
-
 function UserLoginComp() {
-   const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -72,46 +71,41 @@ function UserLoginComp() {
     >
       <div className="space-y-3">
         <OnboardingHeader
-          h1={'Welcome back'}
-          p={'Enjoy extra features when you create an account with us.'}
+          h1={"Welcome back"}
+          p={"Enjoy extra features when you create an account with us."}
         />
 
-        <div className="flex justify-center space-x-5">
+        <div className="flex flex-row justify-between gap-3">
           <button
             onClick={(e) => {
               e.preventDefault();
               signInWithGoogle();
             }}
-            className="bg-gray-200 dark:bg-[#363647] flex justify-center items-center p-3 rounded-md w-full shadow-md"
+            className="flex flex-row flex-nowrap justify-center gap-2 bg-gray-200 dark:bg-[#363647] items-center p-3 rounded-md w-full shadow-md"
           >
-            <Image
-              src={googleIcon}
-              alt="google_icon"
-              className="w-6 h-6 mr-4"
-            />
-            Create Account with Google
+            <Image src={googleIcon} alt="google_icon" className="w-6 h-auto" />
+            <p className="text-[10px]">Create Account with Google</p>
           </button>
-
           <button
             onClick={(e) => {
               e.preventDefault();
               signInWithGithub();
             }}
-            className="bg-gray-200 dark:bg-[#363647]  flex justify-center items-center p-3 rounded-md w-full shadow-md"
+            className="flex flex-row flex-nowrap justify-center gap-2 bg-gray-200 dark:bg-[#363647] items-center p-3 rounded-md w-full shadow-md"
           >
             <Image
-              src={theme === 'dark' ? githubIcon : githubDark}
-              alt="GitHub icon"
-              className="w-7 h-7 mr-4"
+              src={theme === "dark" ? github_darkMode : github_lightMode}
+              alt="google_icon"
+              className="w-6 h-auto"
             />
-            Create Account with Github
+            <p className="text-[10px]">Create Account with Github</p>
           </button>
         </div>
       </div>
 
       <div className="flex items-center text-center">
         <div className="border-b-2 border-gray-200 w-full relative flex justify-center"></div>
-        <p className="flex justify-center w-1/12">OR</p>
+        <p className="flex justify-center w-1/6">OR</p>
         <div className="border-b-2 border-gray-200 w-full relative flex justify-center"></div>
       </div>
 
@@ -122,8 +116,7 @@ function UserLoginComp() {
             type="email"
             name="email"
             id="email"
-            className="w-full shadow-sm bg-gray-200 border-2 border-gray-300  dark:bg-[#363647] rounded-md p-3"
-
+            className="dark:bg-[#363647] border-[1px] p-3 rounded-lg bg-gray-100 w-full"
             placeholder="Enter Email Address"
             onChange={emailChange}
             value={emailAddress}
@@ -132,8 +125,7 @@ function UserLoginComp() {
         </div>
 
         <div>
-
-          <label htmlFor="password">Password*</label>
+          <label htmlFor="password">Password</label>
           <PasswordToggle
             inputId="password"
             placeholder="Enter password"
@@ -149,15 +141,17 @@ function UserLoginComp() {
         <div className="space-y-3">
           <button
             type="submit"
-            className="bg-violet-800 text-white text-center font-bold block w-full p-3 rounded-md">
+            className="bg-violet-800 text-white text-center font-bold block w-full p-3 rounded-md"
+          >
             Log in
           </button>
 
-          <p className="text-center font-semibold">
+          <p className="text-center">
             {"Don't have an account with us?"}
             <Link
               href="/?view=signup"
-              className="text-violet-800 mx-1.5 dark:text-white">
+              className="text-violet-800 mx-1.5 dark:text-white font-semibold"
+            >
               Create your account
             </Link>
           </p>
