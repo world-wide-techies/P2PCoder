@@ -27,9 +27,9 @@ function initializeTime(joinTime) {
   }
 }
 
-function handleClick() {
+function copyPeerId() {
   const peerId = generatePeerIdCharacter();
-  return peerId;
+  navigator.clipboard.writeText(peerId);
 }
 
 let sessionData = getSessionData();
@@ -39,7 +39,7 @@ if (!sessionData) {
 }
 
 let currentUser;
-const userIndex = sessionData.findIndex((user) => user.peerId === peerId);
+const userIndex = sessionData.findIndex((user) => user.peerId === sessionId);
 
 if (userIndex !== -1 && sessionData.length < 2) {
   currentUser = {
@@ -66,4 +66,4 @@ window.onbeforeunload = () => {
   storeSessionData(sessionData);
 };
 
-export { handleClick, storeSessionData, getSessionData, initializeTime };
+export { storeSessionData, copyPeerId, getSessionData, initializeTime };
