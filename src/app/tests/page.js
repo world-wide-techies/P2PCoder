@@ -6,6 +6,5 @@ function TestPage() {
       </div>
     </>
   );
-}
 
 export default TestPage;
