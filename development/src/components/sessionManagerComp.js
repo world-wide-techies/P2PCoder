@@ -5,17 +5,11 @@ function sessionManager() {
         Ready to start collaborating?
       </div>
       <div className="space-x-6 flex-col font-normal">
-        <button
-          href={"#"}
-          className="text-white bg-blue-500 active:bg-blue-600 rounded-md px-6 py-3"
-        >
+        <button className="text-white bg-blue-500 active:bg-blue-600 rounded-md px-6 py-3">
           New Peer Session
         </button>
 
-        <button
-          href="#"
-          className="px-6 py-3 font-normal border border-black dark:border-white dark:text-white rounded-md active:text-blue-500"
-        >
+        <button className="px-6 py-3 font-normal border border-black dark:border-white dark:text-white rounded-md active:text-blue-500">
           Join Peer Session
         </button>
       </div>
