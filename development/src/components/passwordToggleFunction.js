@@ -6,6 +6,7 @@ const PasswordToggle = ({
   inputValue,
   handleInputChange,
   placeholder,
+  customClass,
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isDefaultPassword, setIsDefaultPassword] = useState(true);
@@ -81,7 +82,7 @@ const PasswordToggle = ({
         value={inputValue}
         onChange={handleInputChange}
         placeholder={placeholder}
-        className="dark:bg-[#363647] border-[1px] border-gray p-3 rounded-lg bg-gray-100 w-full"
+        className={customClass}
       />
       <div className="absolute right-5 top-1/2 transform -translate-y-1/2">
         <button
