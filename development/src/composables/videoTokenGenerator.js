@@ -15,7 +15,6 @@ function tokenGenerator(identity, room) {
     token.addGrant(grant);
 
     const jwtToken = token.toJwt();
-    console.log(jwtToken);
 
     return jwtToken;
 }
