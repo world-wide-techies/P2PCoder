@@ -16,7 +16,6 @@ import {
 import { useGithubSignin } from "@/composables/authGithubSigninPopup";
 import { PasswordToggle } from "./passwordToggleFunction";
 import {
-  signInWithGoogle,
   useGoogleSignin,
 } from "@/composables/authGoogleSigninPoppup";
 import ErrorModal from "./errorModal_comp";
