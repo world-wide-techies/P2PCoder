@@ -15,7 +15,7 @@ import {
   isUsernameAvailable,
 } from "@/composables/authSignupFunction";
 import { useTheme } from "next-themes";
-import closeIcon from "../../public/assets/onboardingIcons/closecirclelight.svg";
+import closeIcon from "../../public/assets/onboardingIcons/closecirclelight.png";
 
 function SignUpComponent() {
   const { theme, setTheme } = useTheme();
