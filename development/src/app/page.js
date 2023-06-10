@@ -1,5 +1,4 @@
 'use client';
-
 import Welcome from '@/components/welcome_comp';
 import EditorNavBar from '@/components/navbar_components/editorNavbar_comp';
 import SideNavBarControl from '@/components/navbar_components/sidebar_components/sideBarNavControl';
@@ -153,7 +152,7 @@ function Home() {
               <CodingEditor language={items.filter((e) => e.active)[0].ext} />
             ) : (
               <div className="p-11">
-                <Welcome />
+                <Welcome/>
               </div>
             )}
           </>
