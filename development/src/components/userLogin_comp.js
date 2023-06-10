@@ -131,6 +131,9 @@ function UserLoginComp() {
             placeholder="Enter password"
             handleInputChange={passwordChange}
             inputValue={password}
+            customClass={`border ${
+              passwordError ? "border-[#ec6d6a]" : "border-none"
+            } p-3 rounded-lg dark:bg-[#363647] bg-gray-100 w-full`}
           />
           {passwordError && (
             <p className="text-sm text-red-500">{passwordError}</p>
@@ -141,7 +144,7 @@ function UserLoginComp() {
         <div className="space-y-3">
           <button
             type="submit"
-            className="bg-violet-800 text-white text-center font-bold block w-full p-3 rounded-md"
+            className="bg-[#5f5bd7] text-white text-center font-bold block w-full p-3 rounded-md"
           >
             Log in
           </button>
