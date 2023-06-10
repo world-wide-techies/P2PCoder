@@ -1,21 +1,34 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { OnboardingHeader } from "./onboardingHeader";
 import Link from "next/link";
 import Image from "next/image";
-import githubIcon from '../../public/assets/onboardingIcons/github.png';
-import githubDark from '../../public/assets/onboardingIcons/github_black.png';
+import githubIcon from "../../public/assets/onboardingIcons/github.png";
+import githubDark from "../../public/assets/onboardingIcons/github_black.png";
 import googleIcon from "../../public/assets/onboardingIcons/google.png";
 import { PasswordToggle } from "./passwordToggleFunction";
-import { signInWithGithub } from "@/composables/authGithubSigninPopup";
+import { useGithubSignin } from "@/composables/authGithubSigninPopup";
 import { signInWithGoogle } from "@/composables/authGoogleSigninPoppup";
 import { signupFormValidation } from "@/composables/signupFormValidation";
 import { authSignUp } from "@/composables/authSignupFunction";
-  import { useTheme } from 'next-themes';
-
+import { useTheme } from "next-themes";
+import ErrorModal from "./githubGoogleError_comp";
 
 function SignUpComponent() {
-    const { theme, setTheme } = useTheme();
+  const { signinWithGithub, githubError } = useGithubSignin();
+  const [gitErrorMessage, setgitErrorMessage] = useState("");
+
+  useEffect(() => {
+    setgitErrorMessage(githubError);
+    setTimeout(() => {
+      setgitErrorMessage("");
+    }, 5000);
+  }, [githubError]);
+
+  const handleClose = () => {
+    setgitErrorMessage("");
+  };
+  const { theme, setTheme } = useTheme();
   const [user, setUser] = useState({
     firstname: "",
     lastname: "",
@@ -77,7 +90,7 @@ function SignUpComponent() {
         <button
           onClick={(e) => {
             e.preventDefault();
-            signInWithGithub();
+            signinWithGithub();
           }}
           className="w-1/2 p-3 bg-gray-200  dark:bg-[#363647] rounded-lg shadow-lg flex justify-center items-center"
         >
@@ -224,6 +237,12 @@ function SignUpComponent() {
           </Link>
         </p>
       </div>
+
+      <ErrorModal
+        errorMessage={gitErrorMessage}
+        style={"fixed  top-0 right-0 mr-2 "}
+        onClose={() => handleClose()}
+      />
     </form>
   );
 }
