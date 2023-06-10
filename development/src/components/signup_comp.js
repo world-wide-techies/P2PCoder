@@ -15,24 +15,24 @@ import {
 import { signupFormValidation } from "@/composables/signupFormValidation";
 import { authSignUp } from "@/composables/authSignupFunction";
 import { useTheme } from "next-themes";
-import ErrorModal from "./githubGoogleError_comp";
+import ErrorModal from "./errorModal_comp";
+
 
 function SignUpComponent() {
   const { signinWithGithub, githubError } = useGithubSignin();
   const { signinWithGoogle, googleError } = useGoogleSignin();
-  const [gitErrorMessage, setgitErrorMessage] = useState("");
-  console.log(googleError);
-  console.log(githubError);
+  const [errorMessage, setErrorMessage] = useState("");
   useEffect(() => {
-    setgitErrorMessage(githubError || googleError);
+    setErrorMessage(githubError || googleError);
     setTimeout(() => {
-      setgitErrorMessage("");
+      setErrorMessage("");
     }, 6000);
   }, [githubError, googleError]);
 
   const handleClose = () => {
-    setgitErrorMessage("");
+    setErrorMessage("");
   };
+
   const { theme, setTheme } = useTheme();
   const [user, setUser] = useState({
     firstname: "",
@@ -244,7 +244,7 @@ function SignUpComponent() {
       </div>
 
       <ErrorModal
-        errorMessage={gitErrorMessage}
+        errorMessage={errorMessage}
         style={"fixed  top-0 right-0 mr-2 "}
         onClose={() => handleClose()}
       />

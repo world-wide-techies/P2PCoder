@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { OnboardingHeader } from "./onboardingHeader";
 import Link from "next/link";
 import Image from "next/image";
@@ -13,11 +13,29 @@ import {
   passwordValidator,
 } from "@/composables/emailPasswordValidator";
 
-import { signInWithGithub } from "@/composables/authGithubSigninPopup";
+import { useGithubSignin } from "@/composables/authGithubSigninPopup";
 import { PasswordToggle } from "./passwordToggleFunction";
-import { signInWithGoogle } from "@/composables/authGoogleSigninPoppup";
+import {
+  signInWithGoogle,
+  useGoogleSignin,
+} from "@/composables/authGoogleSigninPoppup";
+import ErrorModal from "./errorModal_comp";
 
 function UserLoginComp() {
+  const { signinWithGithub, githubError } = useGithubSignin();
+  const { signinWithGoogle, googleError } = useGoogleSignin();
+  const [errorMessage, setErrorMessage] = useState("");
+  useEffect(() => {
+    setErrorMessage(githubError || googleError);
+    setTimeout(() => {
+      setErrorMessage("");
+    }, 6000);
+  }, [githubError, googleError]);
+
+  const handleClose = () => {
+    setErrorMessage("");
+  };
+
   const { theme, setTheme } = useTheme();
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
@@ -79,7 +97,7 @@ function UserLoginComp() {
           <button
             onClick={(e) => {
               e.preventDefault();
-              signInWithGoogle();
+              signinWithGoogle();
             }}
             className="flex flex-row flex-nowrap justify-center gap-2 bg-gray-200 dark:bg-[#363647] items-center p-3 rounded-md w-full shadow-md"
           >
@@ -89,7 +107,7 @@ function UserLoginComp() {
           <button
             onClick={(e) => {
               e.preventDefault();
-              signInWithGithub();
+              signinWithGithub();
             }}
             className="flex flex-row flex-nowrap justify-center gap-2 bg-gray-200 dark:bg-[#363647] items-center p-3 rounded-md w-full shadow-md"
           >
@@ -157,6 +175,11 @@ function UserLoginComp() {
           </p>
         </div>
       </div>
+      <ErrorModal
+        errorMessage={errorMessage}
+        style={"fixed  top-0 right-0 mr-2 "}
+        onClose={() => handleClose()}
+      />
     </form>
   );
 }
