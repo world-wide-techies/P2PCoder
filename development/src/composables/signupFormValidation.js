@@ -2,20 +2,21 @@ function signupFormValidation(user) {
   const errors = {};
 
   const regxName = /^[A-Za-z\-]{2,50}$/;
-  if (!user.firstname || !user.lastname) {
-    errors.name = "Please enter your name";
-  } else if (
-    user.firstname.length < 2 ||
-    user.firstname.length > 50 ||
-    user.lastname.length < 2 ||
-    user.lastname.length > 50
-  ) {
-    errors.name = "Name must be between 2 and 50 characters";
-  } else if (
-    !user.firstname.match(regxName) ||
-    !user.lastname.match(regxName)
-  ) {
-    errors.name = "Please enter a valid name";
+  if (!user.firstname) {
+    errors.firstname = "Please enter your first name";
+  } else if (user.firstname.length < 2 || user.firstname.length > 50) {
+    errors.firstname = "Name must be between 2 and 50 characters";
+  } else if (!user.firstname.match(regxName)) {
+    errors.firstname = "Please enter a valid name";
+  }
+
+  const regxLastName = /^[A-Za-z\-]{2,50}$/;
+  if (!user.lastname) {
+    errors.lastname = "Please enter your last name";
+  } else if (user.lastname.length < 2 || user.lastname.length > 50) {
+    errors.lastname = "Name must be between 2 and 50 characters";
+  } else if (!user.lastname.match(regxLastName)) {
+    errors.lastname = "Please enter a valid name";
   }
 
   const regxEmail = /^([a-zA-Z0-9\.]+)@([a-zA-Z]+)\.([a-z]+)(\.[a-z]+)?$/;
