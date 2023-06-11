@@ -316,7 +316,6 @@ function SignUpComponent() {
           </div>
         </div>
       </div>
-      {/* 
       <div className="space-y-3">
         <button
           type="submit"
@@ -334,7 +333,7 @@ function SignUpComponent() {
             Log in
           </Link>
         </p>
-      </div> */}
+      </div>
     </form>
   );
 }
