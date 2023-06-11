@@ -15,7 +15,8 @@ import {
   isUsernameAvailable,
 } from "@/composables/authSignupFunction";
 import { useTheme } from "next-themes";
-import closeIcon from "../../public/assets/onboardingIcons/closecirclelight.png";
+import closeIcon from "../../public/assets/onboardingIcons/close_light.png";
+import closeDark from "../../public/assets/onboardingIcons/closecircledark.png";
 
 function SignUpComponent() {
   const { theme, setTheme } = useTheme();
@@ -85,7 +86,11 @@ function SignUpComponent() {
           h1={"Create an account with us"}
           p={"Enjoy extra features when you create an account with us."}
         />
-        <Image src={closeIcon} alt="close icon" className="w-6 h-6 mr-4 mt-2" />
+        <Image
+          src={theme === "dark" ? closeIcon : closeDark}
+          alt="close icon"
+          className="w-6 h-6 mr-4 mt-2"
+        />
       </div>
 
       <div className="flex justify-between items-center space-x-3 w-full">
@@ -311,7 +316,7 @@ function SignUpComponent() {
           </div>
         </div>
       </div>
-
+      {/* 
       <div className="space-y-3">
         <button
           type="submit"
@@ -329,7 +334,7 @@ function SignUpComponent() {
             Log in
           </Link>
         </p>
-      </div>
+      </div> */}
     </form>
   );
 }

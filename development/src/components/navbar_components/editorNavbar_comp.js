@@ -1,11 +1,12 @@
-'use client';
-import { useState, useContext } from 'react';
-import AuthNavControls from './authNavControls_comp';
-import Image from 'next/image';
-import moon from '../../../public/assets/onboardingIcons/moon.png';
-import sun from '../../../public/assets/onboardingIcons/sun.png';
-import { useTheme } from 'next-themes';
-import { useTabContext } from '@/composables/tabContext';
+"use client";
+import { useState, useContext } from "react";
+import AuthNavControls from "./authNavControls_comp";
+import Image from "next/image";
+import moon from "../../../public/assets/onboardingIcons/moon.png";
+import sun from "../../../public/assets/onboardingIcons/sun.png";
+import { useTheme } from "next-themes";
+import { useTabContext } from "@/composables/tabContext";
+import { Suspense } from "react";
 
 function EditorNavBar() {
   const [auth, setAuth] = useState(false);
@@ -29,12 +30,12 @@ function EditorNavBar() {
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               >
                 {theme === "dark" ? (
-                  <Image alt="moon" src={moon} width={18} height={18} />
+                  <Image alt="sun" src={sun} width={18} height={18} />
                 ) : (
-                  <Image alt="sun" src={sun} width={20} height={20} />
+                  <Image alt="moon" src={moon} width={20} height={20} />
                 )}
               </button>
-              {(items.length > 1 || items[0]?.title !== 'Welcome') && (
+              {(items.length > 1 || items[0]?.title !== "Welcome") && (
                 <>
                   <button className="ml-6 mr-3 py-3 px-6 rounded-lg bg-[#5F5BD7] text-white text-lg font-normal flex items-center">
                     Sign Up
