@@ -1,4 +1,5 @@
 import { appAuth } from '@/composables/firebaseConfig/config';
+import { isUserSignedIn } from '@/composables/verifySignedIn';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -12,7 +13,7 @@ function SideBottomNavControl() {
   const [auth, setAuth] = useState(false);
 
   useEffect(() => {
-    if (appAuth.currentUser) {
+    if (isUserSignedIn()) {
       setAuth(true);
     } else {
       setAuth(false);

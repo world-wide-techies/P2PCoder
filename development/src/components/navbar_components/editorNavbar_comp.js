@@ -6,6 +6,7 @@ import sun from '../../../public/assets/onboardingIcons/sun.png';
 import userIcon from '../../../public//assets/authNavBarControls/peers-2.png';
 import { useTheme } from 'next-themes';
 import { useTabContext } from '@/composables/tabContext';
+import { isUserSignedIn } from '@/composables/verifySignedIn';
 import { appAuth } from '@/composables/firebaseConfig/config';
 
 function EditorNavBar() {
@@ -14,7 +15,7 @@ function EditorNavBar() {
   const { items } = useTabContext();
 
   useEffect(() => {
-    if (appAuth.currentUser) {
+    if (isUserSignedIn()) {
       setAuth(true);
     } else {
       setAuth(false);
