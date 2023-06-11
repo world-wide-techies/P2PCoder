@@ -6,6 +6,7 @@ import SignUpComponent from "./signup_comp";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import UserLoginComp from "./userLogin_comp";
+import { ForgotPassword } from "./ForgotPassword";
 
 const Welcome = () => {
   const router = useRouter();
@@ -27,6 +28,14 @@ const Welcome = () => {
           }}
         >
           <SignUpComponent />
+        </Modal>
+      ) : view == "recoveraccount" ? (
+        <Modal
+          onClose={() => {
+            router.push("/");
+          }}
+        >
+          <ForgotPassword />
         </Modal>
       ) : (
         <div></div>

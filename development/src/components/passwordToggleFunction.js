@@ -95,7 +95,7 @@ const PasswordToggle = ({
         placeholder={placeholder}
         className={customClass}
       />
-      <div className="absolute right-5 top-1/2 transform -translate-y-1/2">
+      <div className="absolute inset-y-0 right-0 px-3 flex items-center">
         <button
           type="button"
           onClick={handleToggleClick}
