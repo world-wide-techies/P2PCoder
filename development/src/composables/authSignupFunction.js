@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { appAuth, appFirestore } from "./firebaseConfig/config";
 import { doc, getDoc, setDoc } from "firebase/firestore";
+import UserLogin from "./userLoginFunction";
 
 async function isUsernameAvailable(username) {
   try {
@@ -24,8 +25,8 @@ async function authSignUp(name, email, password, username) {
     const user = userCredential.user;
     if (user) {
       await updateProfile(user, { displayName: name });
-      await setDoc(doc(appFirestore, "users", username), { userId: user.uid });
     }
+    await UserLogin(email, password);
     return user;
   } catch (error) {
     const errorMessage = error.message;
@@ -33,4 +34,18 @@ async function authSignUp(name, email, password, username) {
   }
 }
 
-export { isUsernameAvailable, authSignUp };
+async function completeSignUp(user, username) {
+  try {
+    await setDoc(doc(appFirestore, "users", username), {
+      displayName: user.displayName,
+      userId: user.uid,
+      email: user.email,
+      emailVerified: true,
+    });
+  } catch (error) {
+    const errorMessage = error.message;
+    throw new Error(errorMessage);
+  }
+}
+
+export { isUsernameAvailable, authSignUp, completeSignUp };

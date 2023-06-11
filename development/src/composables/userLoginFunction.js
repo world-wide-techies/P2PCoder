@@ -1,5 +1,5 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { appAuth } from './firebaseConfig/config';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { appAuth } from "./firebaseConfig/config";
 
 async function UserLogin(emailAddress, password) {
   try {
