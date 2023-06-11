@@ -15,7 +15,7 @@
     "eslint-config-next": "13.4.2",
     "firebase": "^9.22.0",
     "monaco-editor-webpack-plugin": "^7.0.1",
-    "next": "13.4.2",
+    "next": "^13.4.5",
     "next-themes": "^0.2.1",
     "postcss": "8.4.23",
     "react": "18.2.0",
