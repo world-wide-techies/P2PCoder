@@ -62,23 +62,27 @@ function Home() {
     currentTabChild[0].focus();
     currentTabChild[0].select();
 
-    currentTabChild.addEventListener('submit', tabRenameSubmitHandler, { once: true })
-    currentTabChild.addEventListener('focusout', tabRenameFocusHandler, { once: true })
+    currentTabChild.addEventListener('submit', tabRenameSubmitHandler, {
+      once: true,
+    });
+    currentTabChild.addEventListener('focusout', tabRenameFocusHandler, {
+      once: true,
+    });
 
-    function tabRenameSubmitHandler(e){
+    function tabRenameSubmitHandler(e) {
       currentTabChild.removeEventListener('focusout', tabRenameFocusHandler);
       e.preventDefault();
       const newName = e.target[0].value;
       setTabName(newName);
     }
 
-    function tabRenameFocusHandler(e){
+    function tabRenameFocusHandler(e) {
       currentTabChild.removeEventListener('submit', tabRenameSubmitHandler);
       const currentName = e.target.value;
       setTabName(currentName);
     }
 
-    function setTabName(name){
+    function setTabName(name) {
       const newItems = items.map((item, idx) => ({
         ...item,
         title: idx === index ? name : item.title,
@@ -86,7 +90,7 @@ function Home() {
       setItems(newItems);
       currentTab.replaceChildren(name);
     }
-  }
+  };
 
   return (
     <>
@@ -120,31 +124,24 @@ function Home() {
               }}
             />
           </div>
-          {(items.length > 1 || items[0]?.title !== "Welcome") && (
-            <button className="bg-green-700 flex  items-center my-1 px-4 rounded-md text-white space-x-3">
-              <Image src={runIcon} alt="run" />
-              <p>Run</p>
-            </button>
-          )}
         </div>
-        <div className="bg-white dark:bg-[#1E1E2A]  ml-24 w-[92.9%] p-11 h-screen flex flex-col justify-start">
+        <div className="bg-white dark:bg-[#1E1E2A]  ml-24 w-[92.9%] h-screen flex flex-col justify-start">
           <>
-            {view == "chooseLanguage" ? (
+            {view == 'chooseLanguage' ? (
               <Modal
                 onClose={() => {
-                  router.push("/");
-                }}
-              >
+                  router.push('/');
+                }}>
                 <LanguageModal
                   onClose={() => {
-                    router.push("/");
+                    router.push('/');
                   }}
                 />
               </Modal>
             ) : (
               <div></div>
             )}
-            {items[0]?.active && items[0].title === "Welcome" ? (
+            {items[0]?.active && items[0].title === 'Welcome' ? (
               <div className="p-11">
                 <Welcome />
               </div>
@@ -152,7 +149,7 @@ function Home() {
               <CodingEditor language={items.filter((e) => e.active)[0].ext} />
             ) : (
               <div className="p-11">
-                <Welcome/>
+                <Welcome />
               </div>
             )}
           </>
