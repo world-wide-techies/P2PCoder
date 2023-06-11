@@ -24,4 +24,4 @@ const emailProvider = new GoogleAuthProvider();
 // timestamp
 const timestamp = appFirestore.timestamp;
 
-export { appStorage, timestamp, appAuth, appFirestore, emailProvider };
+export { appStorage, timestamp, appAuth, appFirestore, emailProvider, firebaseConfig };
