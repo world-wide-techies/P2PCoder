@@ -241,12 +241,12 @@ function SignUpComponent() {
                 {errors.username}
               </span>
             )}
-            {!errors.username && !usernameAvailable && user.username !== "" && (
+            {errors.username && !usernameAvailable && user.username !== "" && (
               <span className="text-[#ec6d6a] text-sm mt-2 font-light">
                 Username is not available
               </span>
             )}
-            {!errors.username && usernameAvailable && user.username !== "" && (
+            {!errors.username && usernameAvailable && !user.username !== "" && (
               <span className="text-[#21e427] text-sm mt-2 font-light">
                 Username available
               </span>

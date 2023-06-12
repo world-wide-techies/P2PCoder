@@ -1,6 +1,5 @@
 import Image from "next/image";
 import React, { useState } from "react";
-import closeCircle from ".././../public/assets/forgotPasswordForm/closeCircle.png";
 import { emailValidator } from "@/composables/emailPasswordValidator";
 import { resetPassword } from "@/composables/sendPasswordResetFunction";
 import closeWhite from '.././../public/assets/forgotPasswordForm/close_white.png';
