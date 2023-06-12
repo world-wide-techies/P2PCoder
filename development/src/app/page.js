@@ -7,7 +7,6 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { Modal } from '@/components/modal';
 import { LanguageModal } from '@/components/languageModal_comp';
 import { useTabContext } from '@/composables/tabContext';
-import CodingEditor from '@/components/codingEditor';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Collab from '@/components/collab_comp';
