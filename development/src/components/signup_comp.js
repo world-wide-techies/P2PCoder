@@ -59,15 +59,21 @@ function SignUpComponent() {
       try {
         const isAvailable = await isUsernameAvailable(user.username);
         if (isAvailable) {
-          const createdUser = await authSignUp(
+          const signUpUser = await authSignUp(
             user.firstname,
             user.email,
             user.password,
             user.username
           );
-          await completeSignUp(createdUser, user.username);
-          setShowOverlay(true);
-          return createdUser;
+
+          if (signUpUser.success) {
+            const createdUser = signUpUser.user;
+            await completeSignUp(createdUser, user.username);
+            setShowOverlay(true);
+            return createdUser;
+          } else {
+            setErrors({ firebaseError: signUpUser.error });
+          }
         } else {
           setUsernameAvailable(false);
         }

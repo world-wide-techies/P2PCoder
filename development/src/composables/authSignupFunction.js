@@ -1,7 +1,10 @@
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification,
+} from "firebase/auth";
 import { appAuth, appFirestore } from "./firebaseConfig/config";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import UserLogin from "./userLoginFunction";
 
 async function isUsernameAvailable(username) {
   try {
@@ -25,12 +28,12 @@ async function authSignUp(name, email, password, username) {
     const user = userCredential.user;
     if (user) {
       await updateProfile(user, { displayName: name });
+      await sendEmailVerification(user);
     }
-    await UserLogin(email, password);
-    return user;
+
+    return { success: true, user };
   } catch (error) {
-    const errorMessage = error.message;
-    throw new Error(errorMessage);
+    return { success: false, error: error.message };
   }
 }
 
