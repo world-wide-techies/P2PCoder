@@ -13,12 +13,28 @@ import {
   passwordValidator,
 } from "@/composables/emailPasswordValidator";
 
-import { signInWithGithub } from "@/composables/authGithubSigninPopup";
+import { useGithubSignin } from "@/composables/authGithubSigninPopup";
 import { PasswordToggle } from "./passwordToggleFunction";
-import { signInWithGoogle } from "@/composables/authGoogleSigninPoppup";
-import { ForgotPassword } from "./ForgotPassword";
+import {
+  useGoogleSignin,
+} from "@/composables/authGoogleSigninPoppup";
+import ErrorModal from "./errorModal_comp";
 
 function UserLoginComp() {
+  const { signinWithGithub, githubError } = useGithubSignin();
+  const { signinWithGoogle, googleError } = useGoogleSignin();
+  const [errorMessage, setErrorMessage] = useState("");
+  useEffect(() => {
+    setErrorMessage(githubError || googleError);
+    setTimeout(() => {
+      setErrorMessage("");
+    }, 6000);
+  }, [githubError, googleError]);
+
+  const handleClose = () => {
+    setErrorMessage("");
+  };
+
   const { theme, setTheme } = useTheme();
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
@@ -176,7 +192,11 @@ function UserLoginComp() {
           </div>
         </div>
       </form>}
-    
+      <ErrorModal
+      errorMessage={errorMessage}
+      style={"fixed  top-0 right-0 mr-2 "}
+      onClose={() => handleClose()}
+    />
     </>
   );
 }
