@@ -1,19 +1,15 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { appAuth, appFirestore } from "./firebaseConfig/config";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { appAuth, appFirestore } from "./firebaseConfig/config" ;
+import { doc, getFirestore, getDoc, setDoc } from "firebase/firestore";
+
 
 async function isUsernameAvailable(username) {
   try {
-    // Validate the username
-    if (!isValidUsername(username)) {
-      throw new Error("Invalid username");
-    }
-
-    const userRef = doc(appFirestore, "users", username);
-    const userSnapshot = await getDoc(userRef);
+    const useRef = doc(appFirestore, "users", username);
+    const userSnapshot = await getDoc(useRef);
     return !userSnapshot.exists();
   } catch (error) {
-    throw new Error(error);
+    throw error;
   }
 }
 
@@ -21,30 +17,24 @@ async function authSignUp(name, email, password, username) {
   try {
     const isAvailable = await isUsernameAvailable(username);
 
-    const userCredential = await createUserWithEmailAndPassword(
-      appAuth,
-      email,
-      password
-    );
-    const user = userCredential.user;
-    if (user) {
-      await updateProfile(user, { displayName: name });
-      await setDoc(doc(appFirestore, "users", username), { userId: user.uid });
+    if (isAvailable) {
+      const userCredential = await createUserWithEmailAndPassword(
+        appAuth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      if (user) {
+        await updateProfile(user, { displayName: name });
+        await setDoc(doc(appFirestore, "users", username), { userId: user.uid });
+        return user;
+      }
+    } else {
+      throw new Error("Username is not available");
     }
-    return user;
   } catch (error) {
-    const errorMessage = error.message;
-    throw new Error(errorMessage);
+    throw error; 
   }
-}
-
-function isValidUsername(username) {
-  // Perform username validation logic here
-  // Return true if the username is valid, false otherwise
-  // You can customize this function based on your requirements
-  // For example, you can check for length, allowed characters, etc.
-  // Here's a basic example:
-  return typeof username === "string" && username.length > 0;
 }
 
 export { isUsernameAvailable, authSignUp };

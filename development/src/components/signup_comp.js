@@ -49,7 +49,6 @@ function SignUpComponent() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const formErrors = signupFormValidation(user);
 
     if (Object.keys(formErrors).length === 0) {
@@ -241,7 +240,7 @@ function SignUpComponent() {
                 {errors.username}
               </span>
             )}
-            {errors.username && !usernameAvailable && user.username !== "" && (
+            {!errors.username && usernameAvailable && user.username !== "" && (
               <span className="text-[#ec6d6a] text-sm mt-2 font-light">
                 Username is not available
               </span>
@@ -316,6 +315,10 @@ function SignUpComponent() {
         <button
           type="submit"
           className="bg-[#5f5bd7] text-white text-center text-lg font-semibold block w-full p-3 rounded-md mt-8"
+          onClick={(e) => {
+            e.preventDefault();
+            authSignUp();
+          }}
         >
           Create Account
         </button>
