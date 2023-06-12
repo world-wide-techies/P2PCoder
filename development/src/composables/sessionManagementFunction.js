@@ -4,23 +4,23 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
 import { firebaseConfig } from "./firebaseConfig/config";
+import PeerSession from "@/components/PeerOverlay_comp";
 
 firebase.initializeApp(firebaseConfig);
 
 // Storing session data with local storage
-function storeSessionDataLocally(users) {
-  localStorage.setItem("users", JSON.stringify(users));
+function storeSessionDataLocally(sessionData) {
+  localStorage.setItem("sessionData", JSON.stringify(sessionData));
 }
 
 function getSessionDataLocally() {
-  const users = JSON.parse(localStorage.getItem("users"));
-  return users;
+  const sessionData = JSON.parse(localStorage.getItem("sessionData"));
+  return sessionData;
 }
 
 // Storing session data with firebase
-function storeSessionDataFirebase(users, peerId) {
+function storeSessionDataFirebase(sessionData) {
   const userId = getCurrentUserId();
-  const sessionData = { users, peerId };
   firebase.database().ref(`sessions/${userId}`).set(sessionData);
 }
 
@@ -59,8 +59,6 @@ function initializeTimer(userJoinTime) {
   }, 1000);
 }
 
-let peerId = generatePeerIdCharacter();
-
 const copyPeerId = () => {
   navigator.clipboard.writeText(peerId);
 };
@@ -72,37 +70,53 @@ if (!currentUser) {
 
 let sessionDataLocally = getSessionDataLocally();
 if (!sessionDataLocally) {
-  sessionDataLocally = [];
+  sessionDataLocally = {};
   storeSessionDataLocally(sessionDataLocally);
 }
 
 let sessionDataFirebase = await getSessionDataFirebase();
 if (!sessionDataFirebase) {
-  sessionDataFirebase = { users: [], peerId };
-  storeSessionDataFirebase(
-    sessionDataFirebase.users,
-    sessionDataFirebase.peerId
-  );
-} else {
-  peerId = sessionDataFirebase.peerId;
+  sessionDataFirebase = {};
+  storeSessionDataFirebase(sessionDataFirebase);
 }
 
-const userIndex = sessionDataFirebase.users.findIndex(
-  (user) => user.peerId === peerId
-);
-if (userIndex === -1 && sessionDataFirebase.users.length < 2) {
+let sessionName;
+let programmingLanguage;
+
+let peerId = sessionDataFirebase.peerId;
+if (!peerId) {
+  peerId = generatePeerIdCharacter();
+  sessionDataFirebase.peerId = peerId;
+  storeSessionDataFirebase(sessionDataFirebase);
+}
+
+const userIndex =
+  sessionDataFirebase.users &&
+  sessionDataFirebase.users.findIndex((user) => user.peerId === peerId);
+if (
+  userIndex === -1 &&
+  (!sessionDataFirebase.users || sessionDataFirebase.users.length < 2)
+) {
+  PeerSession();
   const newSessionData = {
+    sessionName,
+    programmingLanguage,
     peerId,
     userJoinTime: new Date().toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
     }),
   };
-  sessionDataFirebase.users.push(newSessionData);
-  storeSessionDataFirebase(sessionDataFirebase.users, peerId);
+
+  sessionDataFirebase.sessionName = sessionName;
+  sessionDataFirebase.programmingLanguage = programmingLanguage;
+  sessionDataFirebase.users = [newSessionData];
+
+  storeSessionDataFirebase(sessionDataFirebase);
 } else if (userIndex !== -1) {
   const currentUserData = sessionDataFirebase.users[userIndex];
   const storedJoinTime = currentUserData.userJoinTime;
+  peerId = currentUserData.peerId;
   initializeTimer(storedJoinTime);
 } else {
   toast.error("Invalid Session ID");
@@ -112,10 +126,12 @@ if (userIndex === -1 && sessionDataFirebase.users.length < 2) {
 function endSession() {
   const userId = getCurrentUserId();
   firebase.database().ref(`sessions/${userId}`).remove();
-  localStorage.removeItem("users");
+  localStorage.removeItem("sessionData");
 }
 
 export {
+  sessionName,
+  programmingLanguage,
   storeSessionDataLocally,
   getSessionDataLocally,
   storeSessionDataFirebase,
