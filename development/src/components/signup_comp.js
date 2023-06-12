@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { OnboardingHeader } from "./onboardingHeader";
 import Link from "next/link";
 import Image from "next/image";
@@ -7,18 +7,36 @@ import githubIcon from "../../public/assets/onboardingIcons/github.png";
 import githubDark from "../../public/assets/onboardingIcons/github_black.png";
 import googleIcon from "../../public/assets/onboardingIcons/google.png";
 import { PasswordToggle } from "./passwordToggleFunction";
-import { signInWithGithub } from "@/composables/authGithubSigninPopup";
-import { signInWithGoogle } from "@/composables/authGoogleSigninPoppup";
+import { useGithubSignin } from "@/composables/authGithubSigninPopup";
+import {
+  useGoogleSignin,
+} from "@/composables/authGoogleSigninPoppup";
 import { signupFormValidation } from "@/composables/signupFormValidation";
 import {
   authSignUp,
   isUsernameAvailable,
 } from "@/composables/authSignupFunction";
 import { useTheme } from "next-themes";
+
 import closeIcon from "../../public/assets/onboardingIcons/close_light.png";
 import closeDark from "../../public/assets/onboardingIcons/closecircledark.png";
+import ErrorModal from "./errorModal_comp";
 
 function SignUpComponent() {
+  const { signinWithGithub, githubError } = useGithubSignin();
+  const { signinWithGoogle, googleError } = useGoogleSignin();
+  const [errorMessage, setErrorMessage] = useState("");
+  useEffect(() => {
+    setErrorMessage(githubError || googleError);
+    setTimeout(() => {
+      setErrorMessage("");
+    }, 6000);
+  }, [githubError, googleError]);
+
+  const handleClose = () => {
+    setErrorMessage("");
+  };
+  
   const { theme, setTheme } = useTheme();
   const [user, setUser] = useState({
     firstname: "",
@@ -97,7 +115,7 @@ function SignUpComponent() {
         <button
           onClick={(e) => {
             e.preventDefault();
-            signInWithGoogle();
+            signinWithGoogle();
           }}
           className="w-1/2 p-3 bg-[#DCDCE5] dark:bg-[#363647] text-lg font-normal rounded-lg  flex justify-center items-center"
         >
@@ -108,7 +126,7 @@ function SignUpComponent() {
         <button
           onClick={(e) => {
             e.preventDefault();
-            signInWithGithub();
+            signinWithGithub();
           }}
           className="w-1/2  p-3 bg-[#DCDCE5] text-lg font-normal  dark:bg-[#363647] rounded-lg  flex justify-center items-center"
         >
@@ -334,6 +352,12 @@ function SignUpComponent() {
           </Link>
         </p>
       </div>
+
+      <ErrorModal
+        errorMessage={errorMessage}
+        style={"fixed  top-0 right-0 mr-2 "}
+        onClose={() => handleClose()}
+      />
     </form>
   );
 }
