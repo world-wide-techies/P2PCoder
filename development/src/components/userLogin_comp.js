@@ -109,7 +109,7 @@ function UserLoginComp() {
             <button
               onClick={(e) => {
                 e.preventDefault();
-                signInWithGoogle();
+                signinWithGoogle();
               }}
               className="flex flex-row flex-nowrap justify-center gap-2 bg-gray-200 dark:bg-[#363647] items-center p-3 rounded-md w-full shadow-md"
             >
@@ -119,7 +119,7 @@ function UserLoginComp() {
             <button
               onClick={(e) => {
                 e.preventDefault();
-                signInWithGithub();
+                signinWithGithub();
               }}
               className="flex flex-row flex-nowrap justify-center gap-2 bg-gray-200 dark:bg-[#363647] items-center p-3 rounded-md w-full shadow-md"
             >
