@@ -1,6 +1,4 @@
-import ErrorModal from "@/components/errorModal_comp";
 import { createContext, useContext, useEffect, useState } from "react";
-import { toast } from "react-toastify";
 
 export const TabContext = createContext();
 
