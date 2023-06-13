@@ -17,6 +17,7 @@ import {
 } from "@/composables/authSignupFunction";
 import { useTheme } from "next-themes";
 import closeIcon from "../../public/assets/onboardingIcons/closecirclelight.png";
+import closeIconDark from "../../public/assets/onboardingIcons/closecircledark.png";
 import VerificationOverlay from "./VerificationOverlay";
 import ErrorModal from "./errorModal_comp";
 
@@ -48,6 +49,11 @@ function SignUpComponent() {
   const [errors, setErrors] = useState({});
   const [usernameAvailable, setUsernameAvailable] = useState(null);
   const [showOverlay, setShowOverlay] = useState(false);
+  const [showForm, setShowForm] = useState(true);
+
+  const handleCloseForm = () => {
+    setShowForm(false);
+  };
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
@@ -84,7 +90,10 @@ function SignUpComponent() {
           if (signUpUser.success) {
             const createdUser = signUpUser.user;
             await completeSignUp(createdUser, user.username);
+            await sendEmailVerification(createdUser);
+            setFormSubmitted(true);
             setShowOverlay(true);
+            handleCloseForm();
             return createdUser;
           } else {
             setErrors({ firebaseError: signUpUser.error });
@@ -102,7 +111,7 @@ function SignUpComponent() {
 
   return (
     <div>
-      {!showOverlay ? (
+      {showForm ? (
         <form
           className="space-y-5 p-12  bg-[#F3F3F6] dark:bg-[#1E1E2A] w-auto min-w-[800px] min-h-[730px] font-nohemi rounded-3xl drop-shadow-lg"
           onSubmit={handleSubmit}
@@ -113,9 +122,10 @@ function SignUpComponent() {
               p={"Enjoy extra features when you create an account with us."}
             />
             <Image
-              src={closeIcon}
+              src={theme === "dark" ? closeIconDark : closeIcon}
               alt="close icon"
               className="w-6 h-6 mr-4 mt-2"
+              onClick={handleCloseForm}
             />
           </div>
 
@@ -378,9 +388,7 @@ function SignUpComponent() {
             onClose={() => handleClose()}
           />
         </form>
-      ) : (
-        <VerificationOverlay email={user.email} />
-      )}
+      ) : null}
     </div>
   );
 }
