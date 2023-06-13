@@ -17,13 +17,9 @@ import {
 } from "@/composables/authSignupFunction";
 import { useTheme } from "next-themes";
 
-<<<<<<< HEAD
-// ,
-=======
 import closeIcon from "../../public/assets/onboardingIcons/close_light.png";
 import closeDark from "../../public/assets/onboardingIcons/closecircledark.png";
 import ErrorModal from "./errorModal_comp";
->>>>>>> ebbef85521274f2a52fe9edacb5ea292d303914f
 
 function SignUpComponent() {
   const { signinWithGithub, githubError } = useGithubSignin();
