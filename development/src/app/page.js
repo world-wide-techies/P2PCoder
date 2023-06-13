@@ -7,11 +7,9 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { Modal } from '@/components/modal';
 import { LanguageModal } from '@/components/languageModal_comp';
 import { useTabContext } from '@/composables/tabContext';
-import CodingEditor from '@/components/codingEditor';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import runIcon from '../../public/assets/languageIcons/runIcon.svg';
-import Image from 'next/image';
+import Collab from '@/components/collab_comp';
 
 function Home() {
   const { items, setItems } = useTabContext();
@@ -146,7 +144,7 @@ function Home() {
                 <Welcome />
               </div>
             ) : items.filter((e) => e.active)[0] ? (
-              <CodingEditor language={items.filter((e) => e.active)[0].ext} />
+              <Collab />
             ) : (
               <div className="p-11">
                 <Welcome />
