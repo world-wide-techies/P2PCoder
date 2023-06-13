@@ -6,8 +6,8 @@ const Collab = () => {
 
   return (
     <div className="w-full flex">
-      <div className={`${isVideoOn ? 'w-2/3' : 'w-[95vw]'}`}>
-        <CodingEditor isVideoOn={isVideoOn} />
+      <div className={isVideoOn ? 'w-2/3' : 'w-[95vw]'}>
+        <CodingEditor />
       </div>
       {isVideoOn && (
         <div className="w-1/3">
