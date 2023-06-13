@@ -11,7 +11,6 @@ const ForgotPassword = () => {
   const { theme, setTheme } = useTheme();
   const [emailAddress, setEmailAddress] = useState("");
   const [error, setError] = useState(false);
-  const [closeForgotPassword, setCloseForgotPassword] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -43,7 +42,6 @@ const ForgotPassword = () => {
   const router = useRouter();
 
   const handleCloseForgotPassword = () => {
-    setCloseForgotPassword(true);
     router.push("/");
   };
 

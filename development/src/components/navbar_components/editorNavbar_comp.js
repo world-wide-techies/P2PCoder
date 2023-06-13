@@ -34,7 +34,8 @@ function EditorNavBar() {
                   <Image alt="sun" src={sun} width={20} height={20} />
                 )}
               </button>
-              {(items.length > 1 || items[0]?.title !== 'Welcome') && (
+              {(items.length > 1 ||
+                (items.length === 1 && items[0]?.title !== "Welcome")) && (
                 <>
                   <button className="ml-6 mr-3 py-3 px-6 rounded-lg bg-[#5F5BD7] text-white text-lg font-normal flex items-center">
                     Sign Up

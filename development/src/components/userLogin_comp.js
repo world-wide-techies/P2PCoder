@@ -30,10 +30,12 @@ function UserLoginComp() {
 
   const emailChange = (e) => {
     setEmailAddress(e.target.value);
+    setEmailError(false)
   };
 
   const passwordChange = (e) => {
     setPassword(e.target.value);
+    setPasswordError(false)
   };
 
   const handleCloseLogin = () => {
@@ -102,7 +104,7 @@ function UserLoginComp() {
                 e.preventDefault();
                 signInWithGoogle();
               }}
-              className="flex flex-row flex-nowrap justify-center gap-2 bg-[#DCDCE5] dark:bg-[#363647] items-center p-3 rounded-md w-full shadow-md"
+              className="flex flex-row flex-nowrap justify-center gap-2 bg-[#DCDCE5] dark:bg-[#363647] items-center p-3 rounded-md w-full"
             >
               <Image
                 src={googleIcon}
@@ -116,7 +118,7 @@ function UserLoginComp() {
                 e.preventDefault();
                 signInWithGithub();
               }}
-              className="flex flex-row flex-nowrap justify-center gap-2 bg-[#DCDCE5] dark:bg-[#363647] items-center px-3 rounded-md w-full shadow-md"
+              className="flex flex-row flex-nowrap justify-center gap-2 bg-[#DCDCE5] dark:bg-[#363647] items-center px-3 rounded-md w-full"
             >
               <Image
                 src={theme === "dark" ? github_darkMode : github_lightMode}
