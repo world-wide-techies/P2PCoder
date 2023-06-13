@@ -18,7 +18,6 @@ import {
 import { useTheme } from "next-themes";
 import closeIcon from "../../public/assets/onboardingIcons/closecirclelight.png";
 import closeIconDark from "../../public/assets/onboardingIcons/closecircledark.png";
-import VerificationOverlay from "./VerificationOverlay";
 import ErrorModal from "./errorModal_comp";
 
 function SignUpComponent() {
@@ -48,7 +47,6 @@ function SignUpComponent() {
 
   const [errors, setErrors] = useState({});
   const [usernameAvailable, setUsernameAvailable] = useState(null);
-  const [showOverlay, setShowOverlay] = useState(false);
   const [showForm, setShowForm] = useState(true);
 
   const handleCloseForm = () => {
