@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile,  sendEmailVerification } from "firebase/auth";
 import { appAuth, appFirestore } from "./firebaseConfig/config";
 import { doc, getDoc, collection, getFirestore, setDoc, query, where, getDocs } from "firebase/firestore";
 
@@ -57,7 +57,8 @@ async function authSignUp(name, email, password, username) {
       if (user) {
         await updateProfile(user, { displayName: name });
         await setDoc(doc(appFirestore, "users", username), { userId: user.uid });
-        return user;
+        await sendEmailVerification(user);
+        return { success: true, message: 'Please verify your email before signing in. A verification email has been sent to your email address.', user };
       }
     } else {
       if (!isEmailAvailable) {

@@ -93,6 +93,7 @@ function SignUpComponent() {
             user.password,
             user.username
           );
+          return createdUser;
           console.log("User signed up:", createdUser);
         } else {
           if (!isUsernameAvailable) {
