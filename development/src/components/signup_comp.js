@@ -16,10 +16,14 @@ import {
   checkEmailAvailability,
 } from "@/composables/authSignupFunction";
 import { useTheme } from "next-themes";
-import closeIcon from "../../public/assets/onboardingIcons/closecirclelight.png";
-import ErrorModal from "./errorModal_comp";
 
+<<<<<<< HEAD
 // ,
+=======
+import closeIcon from "../../public/assets/onboardingIcons/close_light.png";
+import closeDark from "../../public/assets/onboardingIcons/closecircledark.png";
+import ErrorModal from "./errorModal_comp";
+>>>>>>> ebbef85521274f2a52fe9edacb5ea292d303914f
 
 function SignUpComponent() {
   const { signinWithGithub, githubError } = useGithubSignin();
@@ -124,7 +128,11 @@ function SignUpComponent() {
           h1={"Create an account with us"}
           p={"Enjoy extra features when you create an account with us."}
         />
-        <Image src={closeIcon} alt="close icon" className="w-6 h-6 mr-4 mt-2" />
+        <Image
+          src={theme === "dark" ? closeIcon : closeDark}
+          alt="close icon"
+          className="w-6 h-6 mr-4 mt-2"
+        />
       </div>
 
       <div className="flex justify-between items-center space-x-3 w-full">
@@ -367,7 +375,6 @@ function SignUpComponent() {
           </div>
         </div>
       </div>
-
       <div className="space-y-3">
         <button
           type="submit"

@@ -15,6 +15,9 @@ import {
 
 import { useGithubSignin } from "@/composables/authGithubSigninPopup";
 import { PasswordToggle } from "./passwordToggleFunction";
+import { signInWithGoogle } from "@/composables/authGoogleSigninPoppup";
+import closeIcon from "../../public/assets/onboardingIcons/close_light.png";
+import closeDark from "../../public/assets/onboardingIcons/closecircledark.png";
 import {
   useGoogleSignin,
 } from "@/composables/authGoogleSigninPoppup";
@@ -95,10 +98,87 @@ function UserLoginComp() {
     <>
     {forgotPasswordModal ? <ForgotPassword handleClose={closeForgotPassword} /> :   
     <form
-        className="space-y-6 p-10 bg-white dark:bg-[#1E1E2A] dark:text-white w-[100%] rounded-3xl shadow-md "
-        onSubmit={loginUser}
-      >
-        
+      className="space-y-6 p-10 bg-white dark:bg-[#1E1E2A] dark:text-white"
+      onSubmit={loginUser}
+    >
+      <div className="space-y-3">
+        <div className="flex justify-between">
+          <OnboardingHeader
+            h1={"Welcome back"}
+            p={"Enjoy extra features when you create an account with us."}
+          />
+          <Image
+            src={theme === "dark" ? closeIcon : closeDark}
+            alt="close icon"
+            className="w-6 h-6 mr-4 mt-2"
+          />
+        </div>
+        <div className="flex flex-row justify-between gap-3">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              signinWithGoogle();
+            }}
+            className="flex flex-row flex-nowrap justify-center gap-2 bg-gray-200 dark:bg-[#363647] items-center p-3 rounded-md w-full shadow-md"
+          >
+            <Image src={googleIcon} alt="google_icon" className="w-6 h-auto" />
+            <p className="text-[10px]">Create Account with Google</p>
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              signinWithGithub();
+            }}
+            className="flex flex-row flex-nowrap justify-center gap-2 bg-gray-200 dark:bg-[#363647] items-center p-3 rounded-md w-full shadow-md"
+          >
+            <Image
+              src={theme === "dark" ? github_darkMode : github_lightMode}
+              alt="google_icon"
+              className="w-6 h-auto"
+            />
+            <p className="text-[10px]">Create Account with Github</p>
+          </button>
+        </div>
+      </div>
+
+      <div className="flex items-center text-center">
+        <div className="border-b-2 border-gray-200 w-full relative flex justify-center"></div>
+        <p className="flex justify-center w-1/6">OR</p>
+        <div className="border-b-2 border-gray-200 w-full relative flex justify-center"></div>
+      </div>
+
+      <div className="space-y-8">
+        <div>
+          <label htmlFor="email">Email Address</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className="dark:bg-[#363647] border-[1px] p-3 rounded-lg bg-gray-100 w-full"
+            placeholder="Enter Email Address"
+            onChange={emailChange}
+            value={emailAddress}
+          />
+          {emailError && <p className="text-sm text-red-500">{emailError}</p>}
+        </div>
+
+        <div>
+          <label htmlFor="password">Password</label>
+          <PasswordToggle
+            inputId="password"
+            placeholder="Enter password"
+            handleInputChange={passwordChange}
+            inputValue={password}
+            customClass={`border ${
+              passwordError ? "border-[#ec6d6a]" : "border-none"
+            } p-3 rounded-lg dark:bg-[#363647] bg-gray-100 w-full`}
+          />
+          {passwordError && (
+            <p className="text-sm text-red-500">{passwordError}</p>
+          )}
+          <button className="float-right">Forgot password?</button>
+        </div>
+
         <div className="space-y-3">
           <OnboardingHeader
             h1={"Welcome back"}
@@ -190,6 +270,7 @@ function UserLoginComp() {
               </Link>
             </p>
           </div>
+        </div>
         </div>
       </form>}
       <ErrorModal

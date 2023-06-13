@@ -1,11 +1,13 @@
-'use client';
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import moon from '../../../public/assets/onboardingIcons/moon.png';
-import sun from '../../../public/assets/onboardingIcons/sun.png';
+"use client";
+import { useState, useContext, useEffect} from "react";
+import AuthNavControls from "./authNavControls_comp";
+import Image from "next/image";
+import moon from "../../../public/assets/onboardingIcons/moon.png";
+import sun from "../../../public/assets/onboardingIcons/sun.png";
+import { useTheme } from "next-themes";
+import { useTabContext } from "@/composables/tabContext";
+import { Suspense } from "react";
 import userIcon from '../../../public//assets/authNavBarControls/peers-2.png';
-import { useTheme } from 'next-themes';
-import { useTabContext } from '@/composables/tabContext';
 import { isUserSignedIn } from '@/composables/verifySignedIn';
 import { appAuth } from '@/composables/firebaseConfig/config';
 
@@ -51,11 +53,12 @@ function EditorNavBar() {
           ) : (
             <div className="flex justify-end">
               <button
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
-                {theme === 'dark' ? (
-                  <Image alt="moon" src={moon} width={18} height={18} />
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              >
+                {theme === "dark" ? (
+                  <Image alt="sun" src={sun} width={18} height={18} />
                 ) : (
-                  <Image alt="sun" src={sun} width={20} height={20} />
+                  <Image alt="moon" src={moon} width={20} height={20} />
                 )}
               </button>
               {!auth && (items.length > 1 || items[0]?.title !== 'Welcome') && (
