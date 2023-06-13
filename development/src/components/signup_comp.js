@@ -8,23 +8,38 @@ import githubDark from "../../public/assets/onboardingIcons/github_black.png";
 import googleIcon from "../../public/assets/onboardingIcons/google.png";
 import { PasswordToggle } from "./passwordToggleFunction";
 import { useGithubSignin } from "@/composables/authGithubSigninPopup";
-import {
-  useGoogleSignin,
-} from "@/composables/authGoogleSigninPoppup";
+import { useGoogleSignin } from "@/composables/authGoogleSigninPoppup";
 import { signupFormValidation } from "@/composables/signupFormValidation";
 import {
   authSignUp,
-  isUsernameAvailable,
+  checkUsernameAvailability,
+  checkEmailAvailability,
 } from "@/composables/authSignupFunction";
 import { useTheme } from "next-themes";
 import closeIcon from "../../public/assets/onboardingIcons/closecirclelight.png";
 import ErrorModal from "./errorModal_comp";
 
+// ,
 
 function SignUpComponent() {
   const { signinWithGithub, githubError } = useGithubSignin();
   const { signinWithGoogle, googleError } = useGoogleSignin();
+  const { theme, setTheme } = useTheme();
   const [errorMessage, setErrorMessage] = useState("");
+  const [errors, setErrors] = useState({});
+  const [usernameAvailable, setUsernameAvailable] = useState(false);
+  const [emailAvailable, setEmailAvailable] = useState(false);
+
+  const [user, setUser] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    username: "",
+    password: "",
+    confirm_password: "",
+  });
+
+
   useEffect(() => {
     setErrorMessage(githubError || googleError);
     setTimeout(() => {
@@ -35,19 +50,7 @@ function SignUpComponent() {
   const handleClose = () => {
     setErrorMessage("");
   };
-  
-  const { theme, setTheme } = useTheme();
-  const [user, setUser] = useState({
-    firstname: "",
-    lastname: "",
-    email: "",
-    username: "",
-    password: "",
-    confirm_password: "",
-  });
 
-  const [errors, setErrors] = useState({});
-  const [usernameAvailable, setUsernameAvailable] = useState(null);
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
@@ -57,8 +60,15 @@ function SignUpComponent() {
 
     if (name === "username") {
       try {
-        const isAvailable = await isUsernameAvailable(value);
+        const isAvailable = await checkUsernameAvailability(value);
         setUsernameAvailable(isAvailable);
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (name === "email") {
+      try {
+        const isAvailable = await checkEmailAvailability(value);
+        setEmailAvailable(isAvailable);
       } catch (error) {
         console.log(error);
       }
@@ -71,21 +81,32 @@ function SignUpComponent() {
 
     if (Object.keys(formErrors).length === 0) {
       try {
-        const isAvailable = await isUsernameAvailable(user.username);
-        if (isAvailable) {
+        const isUsernameAvailable = await checkUsernameAvailability(
+          user.username
+        );
+        const isEmailAvailable = await checkEmailAvailability(user.email);
+
+        if (isUsernameAvailable && isEmailAvailable) {
           const createdUser = await authSignUp(
             user.firstname,
             user.email,
             user.password,
             user.username
           );
-
-          console.log("user signed up", createdUser);
+          console.log("User signed up:", createdUser);
         } else {
-          setUsernameAvailable(false);
+          if (!isUsernameAvailable) {
+            setUsernameAvailable(false);
+          }
+          if (!isEmailAvailable) {
+            setEmailAvailable(false);
+          }
         }
       } catch (error) {
-        setErrors({ firebaseError: error.message });
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          firebaseError: error.message,
+        }));
       }
     } else {
       setErrors(formErrors);
@@ -212,7 +233,14 @@ function SignUpComponent() {
               aria-label="email"
               placeholder="Enter Email Address"
               className={`border ${
-                errors.email ? "border-[#ec6d6a]" : "border-[#DCDCE5]"
+                (user.email !== "" || errors.email) &&
+                (errors.firebaseError || emailAvailable === false)
+                  ? "border-[#ec6d6a]"
+                  : user.email !== "" &&
+                    emailAvailable &&
+                    !errors.email
+                  ? "border-green-500"
+                  : "border-[#DCDCE5]"
               } p-3 rounded-xl dark:bg-[#363647] bg-[#ebebf0] w-full h-[48px] text-sm placeholder-[#67667A] font-normal focus:ring-2 focus:ring-[#5F5BD7] focus:border-transparent outline-none`}
             />
             {errors.email && (
@@ -222,7 +250,16 @@ function SignUpComponent() {
             )}
             {errors.firebaseError && (
               <span className="text-[#ec6d6a] text-sm mt-2 font-light">
-                Email already in use
+                {errors.firebaseError}
+              </span>
+            )}
+            {!errors.email && !errors.firebaseError && user.email !== "" && (
+              <span
+                className={`text-sm mt-2 font-light ${
+                  emailAvailable ? "text-[#21e427]" : ""
+                }`}
+              >
+                {emailAvailable ? "Email available" : ""}
               </span>
             )}
           </div>
@@ -246,7 +283,7 @@ function SignUpComponent() {
                 (user.username !== "" || errors.username) &&
                 (errors.username || usernameAvailable === false)
                   ? "border-[#ec6d6a]"
-                  : usernameAvailable !== "" &&
+                  : user.username !== "" &&
                     usernameAvailable &&
                     !errors.username
                   ? "border-green-500"
@@ -258,14 +295,15 @@ function SignUpComponent() {
                 {errors.username}
               </span>
             )}
-            {!errors.username && usernameAvailable && user.username !== "" && (
-              <span className="text-[#ec6d6a] text-sm mt-2 font-light">
-                Username is not available
-              </span>
-            )}
-            {!errors.username && usernameAvailable && !user.username !== "" && (
-              <span className="text-[#21e427] text-sm mt-2 font-light">
-                Username available
+            {!errors.username && user.username !== "" && (
+              <span
+                className={`text-sm mt-2 font-light ${
+                  usernameAvailable ? "text-[#21e427]" : "text-[#ec6d6a]"
+                }`}
+              >
+                {usernameAvailable
+                  ? "Username available"
+                  : "Username is not available"}
               </span>
             )}
           </div>
@@ -335,7 +373,12 @@ function SignUpComponent() {
           className="bg-[#5f5bd7] text-white text-center text-lg font-semibold block w-full p-3 rounded-md mt-8"
           onClick={(e) => {
             e.preventDefault();
-            authSignUp();
+            authSignUp(
+              user.firstname,
+              user.email,
+              user.password,
+              user.username
+            );
           }}
         >
           Create Account

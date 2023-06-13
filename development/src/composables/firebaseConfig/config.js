@@ -12,6 +12,7 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_APP_ID,
 };
 
+
 // Init firebase
 const app = initializeApp(firebaseConfig);
 
@@ -23,4 +24,4 @@ const emailProvider = new GoogleAuthProvider();
 // timestamp
 const timestamp = appFirestore.timestamp;
 
-export { appStorage, timestamp, appAuth, appFirestore, emailProvider };
+export { appStorage, timestamp, appAuth, appFirestore, emailProvider,app };
