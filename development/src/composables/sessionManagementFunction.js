@@ -4,7 +4,6 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
 import { firebaseConfig } from "./firebaseConfig/config";
-import PeerSession from "@/components/PeerOverlay_comp";
 
 firebase.initializeApp(firebaseConfig);
 
@@ -38,7 +37,7 @@ function getCurrentUserId() {
   if (!currentUser) {
     throw new Error("User is not authenticated");
   }
-  return currentUser.uId();
+  return currentUser.uid;
 }
 
 function initializeTimer(userJoinTime) {
@@ -59,70 +58,54 @@ function initializeTimer(userJoinTime) {
   }, 1000);
 }
 
-const copyPeerId = () => {
-  navigator.clipboard.writeText(peerId);
-};
-
-const currentUser = firebase.auth.currentUser;
-if (!currentUser) {
-  throw new Error("User is not authenticated");
+function checkUserAuthentication() {
+  const currentUser = firebase.auth.currentUser;
+  if (!currentUser) {
+    throw new Error("User is not authenticated");
+  }
 }
 
-let sessionDataLocally = getSessionDataLocally();
-if (!sessionDataLocally) {
-  sessionDataLocally = {};
-  storeSessionDataLocally(sessionDataLocally);
+function validatePeerId(sessionId, sessionDataFirebase) {
+  if (!sessionDataFirebase || sessionId !== sessionDataFirebase.sessionId) {
+    toast.error("Invalid session ID");
+  }
 }
 
-let sessionDataFirebase = await getSessionDataFirebase();
-if (!sessionDataFirebase) {
-  sessionDataFirebase = {};
-  storeSessionDataFirebase(sessionDataFirebase);
+function checkSessionCapacity(sessionDataFirebase) {
+  if (sessionDataFirebase.users && sessionDataFirebase.users.length >= 2) {
+    toast.error("Session has reached maximum number of users");
+  }
 }
 
-let sessionName;
-let programmingLanguage;
+function joinPeerSession(sessionId) {
+  checkUserAuthentication();
 
-let peerId = sessionDataFirebase.peerId;
-if (!peerId) {
-  peerId = generatePeerIdCharacter();
-  sessionDataFirebase.peerId = peerId;
-  storeSessionDataFirebase(sessionDataFirebase);
-}
+  const sessionDataFirebase = getSessionDataFirebase();
 
-const userIndex =
-  sessionDataFirebase.users &&
-  sessionDataFirebase.users.findIndex((user) => user.peerId === peerId);
-if (
-  userIndex === -1 &&
-  (!sessionDataFirebase.users || sessionDataFirebase.users.length < 2)
-) {
-  PeerSession();
-  const newSessionData = {
-    sessionName,
-    programmingLanguage,
+  validatePeerId(sessionId, sessionDataFirebase);
+  checkSessionCapacity(sessionDataFirebase);
+
+  const peerId = generatePeerIdCharacter();
+  const userJoinTime = new Date().toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  const currentUser = {
     peerId,
-    userJoinTime: new Date().toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    }),
+    userJoinTime,
   };
 
-  sessionDataFirebase.sessionName = sessionName;
-  sessionDataFirebase.programmingLanguage = programmingLanguage;
-  sessionDataFirebase.users = [newSessionData];
+  if (!sessionDataFirebase.users) {
+    sessionDataFirebase.users = [];
+  }
+
+  sessionDataFirebase.users.push(currentUser);
 
   storeSessionDataFirebase(sessionDataFirebase);
-} else if (userIndex !== -1) {
-  const currentUserData = sessionDataFirebase.users[userIndex];
-  const storedJoinTime = currentUserData.userJoinTime;
-  peerId = currentUserData.peerId;
-  initializeTimer(storedJoinTime);
-} else {
-  toast.error("Invalid Session ID");
+
+  initializeTimer(userJoinTime);
 }
 
-// use case logic when users decide to change programming language or end session before timeout
 function endSession() {
   const userId = getCurrentUserId();
   firebase.database().ref(`sessions/${userId}`).remove();
@@ -130,12 +113,12 @@ function endSession() {
 }
 
 export {
-  sessionName,
-  programmingLanguage,
+  checkUserAuthentication,
   storeSessionDataLocally,
   getSessionDataLocally,
   storeSessionDataFirebase,
   getSessionDataFirebase,
-  copyPeerId,
   initializeTimer,
+  joinPeerSession,
+  endSession,
 };

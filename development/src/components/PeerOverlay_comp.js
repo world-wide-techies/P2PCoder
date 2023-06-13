@@ -1,4 +1,3 @@
-"use client";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import HTML from "../../public/assets/codeEditorIcons/symbol.png";
@@ -7,13 +6,32 @@ import JS from "../../public/assets/codeEditorIcons/Group.png";
 import closeIconWhite from "../../public/assets/onboardingIcons/close_light.png";
 import closeIconBlack from "../../public/assets/onboardingIcons/close_black.png";
 import React, { useState } from "react";
+import {
+  storeSessionDataLocally,
+  storeSessionDataFirebase,
+  checkUserAuthentication,
+} from "@/composables/sessionManagementFunction";
+import { generatePeerIdCharacter } from "@/composables/peerIdGenerator";
+import { toast } from "react-toastify";
 
 function PeerSession() {
   const [activeLanguage, setActiveLanguage] = useState("");
   const [sessionName, setSessionName] = useState("");
   const [isOpen, setIsOpen] = useState(true);
 
-  const handleClick = () => {};
+  function createPeerSession() {
+    checkUserAuthentication();
+    if (!sessionName && !activeLanguage) {
+      toast.error("Session name and Programming language required");
+    } else {
+      const sessionId = generatePeerIdCharacter();
+
+      const sessionData = { sessionName, activeLanguage, sessionId, users: [] };
+
+      storeSessionDataLocally(sessionData);
+      storeSessionDataFirebase(sessionData);
+    }
+  }
 
   const handleClose = () => {
     setIsOpen(false);
@@ -44,8 +62,8 @@ function PeerSession() {
           </div>
           <input
             type="text"
-            name="sessionNom"
-            id="sessionNom"
+            name="sessionName"
+            id="sessionName"
             value={sessionName}
             onChange={(e) => setSessionName(e.target.value)}
             placeholder="Enter Session Name"
@@ -58,12 +76,11 @@ function PeerSession() {
           </div>
           <div
             className="flex justify-between "
-            value={activeLanguage}
-            onChange={(e) => setActiveLanguage(e.target.value)}
+            onChange={(e) => setActiveLanguage(e.target.activeLanguage)}
           >
             <div
               onClick={() => setActiveLanguage("html")}
-              className={` w-32 h-32 flex justify-center items-center flex-col  shadow-md shadow-black rounded-md ${
+              className={` w-32 h-32 flex justify-center items-center flex-col  shadow-md shadow-black rounded-md cursor-pointer ${
                 activeLanguage === "html"
                   ? "bg-blue-500 text-white"
                   : "  bg-gray-200 dark:bg-[#3D3D48]"
@@ -76,7 +93,7 @@ function PeerSession() {
             </div>
             <div
               onClick={() => setActiveLanguage("css")}
-              className={` w-32 h-32 flex justify-center items-center shadow-md shadow-black flex-col rounded-md ${
+              className={` w-32 h-32 flex justify-center items-center shadow-md shadow-black flex-col rounded-md cursor-pointer ${
                 activeLanguage === "css"
                   ? "bg-blue-500 text-white "
                   : " bg-gray-200 dark:bg-[#3D3D48]"
@@ -89,7 +106,7 @@ function PeerSession() {
             </div>
             <div
               onClick={() => setActiveLanguage("javascript")}
-              className={` w-32 h-32 flex justify-center shadow-md shadow-black items-center flex-col rounded-md ${
+              className={` w-32 h-32 flex justify-center shadow-md shadow-black items-center flex-col rounded-md cursor-pointer ${
                 activeLanguage === "javascript"
                   ? "bg-blue-500 text-white"
                   : " bg-gray-200 dark:bg-[#3D3D48]"
@@ -101,7 +118,10 @@ function PeerSession() {
           </div>
         </div>
 
-        <button className="w-full py-7 px-6 text-white mt-12 rounded-lg bg-[#5F5BD7] text-center font-normal text-lg font-nohemi">
+        <button
+          onClick={createPeerSession}
+          className="w-full py-7 px-6 text-white mt-12 rounded-lg bg-[#5F5BD7] text-center font-normal text-lg font-nohemi"
+        >
           Create Peer Session
         </button>
       </div>
@@ -109,4 +129,4 @@ function PeerSession() {
   );
 }
 
-export { PeerSession, sessionName, activeLanguage };
+export { PeerSession };
