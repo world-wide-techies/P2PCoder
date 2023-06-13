@@ -1,3 +1,4 @@
+import ErrorModal from "@/components/errorModal_comp";
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -6,6 +7,7 @@ export const TabContext = createContext();
 export const TabProvider = ({ children }) => {
   const barItems = [{ id: 1, title: "Welcome", active: true }];
   const [items, setItems] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (items.length == 0) {
@@ -55,13 +57,22 @@ export const TabProvider = ({ children }) => {
         ];
         setItems(newItems);
       } else {
-        toast.error("You can only have 5 pages open at once.");
+        setErrorMessage("You can only have 5 pages open at once.");
       }
     }
   };
 
   return (
-    <TabContext.Provider value={{ barItems, items, setItems, handleLanguage }}>
+    <TabContext.Provider
+      value={{
+        barItems,
+        items,
+        setItems,
+        handleLanguage,
+        setErrorMessage,
+        errorMessage,
+      }}
+    >
       {children}
     </TabContext.Provider>
   );
