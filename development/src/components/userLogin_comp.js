@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { OnboardingHeader } from "./onboardingHeader";
 import Link from "next/link";
 import Image from "next/image";
@@ -19,7 +19,28 @@ import closeWhite from ".././../public/assets/forgotPasswordForm/close_white.png
 import closeBlack from ".././../public/assets/onboardingIcons/close_black.png";
 import { useRouter } from "next/navigation";
 
+import { useGithubSignin } from "@/composables/authGithubSigninPopup";
+import { PasswordToggle } from "./passwordToggleFunction";
+import {
+  useGoogleSignin,
+} from "@/composables/authGoogleSigninPoppup";
+import ErrorModal from "./errorModal_comp";
+
 function UserLoginComp() {
+  const { signinWithGithub, githubError } = useGithubSignin();
+  const { signinWithGoogle, googleError } = useGoogleSignin();
+  const [errorMessage, setErrorMessage] = useState("");
+  useEffect(() => {
+    setErrorMessage(githubError || googleError);
+    setTimeout(() => {
+      setErrorMessage("");
+    }, 6000);
+  }, [githubError, googleError]);
+
+  const handleClose = () => {
+    setErrorMessage("");
+  };
+
   const { theme, setTheme } = useTheme();
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
@@ -196,8 +217,13 @@ function UserLoginComp() {
             </p>
           </div>
         </div>
+        <ErrorModal
+        errorMessage={errorMessage}
+        style={"fixed  top-0 right-0 mr-2 "}
+        onClose={() => handleClose()}
+      />
       </form>
-    </div>
+      </div>
   );
 }
 export default UserLoginComp;
