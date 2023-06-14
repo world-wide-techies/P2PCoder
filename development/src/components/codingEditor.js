@@ -2,9 +2,12 @@
 import { useState } from 'react';
 import MonacoEditor from 'react-monaco-editor/lib/editor';
 import { useTheme } from 'next-themes';
+import { useTabContext } from '@/composables/tabContext';
 
-function CodingEditor({ language }) {
+function CodingEditor() {
   const { theme, setTheme } = useTheme();
+  const { items } = useTabContext();
+  const language = items.filter((e) => e.active)[0].ext;
   const [code, setCode] = useState(
     '// Welcome to P2P Coder, a Community Prepared Platform...'
   );
@@ -17,12 +20,12 @@ function CodingEditor({ language }) {
 
   const options = {
     selectOnLineNumbers: true,
+    automaticLayout: true,
   };
   return (
     <div>
       <MonacoEditor
-        width="91vw"
-        height="98vh"
+        height="95vh"
         language={
           language === '.js'
             ? 'javascript'
