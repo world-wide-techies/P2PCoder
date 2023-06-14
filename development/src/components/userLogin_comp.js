@@ -17,19 +17,15 @@ import { useGithubSignin } from "@/composables/authGithubSigninPopup";
 import { PasswordToggle } from "./passwordToggleFunction";
 import closeIcon from "../../public/assets/onboardingIcons/close_light.png";
 import closeDark from "../../public/assets/onboardingIcons/closecircledark.png";
-import {
-  useGoogleSignin,
-} from "@/composables/authGoogleSigninPoppup";
+import { useGoogleSignin } from "@/composables/authGoogleSigninPoppup";
 import ErrorModal from "./errorModal_comp";
-import { addCodeEditorToFirestore } from "@/composables/dbService";
 
 function UserLoginComp() {
   const { signinWithGithub, githubError } = useGithubSignin();
   const { signinWithGoogle, googleError } = useGoogleSignin();
   const [errorMessage, setErrorMessage] = useState("");
+
   useEffect(() => {
-    addCodeEditor();
-    addSession()
     setErrorMessage(githubError || googleError);
     setTimeout(() => {
       setErrorMessage("");

@@ -8,9 +8,7 @@ import githubDark from "../../public/assets/onboardingIcons/github_black.png";
 import googleIcon from "../../public/assets/onboardingIcons/google.png";
 import { PasswordToggle } from "./passwordToggleFunction";
 import { useGithubSignin } from "@/composables/authGithubSigninPopup";
-import {
-  useGoogleSignin,
-} from "@/composables/authGoogleSigninPoppup";
+import { useGoogleSignin } from "@/composables/authGoogleSigninPoppup";
 import { signupFormValidation } from "@/composables/signupFormValidation";
 import {
   authSignUp,
@@ -27,7 +25,6 @@ function SignUpComponent() {
   const { signinWithGoogle, googleError } = useGoogleSignin();
   const [errorMessage, setErrorMessage] = useState("");
   useEffect(() => {
-    
     setErrorMessage(githubError || googleError);
     setTimeout(() => {
       setErrorMessage("");
@@ -37,7 +34,7 @@ function SignUpComponent() {
   const handleClose = () => {
     setErrorMessage("");
   };
-  
+
   const { theme, setTheme } = useTheme();
   const [user, setUser] = useState({
     firstname: "",

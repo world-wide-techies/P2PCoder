@@ -1,7 +1,6 @@
 import { appFirestore, appAuth, app } from "./firebaseConfig/config";
 import { setDoc, doc, addDoc, updateDoc, getDoc } from "firebase/firestore";
 
-//Create a session
 async function addSession(userSessionData) {
   const { sessionName, peerId, language, userName, peerName } = userSessionData;
   if (!sessionName || !peerId || !language || !userName || !peerName) {
@@ -32,7 +31,6 @@ async function addSession(userSessionData) {
   }
 }
 
-// get user details
 async function getUserDetails(peerId) {
   const user = appAuth.currentUser;
   if (user == null) {
@@ -43,20 +41,19 @@ async function getUserDetails(peerId) {
   const userSession = doc(coders, `SESSION/${peerId}`);
   try {
     const sessionData = await getDoc(userSession);
-    console.log(`session is ${JSON.stringify(sessionData.data())}`);
+
     if (!sessionData.exists()) {
       throw new Error("Session not found!");
     }
 
     const docData = sessionData.data();
-    console.log(`value added : ${docData}`);
     return docData;
   } catch (error) {
     console.error("Error adding document: ", error);
   }
 }
 
-// add codeEditor
+
 async function addCollabCodeEditor(codeEditorData) {
   const { editorCode, peerId } = codeEditorData;
   if (!editorCode || !peerId) {
@@ -76,7 +73,7 @@ async function addCollabCodeEditor(codeEditorData) {
     };
 
     const docRef = await setDoc(session, codeData, { merge: true });
-    console.log("code data added");
+    console.log("code editor data added");
   } catch (error) {
     console.error("Error adding document: ", error);
   }
