@@ -1,101 +1,85 @@
 import { appFirestore, appAuth, app } from "./firebaseConfig/config";
 import { setDoc, doc, addDoc, updateDoc, getDoc } from "firebase/firestore";
 
-//const p2pCoder = doc(appFirestore, "P2PCoder");
+//Create a session
+async function addSession(userSessionData) {
+  const { sessionName, peerId, language, userName, peerName } = userSessionData;
+  if (!sessionName || !peerId || !language || !userName || !peerName) {
+    throw new Error("Kindly provide all fields");
+  }
 
-const users = doc(appFirestore, "Users/usersId");
+  const user = appAuth.currentUser;
+  if (user == null) {
+    throw new Error("User not found!");
+  }
 
-const coders = doc(users, "CODERS/codersId");
-const session = doc(coders, "SESSION/sessionId");
+  const coders = doc(appFirestore, `CODERS/${user.uid}`);
+  const session = doc(coders, `SESSION/${peerId}`);
 
-async function addCodeEditor(codeEditorData) {
   try {
-    const codeEditorData = {
-      codes: "Html",
-      first: "Alan",
-      middle: "Mathison",
-      last: "Turing",
-      born: 1912,
+    const sessionData = {
+      sessionName: sessionName,
+      peerName: peerName,
+      peerId: peerId,
+      language: language,
+      createdAt: new Date(),
+      userName: userName,
     };
-
-    const docRef = await setDoc(coders, codeEditorData, { merge: true });
-    console.log("value added");
+    const docRef = await setDoc(session, sessionData, { merge: true });
+    console.log("session added");
   } catch (error) {
     console.error("Error adding document: ", error);
   }
 }
 
-async function getUser(codeEditorData) {
+// get user details
+async function getUserDetails(peerId) {
+  const user = appAuth.currentUser;
+  if (user == null) {
+    throw new Error("User not found!");
+  }
+
+  const coders = doc(appFirestore, `CODERS/${user.uid}`);
+  const userSession = doc(coders, `SESSION/${peerId}`);
   try {
-    const user = await getDoc(coders);
-    if (user.exists()) {
-      const docData = user.data();
+    const sessionData = await getDoc(userSession);
+    console.log(`session is ${JSON.stringify(sessionData.data())}`);
+    if (!sessionData.exists()) {
+      throw new Error("Session not found!");
     }
 
+    const docData = sessionData.data();
     console.log(`value added : ${docData}`);
+    return docData;
   } catch (error) {
     console.error("Error adding document: ", error);
   }
 }
 
-async function addSession(codeEditorData) {
+// add codeEditor
+async function addCollabCodeEditor(codeEditorData) {
+  const { editorCode, peerId } = codeEditorData;
+  if (!editorCode || !peerId) {
+    throw new Error("Kindly insert text");
+  }
+  const user = appAuth.currentUser;
+  console.log(user);
+  if (user == null) {
+    throw new Error("User not found!");
+  }
+
+  const coders = doc(appFirestore, `CODERS/${user.uid}`);
+  const session = doc(coders, `SESSION/${peerId}`);
   try {
-    const codeEditorData = {
-      codes: "Html",
-      first: "Alan",
-      middle: "Mathison",
-      last: "Turing",
-      born: 1912,
+    const codeData = {
+      codes: editorCode,
     };
 
-    const docRef = await getDoc(session, codeEditorData, { merge: true });
-    console.log("value added");
+    const docRef = await setDoc(session, codeData, { merge: true });
+    console.log("code data added");
   } catch (error) {
     console.error("Error adding document: ", error);
   }
 }
 
-//const collabSession = doc(appFirestore, "collaboration/session");
-
-/*async function addCollabSessionToFirestore(sessionData) {
-  try {
-    const docRef = await setDoc(collabSession, sessionData, { merge: true });
-    console.log(docRef);
-  } catch (error) {
-    console.error("Error adding document: ", error);
-  }
-}
-
-async function addCollabSessionToFirestore(sessionData) {
-  try {
-    const docRef = await updateDoc(collabSession, sessionData,);
-    console.log(docRef);
-  } catch (error) {
-    console.error("Error adding document: ", error);
-  }
-}
-*/
-
-const fulfilOrder = async (session) => {
-  /* console.log("fulfilling order", session);*/
-
-  return app
-    .firestore()
-    .collection("users")
-    .doc(session.metadata.email)
-    .collection("orders")
-    .doc(session.id)
-    .set({
-      amount: session.amount_total / 100,
-      amount_shipping: session.total_details.amount_shipping / 100,
-      images: JSON.parse(session.metadata.images),
-      timestamp: admin.firestore.FieldValue.serverTimestamp(),
-    })
-    .then(() => {
-      console.log(
-        `SUCCESS: Order ${session.id} is stored successfully in the database`
-      );
-    });
-};
-
-export { addCodeEditorToFirestore };
+export { addCollabCodeEditor, addSession, getUserDetails };
