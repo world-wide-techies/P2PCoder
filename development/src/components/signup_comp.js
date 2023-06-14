@@ -10,15 +10,13 @@ import { PasswordToggle } from "./passwordToggleFunction";
 import { useGithubSignin } from "@/composables/authGithubSigninPopup";
 import { useGoogleSignin } from "@/composables/authGoogleSigninPoppup";
 import { signupFormValidation } from "@/composables/signupFormValidation";
-import {
-  authSignUp,
-  isUsernameAvailable,
-  completeSignUp,
-} from "@/composables/authSignupFunction";
+import { authSignUp } from "@/composables/authSignupFunction";
 import { useTheme } from "next-themes";
 import closeIcon from "../../public/assets/onboardingIcons/closecirclelight.png";
 import closeIconDark from "../../public/assets/onboardingIcons/closecircledark.png";
 import ErrorModal from "./errorModal_comp";
+import { getDocs, collection, where, query } from "firebase/firestore";
+import { appFirestore } from "../composables/firebaseConfig/config";
 
 function SignUpComponent() {
   const { signinWithGithub, githubError } = useGithubSignin();
@@ -61,10 +59,19 @@ function SignUpComponent() {
 
     if (name === "username") {
       try {
-        const isAvailable = await isUsernameAvailable(value);
-        setUsernameAvailable(isAvailable);
+        const collectionRef = query(
+          collection(appFirestore, "CODERS"),
+          where("username", "==", `${value}`)
+        );
+        const querySnapshot = await getDocs(collectionRef);
+
+        if (querySnapshot.empty) {
+          setUsernameAvailable(true);
+        } else {
+          setUsernameAvailable(false);
+        }
       } catch (error) {
-        setErrors(error);
+        console.log(error);
       }
     }
   };
@@ -76,28 +83,20 @@ function SignUpComponent() {
 
     if (Object.keys(formErrors).length === 0) {
       try {
-        const isAvailable = await isUsernameAvailable(user.username);
-        if (isAvailable) {
-          const signUpUser = await authSignUp(
-            user.firstname,
-            user.email,
-            user.password,
-            user.username
-          );
+        const signUpUser = await authSignUp(
+          user.firstname,
+          user.email,
+          user.password,
+          user.username
+        );
 
-          if (signUpUser.success) {
-            const createdUser = signUpUser.user;
-            await completeSignUp(createdUser, user.username);
-            await sendEmailVerification(createdUser);
-            setFormSubmitted(true);
-            setShowOverlay(true);
-            handleCloseForm();
-            return createdUser;
-          } else {
-            setErrors({ firebaseError: signUpUser.error });
-          }
+        if (signUpUser.success) {
+          const createdUser = signUpUser.user;
+          setFormSubmitted(true);
+
+          return createdUser;
         } else {
-          setUsernameAvailable(false);
+          setErrors({ firebaseError: signUpUser.error });
         }
       } catch (error) {
         setErrors({ firebaseError: error.message });
@@ -271,12 +270,10 @@ function SignUpComponent() {
                   aria-label="username"
                   placeholder="Enter User Name"
                   className={`border ${
-                    (user.username !== "" || errors.username) &&
-                    (errors.username || usernameAvailable === false)
+                    errors.username ||
+                    (usernameAvailable === false && user.username !== "")
                       ? "border-[#ec6d6a]"
-                      : usernameAvailable !== "" &&
-                        usernameAvailable &&
-                        !errors.username
+                      : usernameAvailable && user.username !== ""
                       ? "border-green-500"
                       : "border-[#DCDCE5]"
                   } p-3 rounded-xl dark:bg-[#363647] bg-[#ebebf0]  w-full h-[48px] text-sm placeholder-[#67667A] font-normal focus:ring-2 focus:ring-[#5F5BD7] focus:border-transparent outline-none`}
