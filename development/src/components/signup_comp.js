@@ -26,6 +26,7 @@ function SignUpComponent() {
   const { signinWithGoogle, googleError } = useGoogleSignin();
   const [errorMessage, setErrorMessage] = useState("");
   useEffect(() => {
+    
     setErrorMessage(githubError || googleError);
     setTimeout(() => {
       setErrorMessage("");
