@@ -1,21 +1,13 @@
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification,
+} from "firebase/auth";
 import { appAuth, appFirestore } from "./firebaseConfig/config";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, setDoc, collection } from "firebase/firestore";
 
-async function isUsernameAvailable(username) {
+async function authSignUp(firstname, lastname, email, password, username) {
   try {
-    const useRef = doc(appFirestore, "users", username);
-    const userSnapshot = await getDoc(useRef);
-    return !userSnapshot.exists();
-  } catch (error) {
-    throw new Error(error);
-  }
-}
-
-async function authSignUp(name, email, password, username) {
-  try {
-    const isAvailable = await isUsernameAvailable(username);
-
     const userCredential = await createUserWithEmailAndPassword(
       appAuth,
       email,
@@ -23,14 +15,44 @@ async function authSignUp(name, email, password, username) {
     );
     const user = userCredential.user;
     if (user) {
-      await updateProfile(user, { displayName: name });
-      await setDoc(doc(appFirestore, "users", username), { userId: user.uid });
+      const displayName = `${firstname} ${lastname}`;
+      await updateProfile(user, { displayName: displayName });
+
+      const newUser = {
+        firstname: firstname,
+        lastname: lastname,
+        email: email,
+      };
+
+      await completeSignUp(newUser, username);
     }
-    return user;
+
+    return { success: true, user };
   } catch (error) {
-    const errorMessage = error.message;
-    throw new Error(errorMessage);
+    console.error("Error object:", error);
+    return { success: false, error: error.message };
   }
 }
 
-export { isUsernameAvailable, authSignUp };
+async function triggerEmailVerification(user) {
+  try {
+    await sendEmailVerification(user);
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+}
+
+async function completeSignUp(user, username) {
+  const codersCollection = collection(appFirestore, "CODERS");
+  const newDocRef = doc(codersCollection);
+  const fullname = `${user.firstname} ${user.lastname}`;
+  await setDoc(newDocRef, {
+    fullname,
+    username,
+    email: user.email,
+    createdAt: new Date(),
+  });
+}
+
+export { authSignUp, completeSignUp, triggerEmailVerification };
