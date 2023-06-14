@@ -8,17 +8,6 @@ import { useTheme } from "next-themes";
 const VerificationOverlay = ({ email }) => {
   const { theme, setTheme } = useTheme();
 
-  // const sendEmailVerification = async (e) => {
-  //   e.preventDefault();
-
-  //   const result = await triggerEmailVerification(user);
-  //   if (result.success) {
-  //     console.log("Verified");
-  //   } else {
-  //     console.log("Error", result.error);
-  //   }
-  // };
-
   return (
     <div className="w-full">
       <div className="space-y-6 w-full  bg-neutral-100 dark:bg-[#2F2F3A] p-9 rounded-2xl drop-shadow-md ">
