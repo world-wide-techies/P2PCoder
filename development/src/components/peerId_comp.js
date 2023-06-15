@@ -1,16 +1,29 @@
-"use client"
-import Image from 'next/image'
+'use client'
 import React, { useState } from 'react';
+import Image from 'next/image';
+import { generatePeerIdCharacter } from '../../src/composables/peerIdGenerator';
+
 import closeIconBlack from '../../public/assets/onboardingIcons/close_black.png';
 import closeIconWhite from '../../public/assets/onboardingIcons/close_light.png';
 
-function peerId() {
-
+function PeerId() {
     const [isOpen, setIsOpen] = useState(true);
+    const [peerSessionId, setPeerSessionId] = useState(generatePeerIdCharacter()); 
+    const [copyMessage, setCopyMessage] = useState(''); 
+
     const handleClose = () => {
         setIsOpen(false);
     };
-    
+
+    const handleCopyId = async () => {
+        try {
+            await navigator.clipboard.writeText(peerSessionId);
+            setCopyMessage('ID copied to clipboard');
+        } catch (error) {
+            setCopyMessage('Failed to copy ID to clipboard: ' + error);
+        }
+    };
+
     if (!isOpen) {
         return null;
     }
@@ -24,10 +37,10 @@ function peerId() {
             <div className='flex justify-between my-3'>
                 <div className='flex flex-col'>
                     <div className='font-nohemi font-normal text-sm leading-4 '>PeerSession ID</div>
-                    <div className='font-semibold text-lg font-nohemi leading-5'>JFGT231AQS1</div>
+                    <div className='font-semibold text-lg font-nohemi leading-5'>{peerSessionId}</div>
                 </div>
-                <button className='bg-[#5F5BD7] w-24 h-9 rounded-lg flex justify-center my-3 items-center'>
-                    <svg 
+                <button className='bg-[#5F5BD7] w-24 h-9 rounded-lg flex justify-center my-3 items-center' onClick={handleCopyId}>
+                <svg 
                         width="20"
                         height="12"
                         viewBox="0 0 12 12"
@@ -52,9 +65,10 @@ function peerId() {
                     <div className='font-normal text-sm leading-4 text-white font-nohemi'>Copy ID</div>
                 </button>
             </div>
+            <div className='font-normal text-sm leading-4 text-black font-nohemi dark:text-white'>{copyMessage}</div>
             <button className=' font-nohemi text-white rounded-lg bg-[#5F5BD7] w-full h-12'>Continue</button>
         </div>
-    )
+    );
 }
 
-export default peerId;
+export default PeerId;
