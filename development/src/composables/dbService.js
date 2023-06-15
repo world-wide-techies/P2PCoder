@@ -1,4 +1,4 @@
-import { appFirestore, appAuth, app } from "./firebaseConfig/config";
+import { appFirestore, appAuth, } from "./firebaseConfig/config";
 import { setDoc, doc, updateDoc, getDoc } from "firebase/firestore";
 
 async function addSession(userSessionData) {
