@@ -20,6 +20,7 @@ import { useTheme } from "next-themes";
 import closeIcon from "../../public/assets/onboardingIcons/close_light.png";
 import closeDark from "../../public/assets/onboardingIcons/closecircledark.png";
 import ErrorModal from "./errorModal_comp";
+import { useRouter } from "next/navigation";
 
 function SignUpComponent() {
   const { signinWithGithub, githubError } = useGithubSignin();
@@ -27,8 +28,13 @@ function SignUpComponent() {
   const { theme, setTheme } = useTheme();
   const [errorMessage, setErrorMessage] = useState("");
   const [errors, setErrors] = useState({});
-  const [usernameAvailable, setUsernameAvailable] = useState(false);
-  const [emailAvailable, setEmailAvailable] = useState(false);
+  const [emailAvailable, setEmailAvailable] = useState(true);
+  const [usernameAvailable, setUsernameAvailable] = useState(true);
+  
+
+
+
+  const router = useRouter();
 
   const [user, setUser] = useState({
     firstname: "",
@@ -51,21 +57,14 @@ function SignUpComponent() {
     setErrorMessage("");
   };
 
-
   const handleChange = async (e) => {
     const { name, value } = e.target;
     setUser((prevUser) => ({ ...prevUser, [name]: value }));
-
+  
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
-
-    if (name === "username") {
-      try {
-        const isAvailable = await checkUsernameAvailability(value);
-        setUsernameAvailable(isAvailable);
-      } catch (error) {
-        console.log(error);
-      }
-    } else if (name === "email") {
+  
+   
+    if (name === "email") {
       try {
         const isAvailable = await checkEmailAvailability(value);
         setEmailAvailable(isAvailable);
@@ -73,8 +72,17 @@ function SignUpComponent() {
         console.log(error);
       }
     }
+     else if (name === "username") {
+      try {
+        const isAvailable = await checkUsernameAvailability(value);
+        setUsernameAvailable(isAvailable);
+      } catch (error) {
+        console.log(error);
+      }
+    } 
   };
-
+  
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formErrors = signupFormValidation(user);
@@ -94,7 +102,6 @@ function SignUpComponent() {
             user.username
           );
           return createdUser;
-          console.log("User signed up:", createdUser);
         } else {
           if (!isUsernameAvailable) {
             setUsernameAvailable(false);
@@ -114,6 +121,10 @@ function SignUpComponent() {
     }
   };
 
+const handleCloseButton = () => {
+router.push("/")
+}
+
   return (
     <form
       className="space-y-5 p-12  bg-[#F3F3F6] dark:bg-[#1E1E2A] w-auto min-w-[800px] min-h-[730px] font-nohemi rounded-3xl drop-shadow-lg"
@@ -125,7 +136,8 @@ function SignUpComponent() {
           p={"Enjoy extra features when you create an account with us."}
         />
         <Image
-          src={theme === "dark" ? closeIcon : closeDark}
+          onClick={handleCloseButton}
+        src={theme === "dark" ? closeIcon : closeDark}
           alt="close icon"
           className="w-6 h-6 mr-4 mt-2"
         />
@@ -230,43 +242,45 @@ function SignUpComponent() {
               Email Address
             </label>
             <input
-              type="text"
-              name="email"
-              id="email"
-              value={user.email}
-              onChange={handleChange}
-              aria-label="email"
-              placeholder="Enter Email Address"
-              className={`border ${
-                (user.email !== "" || errors.email) &&
-                (errors.firebaseError || emailAvailable === false)
-                  ? "border-[#ec6d6a]"
-                  : user.email !== "" &&
-                    emailAvailable &&
-                    !errors.email
-                  ? "border-green-500"
-                  : "border-[#DCDCE5]"
-              } p-3 rounded-xl dark:bg-[#363647] bg-[#ebebf0] w-full h-[48px] text-sm placeholder-[#67667A] font-normal focus:ring-2 focus:ring-[#5F5BD7] focus:border-transparent outline-none`}
-            />
-            {errors.email && (
-              <span className="text-[#ec6d6a] text-sm mt-2 font-light">
-                {errors.email}
-              </span>
-            )}
-            {errors.firebaseError && (
-              <span className="text-[#ec6d6a] text-sm mt-2 font-light">
-                {errors.firebaseError}
-              </span>
-            )}
-            {!errors.email && !errors.firebaseError && user.email !== "" && (
-              <span
-                className={`text-sm mt-2 font-light ${
-                  emailAvailable ? "text-[#21e427]" : ""
-                }`}
-              >
-                {emailAvailable ? "Email available" : ""}
-              </span>
-            )}
+            type="text"
+            name="email"
+            id="email"
+            value={user.email}
+            onChange={handleChange}
+            aria-label="email"
+            placeholder="Enter Email Address"
+            className={`border ${
+              (user.email !== "" || errors.email) &&
+              (errors.firebaseError || !emailAvailable)
+                ? "border-[#ec6d6a]"
+                : user.email !== "" &&
+                  emailAvailable &&
+                  !errors.email
+                ? "border-green-500"
+                : "border-[#DCDCE5]"
+            } p-3 rounded-xl dark:bg-[#363647] bg-[#ebebf0] w-full h-[48px] text-sm placeholder-[#67667A] font-normal focus:ring-2 focus:ring-[#5F5BD7] focus:border-transparent outline-none`}
+          />
+          {errors.email && (
+            <span className="text-[#ec6d6a] text-sm mt-2 font-light">
+              {errors.email}
+            </span>
+          )}
+          {errors.firebaseError && (
+            <span className="text-[#ec6d6a] text-sm mt-2 font-light">
+              {errors.firebaseError}
+            </span>
+          )}
+          {!errors.email && !errors.firebaseError && user.email !== "" && (
+            <span
+              className={`text-sm mt-2 font-light ${
+                emailAvailable ? "text-[#21e427]" : "text-[#ec6d6a]"
+              }`}
+            >
+              {emailAvailable ? "Email available" : "Email is not available"}
+            </span>
+          )}
+          
+          
           </div>
 
           <div className="flex flex-col w-1/2 justify-start items-start">
