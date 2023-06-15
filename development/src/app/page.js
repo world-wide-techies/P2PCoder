@@ -1,4 +1,3 @@
-
 'use client';
 import Welcome from '@/components/welcome_comp';
 import EditorNavBar from '@/components/navbar_components/editorNavbar_comp';
