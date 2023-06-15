@@ -25,7 +25,7 @@ async function addSession(userSessionData) {
       userName: userName,
     };
     const docRef = await setDoc(session, sessionData, { merge: true });
-    console.log("session added");
+    return "session added";
   } catch (error) {
     console.error("Error adding document: ", error);
   }
@@ -72,7 +72,7 @@ async function addCollabCodeEditor(codeEditorData) {
     };
 
     const docRef = await setDoc(session, codeData, { merge: true });
-    console.log("code editor data added");
+    return "code editor data added");
   } catch (error) {
     console.error("Error adding document: ", error);
   }
