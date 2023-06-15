@@ -16,7 +16,7 @@ function peerId() {
     }
 
     return (
-        <div className="bg-whitetext-[#0E0C46] dark:bg-[#504F5F]  dark:text-white p-4 flex flex-col rounded-lg">
+        <div className="bg-white text-[#0E0C46] dark:bg-[#504F5F]  dark:text-white p-4 flex flex-col rounded-lg">
             <div className="flex w-full justify-between">
                 <div className="font-nohemi font-bold leading-8">Peer Session Created</div>
                 <button onClick={handleClose}><Image src={closeIconBlack} className="w-5 h-5" /></button>
@@ -24,10 +24,10 @@ function peerId() {
             <div className='flex justify-between my-3'>
                 <div className='flex flex-col'>
                     <div className='font-nohemi font-normal text-sm leading-4 '>PeerSession ID</div>
-                    <div className='font-semibold text-lg leading-5'>chjhcuchnbuh</div>
+                    <div className='font-semibold text-lg font-nohemi leading-5'>JFGT231AQS1</div>
                 </div>
                 <button className='bg-[#5F5BD7] w-24 h-9 rounded-lg flex justify-center my-3 items-center'>
-                    <svg className=''
+                    <svg 
                         width="20"
                         height="12"
                         viewBox="0 0 12 12"
@@ -49,10 +49,10 @@ function peerId() {
                             strokeLinejoin="round"
                         />
                     </svg>
-                    <div className='font-normal text-sm leading-4 font-nohemi'>Copy ID</div>
+                    <div className='font-normal text-sm leading-4 text-white font-nohemi'>Copy ID</div>
                 </button>
             </div>
-            <button className=' font-nohemi text-white rounded-lg bg-[#5F5BD7] w-full h-12 dark:text'>Continue</button>
+            <button className=' font-nohemi text-white rounded-lg bg-[#5F5BD7] w-full h-12'>Continue</button>
         </div>
     )
 }
