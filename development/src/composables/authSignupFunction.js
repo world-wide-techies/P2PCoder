@@ -15,21 +15,18 @@ async function authSignUp(firstname, lastname, email, password, username) {
     );
     const user = userCredential.user;
     if (user) {
-      const displayName = `${firstname} ${lastname}`;
-      await updateProfile(user, { displayName: displayName });
+      await updateProfile(user, { displayName: `${firstname} ${lastname}` });
 
       const newUser = {
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
+        firstname,
+        lastname,
+        email,
       };
 
       await completeSignUp(newUser, username);
     }
-
     return { success: true, user };
   } catch (error) {
-    console.error("Error object:", error);
     return { success: false, error: error.message };
   }
 }

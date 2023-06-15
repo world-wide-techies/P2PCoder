@@ -10,7 +10,7 @@ import { PasswordToggle } from "./passwordToggleFunction";
 import { useGithubSignin } from "@/composables/authGithubSigninPopup";
 import { useGoogleSignin } from "@/composables/authGoogleSigninPoppup";
 import { signupFormValidation } from "@/composables/signupFormValidation";
-import { authSignUp, completeSignUp } from "@/composables/authSignupFunction";
+import { authSignUp } from "@/composables/authSignupFunction";
 import { useTheme } from "next-themes";
 import closeIcon from "../../public/assets/onboardingIcons/closecirclelight.png";
 import closeIconDark from "../../public/assets/onboardingIcons/closecircledark.png";
@@ -78,18 +78,17 @@ function SignUpComponent() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log("User object before validation:", user);
+    const { firstname, lastname, email, password, username } = user;
     const formErrors = signupFormValidation(user);
 
     if (Object.keys(formErrors).length === 0) {
       try {
         const signUpUser = await authSignUp(
-          user.firstname,
-          user.lastname,
-          user.email,
-          user.password,
-          user.username
+          firstname,
+          lastname,
+          email,
+          password,
+          username
         );
 
         if (signUpUser.success) {
