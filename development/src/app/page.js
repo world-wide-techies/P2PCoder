@@ -148,17 +148,17 @@ function Home() {
             ) : (
               <div></div>
             )}
-            {items[0]?.active && items[0].title === "Welcome" ? (
-              <div className="p-11">
-                <Welcome />
-              </div>
-            ) : items.filter((e) => e.active)[0] ? (
-              <Collab />
-            ) : (
-              <div className="p-11">
-                <Welcome />
-              </div>
-            )}
+            {items.map((item) => {
+              if (item?.active && item.title === 'Welcome') {
+                return (
+                  <div className="p-11">
+                    <Welcome />
+                  </div>
+                );
+              } else if (item.active && item.title != 'Welcome') {
+                return <Collab key={item.id} />;
+              }
+            })}
           </>
         </div>
       </main>
