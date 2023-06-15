@@ -5,7 +5,7 @@ import "firebase/auth";
 import "firebase/database";
 import { firebaseConfig } from "./firebaseConfig/config";
 
-firebase.initializeApp(firebaseConfig);
+// firebase.initializeApp(firebaseConfig);
 
 // Storing session data with local storage
 function storeSessionDataLocally(sessionData) {
@@ -65,7 +65,7 @@ function checkUserAuthentication() {
   }
 }
 
-function validatePeerId(sessionId, sessionDataFirebase) {
+function validateSessionId(sessionId, sessionDataFirebase) {
   if (!sessionDataFirebase || sessionId !== sessionDataFirebase.sessionId) {
     toast.error("Invalid session ID");
   }
@@ -82,7 +82,7 @@ function joinPeerSession(sessionId) {
 
   const sessionDataFirebase = getSessionDataFirebase();
 
-  validatePeerId(sessionId, sessionDataFirebase);
+  validateSessionId(sessionId, sessionDataFirebase);
   checkSessionCapacity(sessionDataFirebase);
 
   const peerId = generatePeerIdCharacter();
