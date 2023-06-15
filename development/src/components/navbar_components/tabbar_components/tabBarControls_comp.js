@@ -1,8 +1,12 @@
 'use client';
-import { useEffect } from 'react';
 import TabBarItems from './tabBarItem';
 
-function TabBarControls({ items, handleActiveTab, handleCloseTab, handleRenameTab }) {
+function TabBarControls({
+  items,
+  handleActiveTab,
+  handleCloseTab,
+  handleRenameTab,
+}) {
   if (!Array.isArray(items)) {
     return null;
   }
