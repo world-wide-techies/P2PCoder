@@ -2,17 +2,21 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { generatePeerIdCharacter } from '../../src/composables/peerIdGenerator';
-
+import { useTheme } from "next-themes";
 import closeIconBlack from '../../public/assets/onboardingIcons/close_black.png';
 import closeIconWhite from '../../public/assets/onboardingIcons/close_light.png';
 
 function PeerId() {
+    const { theme, setTheme } = useTheme();
     const [isOpen, setIsOpen] = useState(true);
+    const [copyMessage, setCopyMessage] = useState('');
     const [peerSessionId, setPeerSessionId] = useState('');
 
     useEffect(() => {
         setPeerSessionId(generatePeerIdCharacter()); 
     }, []);
+
+    
 
     const handleClose = () => {
         setIsOpen(false);
@@ -21,9 +25,9 @@ function PeerId() {
     const handleCopyId = async () => {
         try {
             await navigator.clipboard.writeText(peerSessionId);
-            console.log('ID copied to clipboard:', peerSessionId);
+            setCopyMessage('ID copied to clipboard:', peerSessionId);
         } catch (error) {
-            console.error('Failed to copy ID to clipboard:', error);
+            setCopyMessage('Failed to copy ID to clipboard:', error);
         }
     };
 
@@ -35,7 +39,7 @@ function PeerId() {
         <div className="bg-white text-[#0E0C46] dark:bg-[#504F5F]  dark:text-white p-4 flex flex-col rounded-lg">
             <div className="flex w-full justify-between">
                 <div className="font-nohemi font-bold leading-8">Peer Session Created</div>
-                <button onClick={handleClose}><Image src={closeIconBlack} className="w-5 h-5" /></button>
+                <button onClick={handleClose}><Image src={theme === "dark" ? closeIconWhite : closeIconBlack} className="w-5 h-5" /></button>
             </div>
             <div className='flex justify-between my-3'>
                 <div className='flex flex-col'>
@@ -68,6 +72,7 @@ function PeerId() {
                     <div className='font-normal text-sm leading-4 text-white font-nohemi'>Copy ID</div>
                 </button>
             </div>
+            <div className='font-normal text-black text-sm leading-4 font-nohemi dark:text-white'>{copyMessage}</div>
             <button className=' font-nohemi text-white rounded-lg bg-[#5F5BD7] w-full h-12'>Continue</button>
         </div>
     );
