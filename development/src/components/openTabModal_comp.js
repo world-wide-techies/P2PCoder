@@ -54,7 +54,7 @@ export const OpenTabModal = ({ onClose }) => {
             <Image src={JS} alt="language-icon" className="mb-4" />
             <p className="leading-tight text-sm">JS</p>
           </div>
-          {isUserSignedIn() && (
+          { (
             <div
               onClick={() => setActive('collab')}
               className={` w-32 h-32 flex justify-center items-center flex-col rounded-md hover:cursor-pointer ${

@@ -8,18 +8,18 @@ function SessionComp() {
   const view = useSearchParams().get("view");
   return (
     <div>
-      {view == "createSession" ? (
+      {view === "createSession" ? (
         <Modal
           onClose={() => {
-            router.push("/collaborate");
+            router.push("/");
           }}
         >
           <PeerSession />
         </Modal>
-      ) : view == "joinSession" ? (
+      ) : view === "joinSession" ? (
         <Modal
           onClose={() => {
-            router.push("/collaborate");
+            router.push("/");
           }}
         >
           <JoinSession />

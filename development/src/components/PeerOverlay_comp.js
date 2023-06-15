@@ -44,7 +44,7 @@ function PeerSession() {
   const theme = useTheme();
 
   return (
-    <div className="space-y-6 w-[456] h-[429] bg-white dark:bg-[#504F5F] rounded-2xl border-solid font-bold">
+    <div className="space-y-6 w-[456] h-[429] bg-white dark:bg-[#2F2F3A] rounded-2xl border-solid font-bold">
       <div className=" p-8 font-nohemi dark:text-white">
         <div className="flex justify-between">
           <div className="font-bold text-3xl leading-8">
@@ -81,10 +81,10 @@ function PeerSession() {
           >
             <div
               onClick={() => setActiveLanguage("html")}
-              className={` w-32 h-32 flex justify-center items-center flex-col  shadow-md  rounded-md cursor-pointer ${
+              className={` w-32 h-32 flex justify-center items-center flex-col  shadow-md  rounded-md cursor-pointer  ${
                 activeLanguage === "html"
                   ? "bg-blue-500 text-white"
-                  : "  bg-gray-200 "
+                  : "  bg-[#3D3D48] "
               }`}
             >
               <Image src={HTML} className="w-8 h-9 mb-4" />
@@ -97,7 +97,7 @@ function PeerSession() {
               className={` w-32 h-32 flex justify-center items-center shadow-md  flex-col rounded-md cursor-pointer ${
                 activeLanguage === "css"
                   ? "bg-blue-500 text-white "
-                  : " bg-gray-200 "
+                  : " bg-[#3D3D48] "
               }`}
             >
               <Image src={CSS} alt="language-icon" className="w-8 h-8 mb-4" />
@@ -110,7 +110,7 @@ function PeerSession() {
               className={` w-32 h-32 flex justify-center shadow-md  items-center flex-col rounded-md cursor-pointer ${
                 activeLanguage === "javascript"
                   ? "bg-blue-500 text-white"
-                  : " bg-gray-200"
+                  : " bg-[#3D3D48]"
               }`}
             >
               <Image src={JS} alt="language-icon" className="w-8 h-9 mb-4" />

@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import ErrorModal from '@/components/errorModal_comp';
 import UserLoginComp from '@/components/userLogin_comp';
 import SignUpComponent from '@/components/signup_comp';
+import SessionComp from '@/components/session_comp';
 
 function Home() {
   const { items, setItems, errorMessage, setErrorMessage } = useTabContext();
@@ -165,6 +166,7 @@ function Home() {
             ) : (
               <div></div>
             )}
+            
 
             {items.map((item) => {
               if (item?.active && item.title === 'Welcome') {
@@ -174,7 +176,7 @@ function Home() {
                   </div>
                 );
               } else if (item.active && item.title == 'collab') {
-                return <div> Collab Component </div>;
+                return <div> <SessionComp /> </div>;
               } else if (item.active && item.title != 'Welcome') {
                 return <Collab key={item.id} />;
               }
