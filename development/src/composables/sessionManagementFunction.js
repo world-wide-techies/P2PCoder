@@ -5,7 +5,7 @@ import "firebase/auth";
 import "firebase/database";
 import { firebaseConfig } from "./firebaseConfig/config";
 
-firebase.initializeApp(firebaseConfig);
+// firebase.initializeApp(firebaseConfig);
 
 // Storing session data with local storage
 function storeSessionDataLocally(sessionData) {
