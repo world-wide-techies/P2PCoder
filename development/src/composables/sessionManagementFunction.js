@@ -1,13 +1,14 @@
 import { generatePeerIdCharacter } from "./peerIdGenerator";
-import { toast } from "react-toastify";
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
 import { firebaseConfig } from "./firebaseConfig/config";
+import ErrorModal from "@/components/errorModal_comp";
+import { useState } from "react";
 
-// firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
-// Storing session data with local storage
+const [errorMessage, setErrorMessage] = useState("");
 function storeSessionDataLocally(sessionData) {
   localStorage.setItem("sessionData", JSON.stringify(sessionData));
 }
@@ -17,7 +18,6 @@ function getSessionDataLocally() {
   return sessionData;
 }
 
-// Storing session data with firebase
 function storeSessionDataFirebase(sessionData) {
   const userId = getCurrentUserId();
   firebase.database().ref(`sessions/${userId}`).set(sessionData);
@@ -35,7 +35,7 @@ async function getSessionDataFirebase() {
 function getCurrentUserId() {
   const currentUser = firebase.auth().currentUser;
   if (!currentUser) {
-    throw new Error("User is not authenticated");
+    setErrorMessage("User is not authenticated");
   }
   return currentUser.uid;
 }
@@ -61,19 +61,19 @@ function initializeTimer(userJoinTime) {
 function checkUserAuthentication() {
   const currentUser = firebase.auth.currentUser;
   if (!currentUser) {
-    throw new Error("User is not authenticated");
+    setErrorMessage("User is not authenticated");
   }
 }
 
 function validateSessionId(sessionId, sessionDataFirebase) {
   if (!sessionDataFirebase || sessionId !== sessionDataFirebase.sessionId) {
-    toast.error("Invalid session ID");
+    setErrorMessage("Invalid session ID");
   }
 }
 
 function checkSessionCapacity(sessionDataFirebase) {
   if (sessionDataFirebase.users && sessionDataFirebase.users.length >= 2) {
-    toast.error("Session has reached maximum number of users");
+    setErrorMessage("Session has reached maximum number of users");
   }
 }
 
@@ -111,7 +111,11 @@ function endSession() {
   firebase.database().ref(`sessions/${userId}`).remove();
   localStorage.removeItem("sessionData");
 }
-
+<ErrorModal
+  errorMessage={setErrorMessage}
+  style={"fixed  top-0 right-0 mr-2 "}
+  onClose={() => handleClose()}
+/>;
 export {
   checkUserAuthentication,
   storeSessionDataLocally,

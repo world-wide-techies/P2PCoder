@@ -6,7 +6,7 @@ import JS from "../../public/assets/codeEditorIcons/Group.png";
 import closeIconWhite from "../../public/assets/onboardingIcons/close_light.png";
 import closeIconBlack from "../../public/assets/onboardingIcons/close_black.png";
 import React, { useState } from "react";
-import { toast } from "react-toastify";
+import ErrorModal from "./errorModal_comp";
 import {
   storeSessionDataLocally,
   storeSessionDataFirebase,
@@ -14,16 +14,16 @@ import {
 } from "@/composables/sessionManagementFunction";
 import { generatePeerIdCharacter } from "@/composables/peerIdGenerator";
 
-
 function PeerSession() {
   const [activeLanguage, setActiveLanguage] = useState("");
   const [sessionName, setSessionName] = useState("");
   const [isOpen, setIsOpen] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
 
   function createPeerSession() {
     checkUserAuthentication();
     if (!sessionName && !activeLanguage) {
-      toast.error("Session name and Programming language required");
+      setErrorMessage("Session name and Programming language required");
     } else {
       const sessionId = generatePeerIdCharacter();
 
@@ -33,6 +33,11 @@ function PeerSession() {
       storeSessionDataFirebase(sessionData);
     }
   }
+  <ErrorModal
+    errorMessage={setErrorMessage}
+    style={"fixed  top-0 right-0 mr-2 "}
+    onClose={() => handleClose()}
+  />;
 
   const handleClose = () => {
     setIsOpen(false);
@@ -47,9 +52,7 @@ function PeerSession() {
     <div className="space-y-6 w-[456] h-[429] bg-white dark:bg-[#2F2F3A] rounded-2xl border-solid font-bold">
       <div className=" p-8 font-nohemi dark:text-white">
         <div className="flex justify-between">
-          <div className="font-bold text-3xl leading-8">
-            New Peer Session
-          </div>
+          <div className="font-bold text-3xl leading-8">New Peer Session</div>
           <button onClick={handleClose}>
             <Image
               src={theme === "dark" ? closeIconWhite : closeIconBlack}
@@ -88,9 +91,7 @@ function PeerSession() {
               }`}
             >
               <Image src={HTML} className="w-8 h-9 mb-4" />
-              <div className="font-bold text-xl">
-                HTML
-              </div>
+              <div className="font-bold text-xl">HTML</div>
             </div>
             <div
               onClick={() => setActiveLanguage("css")}
@@ -101,9 +102,7 @@ function PeerSession() {
               }`}
             >
               <Image src={CSS} alt="language-icon" className="w-8 h-8 mb-4" />
-              <p className=" font-bold text-xl">
-                CSS
-              </p>
+              <p className=" font-bold text-xl">CSS</p>
             </div>
             <div
               onClick={() => setActiveLanguage("javascript")}
