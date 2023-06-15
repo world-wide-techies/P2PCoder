@@ -1,11 +1,11 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from 'react';
 
 export const TabContext = createContext();
 
 export const TabProvider = ({ children }) => {
   const barItems = [{ id: 1, title: 'Welcome', active: true }];
   const [items, setItems] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (items.length == 0) {
@@ -24,12 +24,28 @@ export const TabProvider = ({ children }) => {
   }, []);
 
   const handleLanguage = (lang) => {
-    if (lang) {
-      if (items.length < 5) {
-        const oldItems = items.map((item) => ({
-          ...item,
-          active: false,
-        }));
+    const oldItems = items.map((item) => ({
+      ...item,
+      active: false,
+    }));
+    if (lang && items.length < 5) {
+      if (lang == 'collab') {
+        const collabCheck = items.filter((e) => e.title == 'collab');
+        if (!collabCheck.length) {
+          const newItems = [
+            ...oldItems,
+            {
+              id: items.length + 1,
+              title: 'collab',
+              ext: '.p2p',
+              active: true,
+            },
+          ];
+          setItems(newItems);
+        } else {
+          setErrorMessage('You can only have 1 collab tab');
+        }
+      } else {
         const newItems = [
           ...oldItems,
           {
@@ -55,9 +71,9 @@ export const TabProvider = ({ children }) => {
           },
         ];
         setItems(newItems);
-      } else {
-        setErrorMessage("You can only have 5 pages open at once.");
       }
+    } else {
+      setErrorMessage('You can only have 5 pages open at once.');
     }
   };
 
@@ -70,8 +86,7 @@ export const TabProvider = ({ children }) => {
         handleLanguage,
         setErrorMessage,
         errorMessage,
-      }}
-    >
+      }}>
       {children}
     </TabContext.Provider>
   );

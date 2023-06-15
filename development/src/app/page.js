@@ -1,19 +1,22 @@
-"use client";
-import Welcome from "@/components/welcome_comp";
-import EditorNavBar from "@/components/navbar_components/editorNavbar_comp";
-import SideNavBarControl from "@/components/navbar_components/sidebar_components/sideBarNavControl";
-import TabBarControls from "@/components/navbar_components/tabbar_components/tabBarControls_comp";
-import { useSearchParams, useRouter } from "next/navigation";
-import { Modal } from "@/components/modal";
-import { LanguageModal } from "@/components/languageModal_comp";
-import { useTabContext } from "@/composables/tabContext";
-import Collab from "@/components/collab_comp";
-import { useEffect } from "react";
-import ErrorModal from "@/components/errorModal_comp";
+
+'use client';
+import Welcome from '@/components/welcome_comp';
+import EditorNavBar from '@/components/navbar_components/editorNavbar_comp';
+import SideNavBarControl from '@/components/navbar_components/sidebar_components/sideBarNavControl';
+import TabBarControls from '@/components/navbar_components/tabbar_components/tabBarControls_comp';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { Modal } from '@/components/modal';
+import { OpenTabModal } from '@/components/openTabModal_comp';
+import { useTabContext } from '@/composables/tabContext';
+import Collab from '@/components/collab_comp';
+import { useEffect } from 'react';
+import ErrorModal from '@/components/errorModal_comp';
+import UserLoginComp from '@/components/userLogin_comp';
+import SignUpComponent from '@/components/signup_comp';
 
 function Home() {
   const { items, setItems, errorMessage, setErrorMessage } = useTabContext();
-  const view = useSearchParams().get("view");
+  const view = useSearchParams().get('view');
   const router = useRouter();
 
   const handleTabActive = (tab) => {
@@ -51,31 +54,31 @@ function Home() {
     const currentTab = event.target;
     const initialName = currentTab.textContent;
 
-    const form = document.createElement("form");
+    const form = document.createElement('form');
     currentTab.replaceChildren(form);
-    const inputField = document.createElement("input");
+    const inputField = document.createElement('input');
     inputField.value = initialName;
     form.appendChild(inputField);
     const currentTabChild = currentTab.firstChild;
     currentTabChild[0].focus();
     currentTabChild[0].select();
 
-    currentTabChild.addEventListener("submit", tabRenameSubmitHandler, {
+    currentTabChild.addEventListener('submit', tabRenameSubmitHandler, {
       once: true,
     });
-    currentTabChild.addEventListener("focusout", tabRenameFocusHandler, {
+    currentTabChild.addEventListener('focusout', tabRenameFocusHandler, {
       once: true,
     });
 
     function tabRenameSubmitHandler(e) {
-      currentTabChild.removeEventListener("focusout", tabRenameFocusHandler);
+      currentTabChild.removeEventListener('focusout', tabRenameFocusHandler);
       e.preventDefault();
       const newName = e.target[0].value;
       setTabName(newName);
     }
 
     function tabRenameFocusHandler(e) {
-      currentTabChild.removeEventListener("submit", tabRenameSubmitHandler);
+      currentTabChild.removeEventListener('submit', tabRenameSubmitHandler);
       const currentName = e.target.value;
       setTabName(currentName);
     }
@@ -92,7 +95,7 @@ function Home() {
 
   useEffect(() => {
     setTimeout(() => {
-      setErrorMessage("");
+      setErrorMessage('');
     }, 6000);
   }, [errorMessage]);
 
@@ -101,8 +104,8 @@ function Home() {
       <main className="h-full bg-[#DCDCE5] dark:bg-[#2F2F3A] relative">
         <ErrorModal
           errorMessage={errorMessage}
-          style={"absolute z-50 top-3 right-0 mr-2 "}
-          onClose={() => setErrorMessage("")}
+          style={'absolute z-50 top-3 right-0 mr-2 '}
+          onClose={() => setErrorMessage('')}
         />
         <div className="relative h-full border-gray-300 border-b-[1px] dark:border-gray-700 ">
           <EditorNavBar />
@@ -135,21 +138,35 @@ function Home() {
         </div>
         <div className="bg-white dark:bg-[#1E1E2A]  ml-24 w-[92.9%] h-screen flex flex-col justify-start">
           <>
-            {view == "chooseLanguage" ? (
+            {view == 'quicklinks' ? (
               <Modal
                 onClose={() => {
-                  router.push("/");
-                }}
-              >
-                <LanguageModal
+                  router.push('/');
+                }}>
+                <OpenTabModal
                   onClose={() => {
-                    router.push("/");
+                    router.push('/');
                   }}
                 />
+              </Modal>
+            ) : view == 'login' ? (
+              <Modal
+                onClose={() => {
+                  router.push('/');
+                }}>
+                <UserLoginComp />
+              </Modal>
+            ) : view == 'signup' ? (
+              <Modal
+                onClose={() => {
+                  router.push('/');
+                }}>
+                <SignUpComponent />
               </Modal>
             ) : (
               <div></div>
             )}
+
             {items.map((item) => {
               if (item?.active && item.title === 'Welcome') {
                 return (
@@ -157,6 +174,8 @@ function Home() {
                     <Welcome />
                   </div>
                 );
+              } else if (item.active && item.title == 'collab') {
+                return <div> Collab Component </div>;
               } else if (item.active && item.title != 'Welcome') {
                 return <Collab key={item.id} />;
               }
