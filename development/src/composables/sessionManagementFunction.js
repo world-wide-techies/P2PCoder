@@ -6,39 +6,40 @@ import { firebaseConfig } from "./firebaseConfig/config";
 import ErrorModal from "@/components/errorModal_comp";
 import { useState } from "react";
 
-firebase.initializeApp(firebaseConfig);
+// const [errorMessage, setErrorMessage] = useState("");
+// const handleClose = () => {
+//   setErrorMessage("");
+// };
+// function storeSessionDataLocally(sessionData) {
+//   localStorage.setItem("sessionData", JSON.stringify(sessionData));
+// }
 
-const [errorMessage, setErrorMessage] = useState("");
-function storeSessionDataLocally(sessionData) {
-  localStorage.setItem("sessionData", JSON.stringify(sessionData));
-}
+// function getSessionDataLocally() {
+//   const sessionData = JSON.parse(localStorage.getItem("sessionData"));
+//   return sessionData;
+// }
 
-function getSessionDataLocally() {
-  const sessionData = JSON.parse(localStorage.getItem("sessionData"));
-  return sessionData;
-}
+// function storeSessionDataFirebase(sessionData) {
+//   const userId = getCurrentUserId();
+//   firebase.database().ref(`sessions/${userId}`).set(sessionData);
+// }
 
-function storeSessionDataFirebase(sessionData) {
-  const userId = getCurrentUserId();
-  firebase.database().ref(`sessions/${userId}`).set(sessionData);
-}
+// async function getSessionDataFirebase() {
+//   const userId = getCurrentUserId();
+//   const snapshot = await firebase
+//     .database()
+//     .ref(`sessions/${userId}`)
+//     .once("value");
+//   return snapshot.val();
+// }
 
-async function getSessionDataFirebase() {
-  const userId = getCurrentUserId();
-  const snapshot = await firebase
-    .database()
-    .ref(`sessions/${userId}`)
-    .once("value");
-  return snapshot.val();
-}
-
-function getCurrentUserId() {
-  const currentUser = firebase.auth().currentUser;
-  if (!currentUser) {
-    setErrorMessage("User is not authenticated");
-  }
-  return currentUser.uid;
-}
+// function getCurrentUserId() {
+//   const currentUser = firebase.auth().currentUser;
+//   if (!currentUser) {
+//     setErrorMessage("User is not authenticated");
+//   }
+//   return currentUser.uid;
+// }
 
 function initializeTimer(userJoinTime) {
   const timer = setInterval(() => {
@@ -58,71 +59,64 @@ function initializeTimer(userJoinTime) {
   }, 1000);
 }
 
-function checkUserAuthentication() {
-  const currentUser = firebase.auth.currentUser;
-  if (!currentUser) {
-    setErrorMessage("User is not authenticated");
-  }
-}
+// function validateSessionId(sessionId, sessionDataFirebase) {
+//   if (!sessionDataFirebase || sessionId !== sessionDataFirebase.sessionId) {
+//     setErrorMessage("Invalid session ID");
+//   }
+// }
 
-function validateSessionId(sessionId, sessionDataFirebase) {
-  if (!sessionDataFirebase || sessionId !== sessionDataFirebase.sessionId) {
-    setErrorMessage("Invalid session ID");
-  }
-}
+// function checkSessionCapacity(sessionDataFirebase) {
+//   if (sessionDataFirebase.users && sessionDataFirebase.users.length >= 2) {
+//     setErrorMessage("Session has reached maximum number of users");
+//   }
+// }
 
-function checkSessionCapacity(sessionDataFirebase) {
-  if (sessionDataFirebase.users && sessionDataFirebase.users.length >= 2) {
-    setErrorMessage("Session has reached maximum number of users");
-  }
-}
+// function joinPeerSession(sessionId) {
+//   checkUserAuthentication();
 
-function joinPeerSession(sessionId) {
-  checkUserAuthentication();
+//   const sessionDataFirebase = getSessionDataFirebase();
 
-  const sessionDataFirebase = getSessionDataFirebase();
+//   validateSessionId(sessionId, sessionDataFirebase);
+//   checkSessionCapacity(sessionDataFirebase);
 
-  validateSessionId(sessionId, sessionDataFirebase);
-  checkSessionCapacity(sessionDataFirebase);
+//   const peerId = generatePeerIdCharacter();
+//   const userJoinTime = new Date().toLocaleTimeString([], {
+//     hour: "2-digit",
+//     minute: "2-digit",
+//   });
+//   const currentUser = {
+//     peerId,
+//     userJoinTime,
+//   };
 
-  const peerId = generatePeerIdCharacter();
-  const userJoinTime = new Date().toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-  const currentUser = {
-    peerId,
-    userJoinTime,
-  };
+//   if (!sessionDataFirebase.users) {
+//     sessionDataFirebase.users = [];
+//   }
 
-  if (!sessionDataFirebase.users) {
-    sessionDataFirebase.users = [];
-  }
+//   sessionDataFirebase.users.push(currentUser);
 
-  sessionDataFirebase.users.push(currentUser);
+//   storeSessionDataFirebase(sessionDataFirebase);
 
-  storeSessionDataFirebase(sessionDataFirebase);
-
-  initializeTimer(userJoinTime);
-}
+//   initializeTimer(userJoinTime);
+// }
 
 function endSession() {
   const userId = getCurrentUserId();
   firebase.database().ref(`sessions/${userId}`).remove();
   localStorage.removeItem("sessionData");
 }
-<ErrorModal
+{/* <ErrorModal
   errorMessage={setErrorMessage}
   style={"fixed  top-0 right-0 mr-2 "}
   onClose={() => handleClose()}
-/>;
-export {
-  checkUserAuthentication,
-  storeSessionDataLocally,
-  getSessionDataLocally,
-  storeSessionDataFirebase,
-  getSessionDataFirebase,
-  initializeTimer,
-  joinPeerSession,
-  endSession,
-};
+/>; */}
+// export {
+//   checkUserAuthentication,
+//   storeSessionDataLocally,
+//   getSessionDataLocally,
+//   storeSessionDataFirebase,
+//   getSessionDataFirebase,
+//   initializeTimer,
+//   joinPeerSession,
+//   endSession,
+// };

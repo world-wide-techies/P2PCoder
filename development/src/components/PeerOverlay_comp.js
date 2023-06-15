@@ -7,30 +7,25 @@ import closeIconWhite from "../../public/assets/onboardingIcons/close_light.png"
 import closeIconBlack from "../../public/assets/onboardingIcons/close_black.png";
 import React, { useState } from "react";
 import ErrorModal from "./errorModal_comp";
-import {
-  storeSessionDataLocally,
-  storeSessionDataFirebase,
-  checkUserAuthentication,
-} from "@/composables/sessionManagementFunction";
 import { generatePeerIdCharacter } from "@/composables/peerIdGenerator";
+import { addSession } from "@/composables/dbService";
 
 function PeerSession() {
-  const [activeLanguage, setActiveLanguage] = useState("");
+  const [language, setlanguage] = useState("");
   const [sessionName, setSessionName] = useState("");
   const [isOpen, setIsOpen] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
   function createPeerSession() {
-    checkUserAuthentication();
-    if (!sessionName && !activeLanguage) {
+  
+    if (!sessionName && !language) {
       setErrorMessage("Session name and Programming language required");
     } else {
       const sessionId = generatePeerIdCharacter();
 
-      const sessionData = { sessionName, activeLanguage, sessionId, users: [] };
+      const sessionData = { sessionName, language, sessionId };
 
-      storeSessionDataLocally(sessionData);
-      storeSessionDataFirebase(sessionData);
+      addSession()
     }
   }
   <ErrorModal
@@ -71,7 +66,7 @@ function PeerSession() {
             value={sessionName}
             onChange={(e) => setSessionName(e.target.value)}
             placeholder="Enter Session Name"
-            className="py-3 mt-2 mb-4 px-4 h-12 w-full font-normal text-sm bg-[#EBEBF0] rounded-lg"
+            className="py-3 mt-2 mb-4 px-4 h-12 w-full font-normal text-sm rounded-lg"
           />
         </div>
         <div>
@@ -80,12 +75,12 @@ function PeerSession() {
           </div>
           <div
             className="flex justify-between space-x-[30px] "
-            onChange={(e) => setActiveLanguage(e.target.activeLanguage)}
+            onChange={(e) => setlanguage(e.target.language)}
           >
             <div
-              onClick={() => setActiveLanguage("html")}
+              onClick={() => setlanguage("html")}
               className={` w-32 h-32 flex justify-center items-center flex-col  shadow-md  rounded-md cursor-pointer  ${
-                activeLanguage === "html"
+                language === "html"
                   ? "bg-blue-500 text-white"
                   : "  bg-[#3D3D48] "
               }`}
@@ -94,9 +89,9 @@ function PeerSession() {
               <div className="font-bold text-xl">HTML</div>
             </div>
             <div
-              onClick={() => setActiveLanguage("css")}
+              onClick={() => setlanguage("css")}
               className={` w-32 h-32 flex justify-center items-center shadow-md  flex-col rounded-md cursor-pointer ${
-                activeLanguage === "css"
+                language === "css"
                   ? "bg-blue-500 text-white "
                   : " bg-[#3D3D48] "
               }`}
@@ -105,9 +100,9 @@ function PeerSession() {
               <p className=" font-bold text-xl">CSS</p>
             </div>
             <div
-              onClick={() => setActiveLanguage("javascript")}
+              onClick={() => setlanguage("javascript")}
               className={` w-32 h-32 flex justify-center shadow-md  items-center flex-col rounded-md cursor-pointer ${
-                activeLanguage === "javascript"
+                language === "javascript"
                   ? "bg-blue-500 text-white"
                   : " bg-[#3D3D48]"
               }`}
