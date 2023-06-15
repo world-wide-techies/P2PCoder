@@ -1,21 +1,21 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { toast } from "react-toastify";
 
 export const TabContext = createContext();
 
 export const TabProvider = ({ children }) => {
-  const barItems = [{ id: 1, title: "Welcome", active: true }];
+  const barItems = [{ id: 1, title: 'Welcome', active: true }];
   const [items, setItems] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (items.length == 0) {
       setItems(barItems);
     } else {
-      window.localStorage.setItem("barItems", JSON.stringify(items));
+      window.localStorage.setItem('barItems', JSON.stringify(items));
     }
   }, [items]);
   useEffect(() => {
-    const storedItems = window.localStorage.getItem("barItems");
+    const storedItems = window.localStorage.getItem('barItems');
     if (storedItems) {
       setItems(JSON.parse(storedItems));
     } else {
@@ -35,33 +35,43 @@ export const TabProvider = ({ children }) => {
           {
             id: items.length + 1,
             title:
-              lang === "js"
-                ? "scripts"
-                : lang === "css"
-                ? "styles"
-                : lang === "html"
-                ? "index"
-                : "untitled",
+              lang === 'js'
+                ? 'scripts'
+                : lang === 'css'
+                ? 'styles'
+                : lang === 'html'
+                ? 'index'
+                : 'untitled',
             ext:
-              lang === "js"
-                ? ".js"
-                : lang === "css"
-                ? ".css"
-                : lang === "html"
-                ? ".html"
-                : "",
+              lang === 'js'
+                ? '.js'
+                : lang === 'css'
+                ? '.css'
+                : lang === 'html'
+                ? '.html'
+                : '',
             active: true,
+            code: '',
           },
         ];
         setItems(newItems);
       } else {
-        toast.error("You can only have 5 pages open at once.");
+        setErrorMessage("You can only have 5 pages open at once.");
       }
     }
   };
 
   return (
-    <TabContext.Provider value={{ barItems, items, setItems, handleLanguage }}>
+    <TabContext.Provider
+      value={{
+        barItems,
+        items,
+        setItems,
+        handleLanguage,
+        setErrorMessage,
+        errorMessage,
+      }}
+    >
       {children}
     </TabContext.Provider>
   );
