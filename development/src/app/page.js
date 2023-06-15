@@ -8,6 +8,8 @@ import { Modal } from "@/components/modal";
 import { LanguageModal } from "@/components/languageModal_comp";
 import { useTabContext } from "@/composables/tabContext";
 import Collab from "@/components/collab_comp";
+import { useEffect } from "react";
+import ErrorModal from "@/components/errorModal_comp";
 
 function Home() {
   const { items, setItems, errorMessage, setErrorMessage } = useTabContext();
