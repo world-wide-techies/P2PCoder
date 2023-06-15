@@ -1,20 +1,38 @@
-'use client';
-import Welcome from '@/components/welcome_comp';
-import EditorNavBar from '@/components/navbar_components/editorNavbar_comp';
-import SideNavBarControl from '@/components/navbar_components/sidebar_components/sideBarNavControl';
-import TabBarControls from '@/components/navbar_components/tabbar_components/tabBarControls_comp';
-import { useSearchParams, useRouter } from 'next/navigation';
-import { Modal } from '@/components/modal';
-import { LanguageModal } from '@/components/languageModal_comp';
-import { useTabContext } from '@/composables/tabContext';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Collab from '@/components/collab_comp';
+"use client";
+import Welcome from "@/components/welcome_comp";
+import EditorNavBar from "@/components/navbar_components/editorNavbar_comp";
+import SideNavBarControl from "@/components/navbar_components/sidebar_components/sideBarNavControl";
+import TabBarControls from "@/components/navbar_components/tabbar_components/tabBarControls_comp";
+import { useSearchParams, useRouter } from "next/navigation";
+import { Modal } from "@/components/modal";
+import { LanguageModal } from "@/components/languageModal_comp";
+import { useTabContext } from "@/composables/tabContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Collab from "@/components/collab_comp";
+import { useEffect, useState } from "react";
 
 function Home() {
   const { items, setItems } = useTabContext();
-  const view = useSearchParams().get('view');
+  const [collab, setCollab] = useState([]);
+  const view = useSearchParams().get("view");
   const router = useRouter();
+
+  useEffect(() => {
+    const c = [...collab];
+    const checker = [...collab];
+    items.forEach((element) => {
+      if (element.id > c.length) {
+        c.push(<Collab key={element.id} />);
+      }
+    });
+    if (checker.length != c.length) {
+      setCollab(c);
+    }
+  }, [items]);
+  useEffect(() => {
+    console.log(collab);
+  }, [collab]);
 
   const handleTabActive = (tab) => {
     const index = items.findIndex((i, k) => k === tab);
@@ -51,31 +69,31 @@ function Home() {
     const currentTab = event.target;
     const initialName = currentTab.textContent;
 
-    const form = document.createElement('form');
+    const form = document.createElement("form");
     currentTab.replaceChildren(form);
-    const inputField = document.createElement('input');
+    const inputField = document.createElement("input");
     inputField.value = initialName;
     form.appendChild(inputField);
     const currentTabChild = currentTab.firstChild;
     currentTabChild[0].focus();
     currentTabChild[0].select();
 
-    currentTabChild.addEventListener('submit', tabRenameSubmitHandler, {
+    currentTabChild.addEventListener("submit", tabRenameSubmitHandler, {
       once: true,
     });
-    currentTabChild.addEventListener('focusout', tabRenameFocusHandler, {
+    currentTabChild.addEventListener("focusout", tabRenameFocusHandler, {
       once: true,
     });
 
     function tabRenameSubmitHandler(e) {
-      currentTabChild.removeEventListener('focusout', tabRenameFocusHandler);
+      currentTabChild.removeEventListener("focusout", tabRenameFocusHandler);
       e.preventDefault();
       const newName = e.target[0].value;
       setTabName(newName);
     }
 
     function tabRenameFocusHandler(e) {
-      currentTabChild.removeEventListener('submit', tabRenameSubmitHandler);
+      currentTabChild.removeEventListener("submit", tabRenameSubmitHandler);
       const currentName = e.target.value;
       setTabName(currentName);
     }
@@ -125,31 +143,32 @@ function Home() {
         </div>
         <div className="bg-white dark:bg-[#1E1E2A]  ml-24 w-[92.9%] h-screen flex flex-col justify-start">
           <>
-            {view == 'chooseLanguage' ? (
+            {view == "chooseLanguage" ? (
               <Modal
                 onClose={() => {
-                  router.push('/');
-                }}>
+                  router.push("/");
+                }}
+              >
                 <LanguageModal
                   onClose={() => {
-                    router.push('/');
+                    router.push("/");
                   }}
                 />
               </Modal>
             ) : (
               <div></div>
             )}
-            {items[0]?.active && items[0].title === 'Welcome' ? (
-              <div className="p-11">
-                <Welcome />
-              </div>
-            ) : items.filter((e) => e.active)[0] ? (
-              <Collab />
-            ) : (
-              <div className="p-11">
-                <Welcome />
-              </div>
-            )}
+            {items.map((item, id) => {
+              if (item.active && item.title == "Welcome") {
+                return (
+                  <div className="p-11">
+                    <Welcome key={item.id} />
+                  </div>
+                );
+              } else if (item.active && item.title != "Welcome") {
+                return collab[item.id - 1];
+              }
+            })}
           </>
         </div>
       </main>

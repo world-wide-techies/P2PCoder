@@ -51,6 +51,7 @@ export const TabProvider = ({ children }) => {
                 ? ".html"
                 : "",
             active: true,
+            code: "// Welcome to P2P Coder, a Community Prepared Platform...",
           },
         ];
         setItems(newItems);

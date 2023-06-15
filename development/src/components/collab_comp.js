@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import CodingEditor from './codingEditor';
+import React, { useState } from "react";
+import CodingEditor from "./codingEditor";
 
 const Collab = () => {
   const [isVideoOn, setIsVideoOn] = useState(false);
 
   return (
     <div className="w-full flex">
-      <div className={isVideoOn ? 'w-2/3' : 'w-[95vw]'}>
+      <div className={isVideoOn ? "w-2/3" : "w-[95vw]"}>
         <CodingEditor />
       </div>
       {isVideoOn && (
