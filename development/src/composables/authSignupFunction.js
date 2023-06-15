@@ -41,7 +41,7 @@ async function triggerEmailVerification(user) {
 }
 
 async function completeSignUp(user, username) {
-  const codersCollection = collection(appFirestore, "CODERS");
+  const codersCollection = collection(appFirestore, `CODERS/${user.uid}`);
   const newDocRef = doc(codersCollection);
   const fullname = `${user.firstname} ${user.lastname}`;
   await setDoc(newDocRef, {
