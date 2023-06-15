@@ -24,40 +24,21 @@ export const TabProvider = ({ children }) => {
   }, []);
 
   const handleLanguage = (lang) => {
-    if (lang) {
-      if (items.length < 5) {
-        const oldItems = items.map((item) => ({
-          ...item,
-          active: false,
-        }));
+    const oldItems = items.map((item) => ({
+      ...item,
+      active: false,
+    }));
+    if (lang && items.length < 5) {
+      if (lang == 'collab') {
         const collabCheck = items.filter((e) => e.title == 'collab');
         if (!collabCheck.length) {
           const newItems = [
             ...oldItems,
             {
               id: items.length + 1,
-              title:
-                lang === 'js'
-                  ? 'scripts'
-                  : lang === 'css'
-                  ? 'styles'
-                  : lang === 'html'
-                  ? 'index'
-                  : lang == 'collab'
-                  ? 'collab'
-                  : 'untitled',
-              ext:
-                lang === 'js'
-                  ? '.js'
-                  : lang === 'css'
-                  ? '.css'
-                  : lang === 'html'
-                  ? '.html'
-                  : lang == 'collab'
-                  ? '.p2p'
-                  : '',
+              title: 'collab',
+              ext: '.p2p',
               active: true,
-              code: '',
             },
           ];
           setItems(newItems);
@@ -65,8 +46,34 @@ export const TabProvider = ({ children }) => {
           setErrorMessage('You can only have 1 collab tab');
         }
       } else {
-        setErrorMessage('You can only have 5 pages open at once.');
+        const newItems = [
+          ...oldItems,
+          {
+            id: items.length + 1,
+            title:
+              lang === 'js'
+                ? 'scripts'
+                : lang === 'css'
+                ? 'styles'
+                : lang === 'html'
+                ? 'index'
+                : 'untitled',
+            ext:
+              lang === 'js'
+                ? '.js'
+                : lang === 'css'
+                ? '.css'
+                : lang === 'html'
+                ? '.html'
+                : '',
+            active: true,
+            code: '',
+          },
+        ];
+        setItems(newItems);
       }
+    } else {
+      setErrorMessage('You can only have 5 pages open at once.');
     }
   };
 
