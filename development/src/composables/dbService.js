@@ -1,4 +1,4 @@
-import { appFirestore, appAuth, app } from "./firebaseConfig/config";
+import { appFirestore, appAuth, } from "./firebaseConfig/config";
 import { setDoc, doc, addDoc, updateDoc, getDoc } from "firebase/firestore";
 
 async function addSession(userSessionData) {
@@ -60,7 +60,6 @@ async function addCollabCodeEditor(codeEditorData) {
     throw new Error("Kindly insert text");
   }
   const user = appAuth.currentUser;
-  console.log(user);
   if (user == null) {
     throw new Error("User not found!");
   }
