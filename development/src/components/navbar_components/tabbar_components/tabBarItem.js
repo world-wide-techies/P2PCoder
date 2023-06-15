@@ -1,8 +1,9 @@
 'use client';
 import Image from 'next/image';
-import css from '../../../../public/assets/languageIcons/CSS3.png';
-import html from '../../../../public/assets/languageIcons/HTML.png';
-import js from '../../../../public/assets/languageIcons/Javascript.png';
+import css from '../../../../public/assets/openTabIcons/CSS3.png';
+import html from '../../../../public/assets/openTabIcons/HTML.png';
+import js from '../../../../public/assets/openTabIcons/Javascript.png';
+import users from '../../../../public/assets/sideTopNavBar/user.png';
 
 function TabBarItems({ title, ext, onClose, active, onClick, onDoubleClick }) {
   return (
@@ -23,6 +24,8 @@ function TabBarItems({ title, ext, onClose, active, onClick, onDoubleClick }) {
               ? css
               : ext === '.html'
               ? html
+              : ext == '.p2p'
+              ? users
               : ''
           }
           width={20}
@@ -33,9 +36,8 @@ function TabBarItems({ title, ext, onClose, active, onClick, onDoubleClick }) {
       )}
       <span
         className={
-          active ? "text-black dark:text-white" : "text-black dark:text-white"
-        }
-      >
+          active ? 'text-black dark:text-white' : 'text-black dark:text-white'
+        }>
         {title}
         <span
           className={
@@ -45,6 +47,8 @@ function TabBarItems({ title, ext, onClose, active, onClick, onDoubleClick }) {
               ? 'text-blue-500'
               : ext === '.html'
               ? 'text-orange-500'
+              : ext == '.p2p'
+              ? 'text-[#5F5BD7]'
               : 'untitled'
           }>
           {ext}
@@ -59,10 +63,9 @@ function TabBarItems({ title, ext, onClose, active, onClick, onDoubleClick }) {
           stroke="currentColor"
           className={
             active
-              ? "w-5 h-5 text-[#5F5BD7] dark:text-white "
-              : "w-5 h-5 text-[#5F5BD7] dark:text-white "
-          }
-        >
+              ? 'w-5 h-5 text-[#5F5BD7] dark:text-white '
+              : 'w-5 h-5 text-[#5F5BD7] dark:text-white '
+          }>
           <path
             strokeLinecap="round"
             strokeLinejoin="round"

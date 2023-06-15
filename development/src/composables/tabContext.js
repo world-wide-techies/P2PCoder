@@ -1,11 +1,11 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from 'react';
 
 export const TabContext = createContext();
 
 export const TabProvider = ({ children }) => {
   const barItems = [{ id: 1, title: 'Welcome', active: true }];
   const [items, setItems] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (items.length == 0) {
@@ -30,33 +30,42 @@ export const TabProvider = ({ children }) => {
           ...item,
           active: false,
         }));
-        const newItems = [
-          ...oldItems,
-          {
-            id: items.length + 1,
-            title:
-              lang === 'js'
-                ? 'scripts'
-                : lang === 'css'
-                ? 'styles'
-                : lang === 'html'
-                ? 'index'
-                : 'untitled',
-            ext:
-              lang === 'js'
-                ? '.js'
-                : lang === 'css'
-                ? '.css'
-                : lang === 'html'
-                ? '.html'
-                : '',
-            active: true,
-            code: '',
-          },
-        ];
-        setItems(newItems);
+        const collabCheck = items.filter((e) => e.title == 'collab');
+        if (!collabCheck.length) {
+          const newItems = [
+            ...oldItems,
+            {
+              id: items.length + 1,
+              title:
+                lang === 'js'
+                  ? 'scripts'
+                  : lang === 'css'
+                  ? 'styles'
+                  : lang === 'html'
+                  ? 'index'
+                  : lang == 'collab'
+                  ? 'collab'
+                  : 'untitled',
+              ext:
+                lang === 'js'
+                  ? '.js'
+                  : lang === 'css'
+                  ? '.css'
+                  : lang === 'html'
+                  ? '.html'
+                  : lang == 'collab'
+                  ? '.p2p'
+                  : '',
+              active: true,
+              code: '',
+            },
+          ];
+          setItems(newItems);
+        } else {
+          setErrorMessage('You can only have 1 collab tab');
+        }
       } else {
-        setErrorMessage("You can only have 5 pages open at once.");
+        setErrorMessage('You can only have 5 pages open at once.');
       }
     }
   };
@@ -70,8 +79,7 @@ export const TabProvider = ({ children }) => {
         handleLanguage,
         setErrorMessage,
         errorMessage,
-      }}
-    >
+      }}>
       {children}
     </TabContext.Provider>
   );
