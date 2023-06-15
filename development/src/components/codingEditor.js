@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 "use client";
 import { useState } from "react";
 import MonacoEditor from "react-monaco-editor/lib/editor";
 import { useTheme } from "next-themes";
 import { useTabContext } from "@/composables/tabContext";
+=======
+'use client';
+import MonacoEditor from 'react-monaco-editor/lib/editor';
+import { useTheme } from 'next-themes';
+import { useTabContext } from '@/composables/tabContext';
+>>>>>>> origin/main
 
 function CodingEditor({ id }) {
   const { theme, setTheme } = useTheme();
@@ -34,7 +41,11 @@ function CodingEditor({ id }) {
             ? "html"
             : "javascript"
         }
+<<<<<<< HEAD
         theme={theme == "dark" ? "vs-dark" : "vs-light"}
+=======
+        theme={theme == 'dark' ? 'vs-dark' : 'vs-light'}
+>>>>>>> origin/main
         value={items.filter((e) => e.active)[0].code}
         options={options}
         onChange={onChange}
