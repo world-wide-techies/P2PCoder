@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { generatePeerIdCharacter } from '../../src/composables/peerIdGenerator';
 
@@ -8,8 +8,11 @@ import closeIconWhite from '../../public/assets/onboardingIcons/close_light.png'
 
 function PeerId() {
     const [isOpen, setIsOpen] = useState(true);
-    const [peerSessionId, setPeerSessionId] = useState(generatePeerIdCharacter()); 
-    const [copyMessage, setCopyMessage] = useState(''); 
+    const [peerSessionId, setPeerSessionId] = useState('');
+
+    useEffect(() => {
+        setPeerSessionId(generatePeerIdCharacter()); 
+    }, []);
 
     const handleClose = () => {
         setIsOpen(false);
@@ -18,9 +21,9 @@ function PeerId() {
     const handleCopyId = async () => {
         try {
             await navigator.clipboard.writeText(peerSessionId);
-            setCopyMessage('ID copied to clipboard');
+            console.log('ID copied to clipboard:', peerSessionId);
         } catch (error) {
-            setCopyMessage('Failed to copy ID to clipboard: ' + error);
+            console.error('Failed to copy ID to clipboard:', error);
         }
     };
 
@@ -65,7 +68,6 @@ function PeerId() {
                     <div className='font-normal text-sm leading-4 text-white font-nohemi'>Copy ID</div>
                 </button>
             </div>
-            <div className='font-normal text-sm leading-4 text-black font-nohemi dark:text-white'>{copyMessage}</div>
             <button className=' font-nohemi text-white rounded-lg bg-[#5F5BD7] w-full h-12'>Continue</button>
         </div>
     );
