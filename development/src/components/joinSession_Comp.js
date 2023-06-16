@@ -8,15 +8,7 @@ function JoinSession() {
     if (!sessionId) {
       console.log("Session ID is required");
     } else {
-      const user = {
-        name: "Janet Smith",
-        email: "janetsmith@gmail.com",
-      };
-
-      const hardcodedSessionId = "76cH5HyEWEhglasWBLl9";
-      console.log(`Adding user to session: ${hardcodedSessionId}`);
-
-      const result = await addUserToSession(user, hardcodedSessionId);
+      const result = await addUserToSession(user, sessionId);
       if (result.success) {
         console.log(result.message);
       } else {
