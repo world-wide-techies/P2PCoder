@@ -28,6 +28,7 @@ function UserLoginComp() {
   const { signinWithGithub, githubError } = useGithubSignin();
   const { signinWithGoogle, googleError } = useGoogleSignin();
   const [errorMessage, setErrorMessage] = useState("");
+
   useEffect(() => {
     setErrorMessage(githubError || googleError);
     setTimeout(() => {
