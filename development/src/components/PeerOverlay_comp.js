@@ -6,28 +6,20 @@ import JS from "../../public/assets/codeEditorIcons/Group.png";
 import closeIconWhite from "../../public/assets/onboardingIcons/close_light.png";
 import closeIconBlack from "../../public/assets/onboardingIcons/close_black.png";
 import React, { useState } from "react";
-import {
-  storeSessionDataLocally,
-  storeSessionDataFirebase,
-  checkUserAuthentication,
-} from "@/composables/sessionManagementFunction";
 import { generatePeerIdCharacter } from "@/composables/peerIdGenerator";
 
 function PeerSession({onClose}) {
   const [activeLanguage, setActiveLanguage] = useState("");
   const [sessionName, setSessionName] = useState("");
-  const [isOpen, setIsOpen] = useState(true);
 
   function createPeerSession() {
     if (!sessionName && !activeLanguage) {
-      toast.error("Session name and Programming language are required");
+      throw new Error("Session name and Programming language are required");
     } else {
       const sessionId = generatePeerIdCharacter();
 
       const sessionData = { sessionName, activeLanguage, sessionId };
 
-      storeSessionDataLocally(sessionData);
-      storeSessionDataFirebase(sessionData);
     }
   }
 

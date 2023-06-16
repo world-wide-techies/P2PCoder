@@ -23,7 +23,7 @@ function JoinSession() {
               value={sessionId}
               onChange={(e) => setSessionId(e.target.value)}
               placeholder="Enter Session ID"
-              className="py-3 mt-2 mb-4 px-4 h-12 w-full font-normal text-sm rounded-lg"
+              className="py-3 mt-2 mb-4 px-4 h-12 w-full font-normal dark:bg-[#1E1E2A] text-sm rounded-lg"
             />
             <button
               onClick={handleJoinSession}
