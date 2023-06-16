@@ -1,5 +1,4 @@
 import { generatePeerIdCharacter } from "./peerIdGenerator";
-import { toast } from "react-toastify";
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";

@@ -12,22 +12,19 @@ import {
   checkUserAuthentication,
 } from "@/composables/sessionManagementFunction";
 import { generatePeerIdCharacter } from "@/composables/peerIdGenerator";
-import { toast } from "react-toastify";
-import { SessionManager } from "./sessionManagerComp";
 
-function PeerSession() {
+function PeerSession({onClose}) {
   const [activeLanguage, setActiveLanguage] = useState("");
   const [sessionName, setSessionName] = useState("");
   const [isOpen, setIsOpen] = useState(true);
 
   function createPeerSession() {
-    checkUserAuthentication();
     if (!sessionName && !activeLanguage) {
       toast.error("Session name and Programming language are required");
     } else {
       const sessionId = generatePeerIdCharacter();
 
-      const sessionData = { sessionName, activeLanguage, sessionId, users: [] };
+      const sessionData = { sessionName, activeLanguage, sessionId };
 
       storeSessionDataLocally(sessionData);
       storeSessionDataFirebase(sessionData);
@@ -35,13 +32,11 @@ function PeerSession() {
   }
 
   const handleClose = () => {
-    setIsOpen(false);
+    onClose();
   };
-  if (!isOpen) {
-    return false;
-  }
+  
 
-  const theme = useTheme();
+  const {theme, setTheme} = useTheme();
 
   return (
     <div className="w-[456px] dark:bg-[#2F2F3A] bg-white rounded-2xl">

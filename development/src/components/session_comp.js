@@ -2,7 +2,7 @@ import { SessionManager } from "./sessionManagerComp";
 import { PeerSession } from "./PeerOverlay_comp";
 import { Modal } from "./modal";
 import { useRouter, useSearchParams } from "next/navigation";
-import "react-toastify/dist/ReactToastify.css";
+import JoinSession from "./joinSession_Comp";
 
 function SessionComp() {
   const router = useRouter();
@@ -13,10 +13,26 @@ function SessionComp() {
       {view == "createSession" ? (
         <Modal
           onClose={() => {
-            router.push("/collaborate");
+            router.push("/");
           }}
         >
-          <PeerSession />
+          <PeerSession
+            onClose={() => {
+              router.push("/");
+            }}
+          />
+        </Modal>
+      ) : view == "joinSession" ? (
+        <Modal
+          onClose={() => {
+            router.push("/");
+          }}
+        >
+          <JoinSession
+            onClose={() => {
+              router.push("/");
+            }}
+          />
         </Modal>
       ) : (
         <div></div>
