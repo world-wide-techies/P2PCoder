@@ -182,7 +182,7 @@ function Home() {
                   </div>
                 );
               } else if (item.active && item.title == "collab") {
-                return <div> Collab Component </div>;
+                return <div> <SessionComp/> </div>;
               } else if (item.active && item.title != "Welcome") {
                 return <Collab key={item.id} />;
               }
