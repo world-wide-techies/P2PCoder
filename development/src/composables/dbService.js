@@ -1,4 +1,4 @@
-import { appFirestore, appAuth, } from "./firebaseConfig/config";
+import { appFirestore, appAuth } from "./firebaseConfig/config";
 import { setDoc, doc, updateDoc, getDoc } from "firebase/firestore";
 
 async function addSession(userSessionData) {
@@ -116,4 +116,27 @@ async function updateSession(updatedSessionData) {
   }
 }
 
-export { addCollabCodeEditor, addSession, getUserDetails, updateSession };
+async function addUserToExistingSession(user, peerId) {
+  try {
+    if (!user || !peerId) {
+      throw new Error("User or session ID is missing");
+    }
+    const sessionRef = doc(appFirestore, "SESSIONS", peerId);
+
+    await updateDoc(sessionRef, {
+      users: user,
+    });
+
+    return { success: true, message: "User successfully added to session" };
+  } catch (err) {
+    return { success: false, message: err.message };
+  }
+}
+
+export {
+  addCollabCodeEditor,
+  addSession,
+  getUserDetails,
+  updateSession,
+  addUserToExistingSession,
+};

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { addUserToSession } from "@/composables/addUserToSession";
+import { addUserToExistingSession } from "@/composables/dbService";
 import { useState } from "react";
 import ErrorModal from "./errorModal_comp";
 function JoinSession() {
@@ -20,10 +20,11 @@ function JoinSession() {
 
   const handleJoinSession = async (e) => {
     e.preventDefault();
+
     if (!sessionId) {
       setError("Session ID is required");
     } else {
-      const result = await addUserToSession(user, sessionId);
+      const result = await addUserToExistingSession(user, sessionId);
       if (result.success) {
         setError(result.message);
       }
