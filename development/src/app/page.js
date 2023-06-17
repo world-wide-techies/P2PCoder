@@ -99,6 +99,7 @@ function Home() {
         ext === '.js' ? 'text-yellow-500' : 
         ext === '.css' ? 'text-blue-500' : 
         ext === '.html' ? 'text-orange-500' : 
+        ext === '.p2p' ? 'text-[#5F5BD7]' :
         'untitled'
       )
       currentTabTitleEl.replaceChildren(name, extEl);
