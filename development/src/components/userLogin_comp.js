@@ -20,7 +20,7 @@ import closeDark from "../../public/assets/onboardingIcons/closecircledark.png";
 import { useGoogleSignin } from "@/composables/authGoogleSigninPoppup";
 import ErrorModal from "./errorModal_comp";
 
-function UserLoginComp() {
+function UserLoginComp({ onClose }) {
   const { signinWithGithub, githubError } = useGithubSignin();
   const { signinWithGoogle, googleError } = useGoogleSignin();
   const [errorMessage, setErrorMessage] = useState("");
@@ -93,11 +93,14 @@ function UserLoginComp() {
             h1={"Welcome back"}
             p={"Enjoy extra features when you create an account with us."}
           />
-          <Image
-            src={theme === "dark" ? closeIcon : closeDark}
-            alt="close icon"
-            className="w-6 h-6 mr-4 mt-2"
-          />
+
+          <button type="button" className="w-6 h-6 mr-4 mt-2">
+            <Image
+              src={theme === "dark" ? closeIcon : closeDark}
+              alt="close icon"
+              onClick={() => onClose()}
+            />
+          </button>
         </div>
         <div className="flex flex-row justify-between gap-3">
           <button

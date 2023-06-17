@@ -7,34 +7,34 @@ import closeIconWhite from "../../public/assets/onboardingIcons/close_light.png"
 import closeIconBlack from "../../public/assets/onboardingIcons/close_black.png";
 import React, { useState } from "react";
 import { generatePeerIdCharacter } from "@/composables/peerIdGenerator";
+import { useRouter } from "next/navigation";
 
-function PeerSession({onClose}) {
+function PeerSession({ onClose }) {
   const [activeLanguage, setActiveLanguage] = useState("");
   const [sessionName, setSessionName] = useState("");
-
+  const route = useRouter();
   function createPeerSession() {
     if (!sessionName && !activeLanguage) {
       throw new Error("Session name and Programming language are required");
     } else {
-      const sessionId = generatePeerIdCharacter();
-
-      const sessionData = { sessionName, activeLanguage, sessionId };
-
+      route.push("/?view=peerId");
+      const sessionData = { sessionName, activeLanguage };
     }
   }
 
   const handleClose = () => {
     onClose();
   };
-  
 
-  const {theme, setTheme} = useTheme();
+  const { theme, setTheme } = useTheme();
 
   return (
     <div className="w-[456px] dark:bg-[#2F2F3A] bg-white rounded-2xl">
       <div className="p-8 font-nohemi">
         <div className=" flex justify-between">
-          <div className=" font-bold text-[27px] leading-[32.4px]">New Peer Session</div>
+          <div className=" font-bold text-[27px] leading-[32.4px]">
+            New Peer Session
+          </div>
           <button onClick={handleClose}>
             <Image
               src={theme === "dark" ? closeIconWhite : closeIconBlack}
