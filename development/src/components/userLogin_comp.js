@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { OnboardingHeader } from "./onboardingHeader";
 import Link from "next/link";
 import Image from "next/image";
@@ -12,14 +12,32 @@ import {
   emailValidator,
   passwordValidator,
 } from "@/composables/emailPasswordValidator";
-import { signInWithGithub } from "@/composables/authGithubSigninPopup";
+import { useGithubSignin } from "@/composables/authGithubSigninPopup";
 import { PasswordToggle } from "./passwordToggleFunction";
-import { signInWithGoogle } from "@/composables/authGoogleSigninPoppup";
-import closeWhite from ".././../public/assets/forgotPasswordForm/close_white.png";
-import closeBlack from ".././../public/assets/onboardingIcons/close_black.png";
-import { useRouter } from "next/navigation";
+import closeIcon from "../../public/assets/onboardingIcons/close_light.png";
+import closeDark from "../../public/assets/onboardingIcons/closecircledark.png";
+import { useGoogleSignin } from "@/composables/authGoogleSigninPoppup";
+import ErrorModal from "./errorModal_comp";
+
 
 function UserLoginComp() {
+  const { signinWithGithub, githubError } = useGithubSignin();
+  const { signinWithGoogle, googleError } = useGoogleSignin();
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    setErrorMessage(githubError || googleError);
+    if (errorMessage !== "") {
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 6000);
+    }
+  }, [githubError, googleError]);
+
+  const handleClose = () => {
+    setErrorMessage("");
+  };
+
   const { theme, setTheme } = useTheme();
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
@@ -74,18 +92,40 @@ function UserLoginComp() {
   };
 
   return (
-    <div>
-      <form
-        className="space-y-6 p-10 bg-white dark:bg-[#1E1E2A] dark:text-white w-auto min-w-[600px] font-nohemi rounded-[24px]"
-        onSubmit={loginUser}
-      >
-        <div className="space-y-3">
-          <div className="flex justify-between">
-            <OnboardingHeader
-              h1={"Welcome back"}
-              p={"Enjoy extra features when you create an account with us."}
-            />
-
+    <form
+      className="space-y-6 p-10 bg-white dark:bg-[#1E1E2A] dark:text-white"
+      onSubmit={loginUser}
+    >
+      <div className="space-y-3">
+        <div className="flex justify-between">
+          <OnboardingHeader
+            h1={"Welcome back"}
+            p={"Enjoy extra features when you create an account with us."}
+          />
+          <Image
+            src={theme === "dark" ? closeIcon : closeDark}
+            alt="close icon"
+            className="w-6 h-6 mr-4 mt-2"
+          />
+        </div>
+        <div className="flex flex-row justify-between gap-3">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              signinWithGoogle();
+            }}
+            className="flex flex-row flex-nowrap justify-center gap-2 bg-gray-200 dark:bg-[#363647] items-center p-3 rounded-md w-full shadow-md"
+          >
+            <Image src={googleIcon} alt="google_icon" className="w-6 h-auto" />
+            <p className="text-[10px]">Create Account with Google</p>
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              signinWithGithub();
+            }}
+            className="flex flex-row flex-nowrap justify-center gap-2 bg-gray-200 dark:bg-[#363647] items-center p-3 rounded-md w-full shadow-md"
+          >
             <Image
               src={theme === "dark" ? closeWhite : closeBlack}
               alt="closeBtn"
@@ -194,8 +234,14 @@ function UserLoginComp() {
             </p>
           </div>
         </div>
-      </form>
-    </div>
+      </div>
+      <ErrorModal
+        errorMessage={errorMessage}
+        style={"fixed  top-0 right-0 mr-2 "}
+        onClose={() => handleClose()}
+      />
+    </form>
+
   );
 }
 export default UserLoginComp;

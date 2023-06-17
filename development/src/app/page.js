@@ -5,16 +5,17 @@ import SideNavBarControl from '@/components/navbar_components/sidebar_components
 import TabBarControls from '@/components/navbar_components/tabbar_components/tabBarControls_comp';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Modal } from '@/components/modal';
-import { LanguageModal } from '@/components/languageModal_comp';
+import { OpenTabModal } from '@/components/openTabModal_comp';
 import { useTabContext } from '@/composables/tabContext';
-import CodingEditor from '@/components/codingEditor';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import runIcon from '../../public/assets/languageIcons/runIcon.svg';
-import Image from 'next/image';
+import Collab from '@/components/collab_comp';
+import { useEffect } from 'react';
+import ErrorModal from '@/components/errorModal_comp';
+import UserLoginComp from '@/components/userLogin_comp';
+import SignUpComponent from '@/components/signup_comp';
+import SessionComp from '@/components/session_comp';
 
 function Home() {
-  const { items, setItems } = useTabContext();
+  const { items, setItems, errorMessage, setErrorMessage } = useTabContext();
   const view = useSearchParams().get('view');
   const router = useRouter();
 
@@ -49,49 +50,76 @@ function Home() {
   };
 
   const handleTabRename = (tab, event) => {
+    if (!event.target.classList.contains('tab-title')) return;
+
     const index = items.findIndex((i, k) => k === tab);
-    const currentTab = event.target;
-    const initialName = currentTab.textContent;
+    const currentTabTitleEl = event.target;
+    const currentTab = items[tab];
+    const initialName = currentTab.title;
+    const tabExt = currentTab.ext;
 
     const form = document.createElement('form');
-    currentTab.replaceChildren(form);
+    currentTabTitleEl.replaceChildren(form);
     const inputField = document.createElement('input');
     inputField.value = initialName;
     form.appendChild(inputField);
-    const currentTabChild = currentTab.firstChild;
+    const currentTabChild = currentTabTitleEl.firstChild;
     currentTabChild[0].focus();
     currentTabChild[0].select();
 
-    currentTabChild.addEventListener('submit', tabRenameSubmitHandler, { once: true })
-    currentTabChild.addEventListener('focusout', tabRenameFocusHandler, { once: true })
+    currentTabChild.addEventListener('submit', tabRenameSubmitHandler, {
+      once: true,
+    });
+    currentTabChild.addEventListener('focusout', tabRenameFocusHandler, {
+      once: true,
+    });
 
-    function tabRenameSubmitHandler(e){
+    function tabRenameSubmitHandler(e) {
       currentTabChild.removeEventListener('focusout', tabRenameFocusHandler);
       e.preventDefault();
       const newName = e.target[0].value;
-      setTabName(newName);
+      setTabName(newName, tabExt);
     }
 
-    function tabRenameFocusHandler(e){
+    function tabRenameFocusHandler(e) {
       currentTabChild.removeEventListener('submit', tabRenameSubmitHandler);
       const currentName = e.target.value;
-      setTabName(currentName);
+      setTabName(currentName, tabExt);
     }
-
-    function setTabName(name){
+    
+    function setTabName(name, ext) {
       const newItems = items.map((item, idx) => ({
         ...item,
         title: idx === index ? name : item.title,
       }));
       setItems(newItems);
-      currentTab.replaceChildren(name);
+      const extEl = document.createElement('span');
+      extEl.textContent = ext;
+      extEl.classList.add(
+        ext === '.js' ? 'text-yellow-500' : 
+        ext === '.css' ? 'text-blue-500' : 
+        ext === '.html' ? 'text-orange-500' : 
+        ext === '.p2p' ? 'text-[#5F5BD7]' :
+        'untitled'
+      )
+      currentTabTitleEl.replaceChildren(name, extEl);
     }
-  }
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setErrorMessage('');
+    }, 6000);
+  }, [errorMessage]);
 
   return (
     <>
-      <main className="h-full bg-[#DCDCE5] dark:bg-[#2F2F3A]">
-        <ToastContainer />
+      <main className="h-full bg-[#DCDCE5] dark:bg-[#2F2F3A] relative">
+        <ErrorModal
+          errorMessage={errorMessage}
+          style={'absolute z-50 top-3 right-0 mr-2 '}
+          onClose={() => setErrorMessage('')}
+        />
         <div className="relative h-full border-gray-300 border-b-[1px] dark:border-gray-700 ">
           <EditorNavBar />
         </div>
@@ -120,41 +148,51 @@ function Home() {
               }}
             />
           </div>
-          {(items.length > 1 || items[0]?.title !== "Welcome") && (
-            <button className="bg-green-700 flex  items-center my-1 px-4 rounded-md text-white space-x-3">
-              <Image src={runIcon} alt="run" />
-              <p>Run</p>
-            </button>
-          )}
         </div>
-        <div className="bg-white dark:bg-[#1E1E2A]  ml-24 w-[92.9%] p-11 h-screen flex flex-col justify-start">
+        <div className="bg-white dark:bg-[#1E1E2A]  ml-24 w-[92.9%] h-screen flex flex-col justify-start">
           <>
-            {view == "chooseLanguage" ? (
+            {view == 'quicklinks' ? (
               <Modal
                 onClose={() => {
-                  router.push("/");
-                }}
-              >
-                <LanguageModal
+                  router.push('/');
+                }}>
+                <OpenTabModal
                   onClose={() => {
-                    router.push("/");
+                    router.push('/');
                   }}
                 />
+              </Modal>
+            ) : view == 'login' ? (
+              <Modal
+                onClose={() => {
+                  router.push('/');
+                }}>
+                <UserLoginComp />
+              </Modal>
+            ) : view == 'signup' ? (
+              <Modal
+                onClose={() => {
+                  router.push('/');
+                }}>
+                <SignUpComponent />
               </Modal>
             ) : (
               <div></div>
             )}
-            {items[0]?.active && items[0].title === "Welcome" ? (
-              <div className="p-11">
-                <Welcome />
-              </div>
-            ) : items.filter((e) => e.active)[0] ? (
-              <CodingEditor language={items.filter((e) => e.active)[0].ext} />
-            ) : (
-              <div className="p-11">
-                <Welcome/>
-              </div>
-            )}
+
+            {items.map((item) => {
+              if (item?.active && item.title === 'Welcome') {
+                return (
+                  <div className="p-11">
+                    <Welcome />
+                  </div>
+                );
+              } else if (item.active && item.title == 'collab') {
+                return <div> <SessionComp /> </div>;
+              } else if (item.active && item.title != 'Welcome') {
+                return <Collab key={item.id} />;
+              }
+            })}
           </>
         </div>
       </main>

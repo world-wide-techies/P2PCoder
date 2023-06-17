@@ -3,9 +3,9 @@ import { appAuth } from './firebaseConfig/config';
 function isUserSignedIn() {
   const user = appAuth.currentUser;
   if (user) {
-    console.log('User is signed in');
+    return true;
   } else {
-    console.log('User is not signed in');
+    return false;
   }
 }
 
