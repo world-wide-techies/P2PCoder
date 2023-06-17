@@ -35,9 +35,12 @@ function TabBarItems({ title, ext, onClose, active, onClick, onDoubleClick }) {
         />
       )}
       <span
-        className={
-          active ? 'text-black dark:text-white' : 'text-black dark:text-white'
-        }>
+        className={`tab-title
+          ${ active 
+            ? ' text-black dark:text-white' 
+            : ' text-black dark:text-white'
+          }
+        `}>
         {title}
         <span
           className={

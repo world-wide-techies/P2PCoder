@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import ErrorModal from '@/components/errorModal_comp';
 import UserLoginComp from '@/components/userLogin_comp';
 import SignUpComponent from '@/components/signup_comp';
+import SessionComp from '@/components/session_comp';
 
 function Home() {
   const { items, setItems, errorMessage, setErrorMessage } = useTabContext();
@@ -49,16 +50,20 @@ function Home() {
   };
 
   const handleTabRename = (tab, event) => {
+    if (!event.target.classList.contains('tab-title')) return;
+
     const index = items.findIndex((i, k) => k === tab);
-    const currentTab = event.target;
-    const initialName = currentTab.textContent;
+    const currentTabTitleEl = event.target;
+    const currentTab = items[tab];
+    const initialName = currentTab.title;
+    const tabExt = currentTab.ext;
 
     const form = document.createElement('form');
-    currentTab.replaceChildren(form);
+    currentTabTitleEl.replaceChildren(form);
     const inputField = document.createElement('input');
     inputField.value = initialName;
     form.appendChild(inputField);
-    const currentTabChild = currentTab.firstChild;
+    const currentTabChild = currentTabTitleEl.firstChild;
     currentTabChild[0].focus();
     currentTabChild[0].select();
 
@@ -73,22 +78,31 @@ function Home() {
       currentTabChild.removeEventListener('focusout', tabRenameFocusHandler);
       e.preventDefault();
       const newName = e.target[0].value;
-      setTabName(newName);
+      setTabName(newName, tabExt);
     }
 
     function tabRenameFocusHandler(e) {
       currentTabChild.removeEventListener('submit', tabRenameSubmitHandler);
       const currentName = e.target.value;
-      setTabName(currentName);
+      setTabName(currentName, tabExt);
     }
-
-    function setTabName(name) {
+    
+    function setTabName(name, ext) {
       const newItems = items.map((item, idx) => ({
         ...item,
         title: idx === index ? name : item.title,
       }));
       setItems(newItems);
-      currentTab.replaceChildren(name);
+      const extEl = document.createElement('span');
+      extEl.textContent = ext;
+      extEl.classList.add(
+        ext === '.js' ? 'text-yellow-500' : 
+        ext === '.css' ? 'text-blue-500' : 
+        ext === '.html' ? 'text-orange-500' : 
+        ext === '.p2p' ? 'text-[#5F5BD7]' :
+        'untitled'
+      )
+      currentTabTitleEl.replaceChildren(name, extEl);
     }
   };
 
@@ -174,7 +188,7 @@ function Home() {
                   </div>
                 );
               } else if (item.active && item.title == 'collab') {
-                return <div> Collab Component </div>;
+                return <div> <SessionComp /> </div>;
               } else if (item.active && item.title != 'Welcome') {
                 return <Collab key={item.id} />;
               }
