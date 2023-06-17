@@ -6,13 +6,16 @@ import { useTheme } from 'next-themes';
 import closeIconBlack from '../../public/assets/onboardingIcons/close_black.png';
 import closeIconWhite from '../../public/assets/onboardingIcons/close_light.png';
 import { useSessionContext } from '@/composables/sessionContext';
+import { useTabContext } from '@/composables/tabContext';
+import { useRouter } from 'next/navigation';
 
 function PeerId({ onClose }) {
   const { theme, setTheme } = useTheme();
   const { sessionData, setSessionData } = useSessionContext();
-
+  const { handleLanguage } = useTabContext();
   const [copyMessage, setCopyMessage] = useState('');
   const [peerSessionId, setPeerSessionId] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     setPeerSessionId(generatePeerIdCharacter());
@@ -22,7 +25,8 @@ function PeerId({ onClose }) {
     await setSessionData({ ...sessionData, peerSessionId });
     // you put your function here
     //so your function should be like sendSessionData(sessionData)
-    // mine goes here
+    await handleLanguage(sessionData.activeLanguage);
+    router.push('/');
   };
   const handleClose = () => {
     setSessionData({});
