@@ -195,7 +195,7 @@ function Home() {
             {items.map((item) => {
               if (item?.active && item.title === 'Welcome') {
                 return (
-                  <div className="p-11">
+                  <div className="p-11" key={item.id}>
                     <Welcome />
                   </div>
                 );

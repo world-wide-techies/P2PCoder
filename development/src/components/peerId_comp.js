@@ -1,20 +1,21 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import { generatePeerIdCharacter } from "../../src/composables/peerIdGenerator";
-import { useTheme } from "next-themes";
-import closeIconBlack from "../../public/assets/onboardingIcons/close_black.png";
-import closeIconWhite from "../../public/assets/onboardingIcons/close_light.png";
-import { useSessionContext } from "@/composables/sessionContext";
-import { useTabContext } from "@/composables/tabContext";
-import { useRouter } from "next/navigation";
+'use client';
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { generatePeerIdCharacter } from '../../src/composables/peerIdGenerator';
+import { useTheme } from 'next-themes';
+import closeIconBlack from '../../public/assets/onboardingIcons/close_black.png';
+import closeIconWhite from '../../public/assets/onboardingIcons/close_light.png';
+import { useSessionContext } from '@/composables/sessionContext';
+import { useTabContext } from '@/composables/tabContext';
+import { useRouter } from 'next/navigation';
+import { createSession } from '@/composables/dbService';
 
 function PeerId({ onClose }) {
   const { theme, setTheme } = useTheme();
   const { sessionData, setSessionData } = useSessionContext();
 
-  const [copyMessage, setCopyMessage] = useState("");
-  const [peerSessionId, setPeerSessionId] = useState("");
+  const [copyMessage, setCopyMessage] = useState('');
+  const [peerSessionId, setPeerSessionId] = useState('');
   const { handleLanguage } = useTabContext();
 
   const router = useRouter();
@@ -28,7 +29,7 @@ function PeerId({ onClose }) {
     createSession({ ...sessionData, peerSessionId });
 
     await handleLanguage(sessionData.activeLanguage);
-    router.push("/");
+    router.push('/');
   };
   const handleClose = () => {
     setSessionData({});
@@ -38,9 +39,9 @@ function PeerId({ onClose }) {
   const handleCopyId = async () => {
     try {
       await navigator.clipboard.writeText(peerSessionId);
-      setCopyMessage("ID copied to clipboard:", peerSessionId);
+      setCopyMessage('ID copied to clipboard:', peerSessionId);
     } catch (error) {
-      setCopyMessage("Failed to copy ID to clipboard:", error);
+      setCopyMessage('Failed to copy ID to clipboard:', error);
     }
   };
 
@@ -52,7 +53,7 @@ function PeerId({ onClose }) {
         </div>
         <button onClick={handleClose}>
           <Image
-            src={theme === "dark" ? closeIconWhite : closeIconBlack}
+            src={theme === 'dark' ? closeIconWhite : closeIconBlack}
             className="w-5 h-5"
             alt="close"
           />
@@ -69,15 +70,13 @@ function PeerId({ onClose }) {
         </div>
         <button
           className="bg-[#5F5BD7] w-24 h-9 rounded-lg flex justify-center my-3 items-center"
-          onClick={handleCopyId}
-        >
+          onClick={handleCopyId}>
           <svg
             width="20"
             height="12"
             viewBox="0 0 12 12"
             fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+            xmlns="http://www.w3.org/2000/svg">
             <path
               d="M7.71387 6.21992V8.24492C7.71387 9.93242 7.03887 10.6074 5.35137 10.6074H3.32637C1.63887 10.6074 0.963867 9.93242 0.963867 8.24492V6.21992C0.963867 4.53242 1.63887 3.85742 3.32637 3.85742H5.35137C7.03887 3.85742 7.71387 4.53242 7.71387 6.21992Z"
               stroke="white"
@@ -103,8 +102,7 @@ function PeerId({ onClose }) {
       </div>
       <button
         onClick={handleClick}
-        className=" font-nohemi text-white rounded-lg bg-[#5F5BD7] w-full h-12"
-      >
+        className=" font-nohemi text-white rounded-lg bg-[#5F5BD7] w-full h-12">
         Continue
       </button>
     </div>
