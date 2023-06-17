@@ -96,11 +96,14 @@ function UserLoginComp({ onClose }) {
             p={"Enjoy extra features when you create an account with us."}
           />
 
-          <button type="button" className="w-6 h-6 mr-4 mt-2">
+          <button
+            type="button"
+            onClick={() => onClose()}
+            className="w-6 h-6 mr-4 mt-2"
+          >
             <Image
               src={theme === "dark" ? closeIcon : closeDark}
               alt="close icon"
-              onClick={() => onClose()}
             />
           </button>
         </div>
