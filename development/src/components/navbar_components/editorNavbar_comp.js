@@ -1,13 +1,16 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import AuthNavControls from './authNavControls_comp';
 import Image from 'next/image';
 import moon from '../../../public/assets/onboardingIcons/moon.png';
 import sun from '../../../public/assets/onboardingIcons/sun.png';
-import userIcon from '../../../public//assets/authNavBarControls/peers-2.png';
 import { useTheme } from 'next-themes';
 import { useTabContext } from '@/composables/tabContext';
+import { Suspense } from 'react';
+import userIcon from '../../../public//assets/authNavBarControls/peers-2.png';
 import { isUserSignedIn } from '@/composables/verifySignedIn';
 import { appAuth } from '@/composables/firebaseConfig/config';
+import Link from 'next/link';
 
 function EditorNavBar() {
   const [auth, setAuth] = useState(true);
@@ -53,19 +56,23 @@ function EditorNavBar() {
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
                 {theme === 'dark' ? (
-                  <Image alt="moon" src={moon} width={18} height={18} />
+                  <Image alt="sun" src={sun} width={18} height={18} />
                 ) : (
-                  <Image alt="sun" src={sun} width={20} height={20} />
+                  <Image alt="moon" src={moon} width={20} height={20} />
                 )}
               </button>
               {!auth && (items.length > 1 || items[0]?.title !== 'Welcome') && (
                 <>
-                  <button className="ml-6 mr-3 py-3 px-6 rounded-lg bg-[#5F5BD7] text-white text-lg font-normal flex items-center">
+                  <Link
+                    href={'/?view=signup'}
+                    className="ml-6 mr-3 py-3 px-6 rounded-lg bg-[#5F5BD7] text-white text-lg font-normal flex items-center">
                     Sign Up
-                  </button>
-                  <button className=" py-3 px-6 rounded-lg  text-lg font-normal flex items-center text-[#121212] bg-[#CDCDDA]">
+                  </Link>
+                  <Link
+                    href={'/?view=login'}
+                    className=" py-3 px-6 rounded-lg  text-lg font-normal flex items-center text-[#121212] bg-[#CDCDDA]">
                     Log In
-                  </button>
+                  </Link>
                 </>
               )}
             </div>

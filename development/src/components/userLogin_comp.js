@@ -15,15 +15,16 @@ import {
 
 import { useGithubSignin } from "@/composables/authGithubSigninPopup";
 import { PasswordToggle } from "./passwordToggleFunction";
-import {
-  useGoogleSignin,
-} from "@/composables/authGoogleSigninPoppup";
+import closeIcon from "../../public/assets/onboardingIcons/close_light.png";
+import closeDark from "../../public/assets/onboardingIcons/closecircledark.png";
+import { useGoogleSignin } from "@/composables/authGoogleSigninPoppup";
 import ErrorModal from "./errorModal_comp";
 
 function UserLoginComp() {
   const { signinWithGithub, githubError } = useGithubSignin();
   const { signinWithGoogle, googleError } = useGoogleSignin();
   const [errorMessage, setErrorMessage] = useState("");
+
   useEffect(() => {
     setErrorMessage(githubError || googleError);
     setTimeout(() => {
@@ -87,11 +88,17 @@ function UserLoginComp() {
       onSubmit={loginUser}
     >
       <div className="space-y-3">
-        <OnboardingHeader
-          h1={"Welcome back"}
-          p={"Enjoy extra features when you create an account with us."}
-        />
-
+        <div className="flex justify-between">
+          <OnboardingHeader
+            h1={"Welcome back"}
+            p={"Enjoy extra features when you create an account with us."}
+          />
+          <Image
+            src={theme === "dark" ? closeIcon : closeDark}
+            alt="close icon"
+            className="w-6 h-6 mr-4 mt-2"
+          />
+        </div>
         <div className="flex flex-row justify-between gap-3">
           <button
             onClick={(e) => {
