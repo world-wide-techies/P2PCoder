@@ -21,20 +21,10 @@ function JoinSession() {
   const handleJoinSession = async (e) => {
     e.preventDefault();
 
-    const user = {
-      name: "Janet Smith",
-      email: "janetsmith@gmail.com",
-    };
-
-    // Hardcoded session ID
-    const hardcodedSessionId = "76cH5HyEWEhglasWBLl9";
-
-    console.log(`Adding user to session: ${hardcodedSessionId}`);
-
     if (!sessionId) {
       setError("Session ID is required");
     } else {
-      const result = await addUserToExistingSession(user, hardcodedSessionId);
+      const result = await addUserToExistingSession(user, sessionId);
       if (result.success) {
         setError(result.message);
       }
