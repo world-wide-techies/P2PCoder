@@ -5,22 +5,37 @@ import CSS from "../../public/assets/codeEditorIcons/CSS3.png";
 import JS from "../../public/assets/codeEditorIcons/Group.png";
 import closeIconWhite from "../../public/assets/onboardingIcons/close_light.png";
 import closeIconBlack from "../../public/assets/onboardingIcons/close_black.png";
-import React, { useState } from "react";
-import { generatePeerIdCharacter } from "@/composables/peerIdGenerator";
+import React, { useEffect, useState } from "react";
+
 import { useRouter } from "next/navigation";
+import ErrorModal from "./errorModal_comp";
 
 function PeerSession({ onClose }) {
   const [activeLanguage, setActiveLanguage] = useState("");
   const [sessionName, setSessionName] = useState("");
   const route = useRouter();
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (error !== "") {
+      setTimeout(() => {
+        setError("");
+      }, 6000);
+    }
+  }, [error]);
+
   function createPeerSession() {
     if (!sessionName && !activeLanguage) {
-      throw new Error("Session name and Programming language are required");
+      setError("Session name and Programming language are required");
     } else {
       route.push("/?view=peerId");
       const sessionData = { sessionName, activeLanguage };
     }
   }
+
+  const handleErrorClose = () => {
+    setError("");
+  };
 
   const handleClose = () => {
     onClose();
@@ -107,6 +122,12 @@ function PeerSession({ onClose }) {
           Create Peer Session
         </button>
       </div>
+
+      <ErrorModal
+        errorMessage={error}
+        style={"fixed  top-0 right-0 mr-2 "}
+        onClose={() => handleErrorClose()}
+      />
     </div>
   );
 }

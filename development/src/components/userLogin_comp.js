@@ -27,9 +27,11 @@ function UserLoginComp({ onClose }) {
 
   useEffect(() => {
     setErrorMessage(githubError || googleError);
-    setTimeout(() => {
-      setErrorMessage("");
-    }, 6000);
+    if (errorMessage !== "") {
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 6000);
+    }
   }, [githubError, googleError]);
 
   const handleClose = () => {
