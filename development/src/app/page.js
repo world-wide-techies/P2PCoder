@@ -201,9 +201,8 @@ function Home() {
                 );
               } else if (item.active && item.title == 'collab') {
                 return (
-                  <div>
-                    {' '}
-                    <SessionComp />{' '}
+                  <div key={item.id}>
+                    <SessionComp />
                   </div>
                 );
               } else if (item.active && item.title != 'Welcome') {
