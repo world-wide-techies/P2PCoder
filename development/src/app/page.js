@@ -54,31 +54,31 @@ function Home() {
     const currentTab = event.target;
     const initialName = currentTab.textContent;
 
-    const form = document.createElement("form");
+    const form = document.createElement('form');
     currentTab.replaceChildren(form);
-    const inputField = document.createElement("input");
+    const inputField = document.createElement('input');
     inputField.value = initialName;
     form.appendChild(inputField);
     const currentTabChild = currentTab.firstChild;
     currentTabChild[0].focus();
     currentTabChild[0].select();
 
-    currentTabChild.addEventListener("submit", tabRenameSubmitHandler, {
+    currentTabChild.addEventListener('submit', tabRenameSubmitHandler, {
       once: true,
     });
-    currentTabChild.addEventListener("focusout", tabRenameFocusHandler, {
+    currentTabChild.addEventListener('focusout', tabRenameFocusHandler, {
       once: true,
     });
 
     function tabRenameSubmitHandler(e) {
-      currentTabChild.removeEventListener("focusout", tabRenameFocusHandler);
+      currentTabChild.removeEventListener('focusout', tabRenameFocusHandler);
       e.preventDefault();
       const newName = e.target[0].value;
       setTabName(newName);
     }
 
     function tabRenameFocusHandler(e) {
-      currentTabChild.removeEventListener("submit", tabRenameSubmitHandler);
+      currentTabChild.removeEventListener('submit', tabRenameSubmitHandler);
       const currentName = e.target.value;
       setTabName(currentName);
     }
@@ -95,7 +95,7 @@ function Home() {
 
   useEffect(() => {
     setTimeout(() => {
-      setErrorMessage("");
+      setErrorMessage('');
     }, 6000);
   }, [errorMessage]);
 
@@ -104,8 +104,8 @@ function Home() {
       <main className="h-full bg-[#DCDCE5] dark:bg-[#2F2F3A] relative">
         <ErrorModal
           errorMessage={errorMessage}
-          style={"absolute z-50 top-3 right-0 mr-2 "}
-          onClose={() => setErrorMessage("")}
+          style={'absolute z-50 top-3 right-0 mr-2 '}
+          onClose={() => setErrorMessage('')}
         />
         <div className="relative h-full border-gray-300 border-b-[1px] dark:border-gray-700 ">
           <EditorNavBar />
@@ -138,52 +138,58 @@ function Home() {
         </div>
         <div className="bg-white dark:bg-[#1E1E2A]  ml-24 w-[92.9%] h-screen flex flex-col justify-start">
           <>
-            {view == "quicklinks" ? (
+            {view == 'quicklinks' ? (
               <Modal
                 onClose={() => {
-                  router.push("/");
-                }}
-              >
+                  router.push('/');
+                }}>
                 <OpenTabModal
                   onClose={() => {
-                    router.push("/");
+                    router.push('/');
                   }}
                 />
               </Modal>
-            ) : view == "login" ? (
+            ) : view == 'login' ? (
               <Modal
                 onClose={() => {
-                  router.push("/");
-                }}
-              >
+                  router.push('/');
+                }}>
                 <UserLoginComp
                   onClose={() => {
-                    router.push("/");
+                    router.push('/');
                   }}
                 />
               </Modal>
-            ) : view == "signup" ? (
+            ) : view == 'signup' ? (
               <Modal
                 onClose={() => {
-                  router.push("/");
-                }}
-              >
-                <SignUpComponent />
+                  router.push('/');
+                }}>
+                <SignUpComponent
+                  onClose={() => {
+                    router.push('/');
+                  }}
+                />
               </Modal>
             ) : (
               <div></div>
             )}
 
             {items.map((item) => {
-              if (item?.active && item.title === "Welcome") {
+              if (item?.active && item.title === 'Welcome') {
                 return (
                   <div className="p-11">
                     <Welcome />
                   </div>
                 );
-              } else if (item.active && item.title == "collab") {
-                return <div> <SessionComp/> </div>;
-              } else if (item.active && item.title != "Welcome") {
+              } else if (item.active && item.title == 'collab') {
+                return (
+                  <div>
+                    {' '}
+                    <SessionComp />{' '}
+                  </div>
+                );
+              } else if (item.active && item.title != 'Welcome') {
                 return <Collab key={item.id} />;
               }
             })}
