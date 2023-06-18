@@ -3,12 +3,14 @@ import { addUserToExistingSession } from "@/composables/dbService";
 import { useState } from "react";
 import ErrorModal from "./errorModal_comp";
 import { appAuth, appFirestore } from "@/composables/firebaseConfig/config";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 function JoinSession() {
   const [sessionId, setSessionId] = useState("");
   const [error, setError] = useState("");
   const [isUserAdded, setIsUserAdded] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (error !== "") {
@@ -35,10 +37,10 @@ function JoinSession() {
         sessionId
       );
       if (!result.success) {
-        console.log(result.message);
         setError(result.message);
       } else {
         setIsUserAdded(true);
+        router.push("/");
       }
     }
   };
