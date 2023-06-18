@@ -1,5 +1,14 @@
 import { appFirestore, appAuth } from "./firebaseConfig/config";
-import { setDoc, doc, updateDoc, getDoc } from "firebase/firestore";
+import {
+  setDoc,
+  doc,
+  updateDoc,
+  getDoc,
+  getDocs,
+  collection,
+  query,
+  where,
+} from "firebase/firestore";
 
 async function addSession(userSessionData) {
   const { sessionName, peerId, language, userName, peerName } = userSessionData;
@@ -116,15 +125,29 @@ async function updateSession(updatedSessionData) {
   }
 }
 
-async function addUserToExistingSession(user, peerId) {
+async function addUserToExistingSession(appAuth, appFirestore, peerId) {
   try {
-    if (!user || !peerId) {
+    if (!appAuth || !peerId) {
       throw new Error("User or session ID is missing");
     }
-    const sessionRef = doc(appFirestore, "SESSIONS", peerId);
+
+    const currentUser = appAuth.currentUser;
+
+    if (!currentUser) {
+      throw new Error("User is not authenicated");
+    }
+    const uid = currentUser.uid;
+
+    const sessionRef = doc(appFirestore, "CODERS", uid, "SESSION", peerId);
+
+    const sessionSnap = await getDoc(sessionRef);
+
+    if (!sessionSnap.exists()) {
+      throw new Error(`Session with ID ${peerId} does not exist`);
+    }
 
     await updateDoc(sessionRef, {
-      users: user,
+      session: uid,
     });
 
     return { success: true, message: "User successfully added to session" };

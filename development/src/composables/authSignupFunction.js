@@ -23,7 +23,7 @@ async function authSignUp(firstname, lastname, email, password, username) {
         email,
       };
 
-      await completeSignUp(newUser, username);
+      await completeSignUp(newUser, user.uid, username);
     }
     return { success: true, user };
   } catch (error) {
@@ -40,16 +40,24 @@ async function triggerEmailVerification(user) {
   }
 }
 
-async function completeSignUp(user, username) {
-  const codersCollection = collection(appFirestore, `CODERS/${user.uid}`);
-  const newDocRef = doc(codersCollection);
+async function completeSignUp(user, uid, username) {
+  const newDocRef = doc(appFirestore, "CODERS", uid);
+
   const fullname = `${user.firstname} ${user.lastname}`;
-  await setDoc(newDocRef, {
+
+  const dataToSet = {
     fullname,
     username,
     email: user.email,
     createdAt: new Date(),
-  });
+  };
+
+  try {
+    await setDoc(newDocRef, dataToSet);
+    console.log("Document successfully written.");
+  } catch (error) {
+    console.error("Error writing document: ", error);
+  }
 }
 
 export { authSignUp, completeSignUp, triggerEmailVerification };
