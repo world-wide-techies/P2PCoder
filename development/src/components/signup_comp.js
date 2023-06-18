@@ -24,9 +24,11 @@ function SignUpComponent() {
   const [errorMessage, setErrorMessage] = useState("");
   useEffect(() => {
     setErrorMessage(githubError || googleError);
-    setTimeout(() => {
-      setErrorMessage("");
-    }, 6000);
+    if (errorMessage !== "") {
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 6000);
+    }
   }, [githubError, googleError]);
 
   const handleClose = () => {
@@ -377,14 +379,14 @@ function SignUpComponent() {
               </Link>
             </p>
           </div>
-
-          <ErrorModal
-            errorMessage={errorMessage}
-            style={"fixed  top-0 right-0 mr-2 "}
-            onClose={() => handleClose()}
-          />
         </form>
       ) : null}
+
+      <ErrorModal
+        errorMessage={errorMessage}
+        style={"fixed  top-0 right-0 mr-2 "}
+        onClose={() => handleClose()}
+      />
     </div>
   );
 }
