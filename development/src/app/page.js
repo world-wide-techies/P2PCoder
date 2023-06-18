@@ -171,14 +171,22 @@ function Home() {
                 onClose={() => {
                   router.push('/');
                 }}>
-                <UserLoginComp />
+                <UserLoginComp
+                  onClose={() => {
+                    router.push('/');
+                  }}
+                />
               </Modal>
             ) : view == 'signup' ? (
               <Modal
                 onClose={() => {
                   router.push('/');
                 }}>
-                <SignUpComponent />
+                <SignUpComponent
+                  onClose={() => {
+                    router.push('/');
+                  }}
+                />
               </Modal>
             ) : (
               <div></div>
@@ -193,9 +201,8 @@ function Home() {
                 );
               } else if (item.active && item.title == 'collab') {
                 return (
-                  <div>
-                    {' '}
-                    <SessionComp />{' '}
+                  <div key={item.id}>
+                    <SessionComp />
                   </div>
                 );
               } else if (item.active && item.title != 'Welcome') {

@@ -20,7 +20,7 @@ import { useGoogleSignin } from '@/composables/authGoogleSigninPoppup';
 import ErrorModal from './errorModal_comp';
 import { useRouter } from 'next/navigation';
 
-function UserLoginComp() {
+function UserLoginComp({ onClose }) {
   const { signinWithGithub, githubError } = useGithubSignin();
   const { signinWithGoogle, googleError } = useGoogleSignin();
   const [errorMessage, setErrorMessage] = useState('');
@@ -103,11 +103,17 @@ function UserLoginComp() {
             h1={'Welcome back'}
             p={'Enjoy extra features when you create an account with us.'}
           />
-          <Image
-            src={theme === 'dark' ? closeIcon : closeDark}
-            alt="close icon"
+
+          <button
+            type="button"
+            onClick={() => onClose()}
             className="w-6 h-6 mr-4 mt-2"
-          />
+          >
+            <Image
+              src={theme === "dark" ? closeIcon : closeDark}
+              alt="close icon"
+            />
+          </button>
         </div>
         <div className="flex flex-row justify-between gap-3">
           <div className="flex flex-row justify-between gap-3">

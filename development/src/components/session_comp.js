@@ -3,6 +3,7 @@ import { PeerSession } from "./PeerOverlay_comp";
 import { Modal } from "./modal";
 import { useRouter, useSearchParams } from "next/navigation";
 import JoinSession from "./joinSession_Comp";
+import PeerId from "./peerId_comp";
 
 function SessionComp() {
   const router = useRouter();
@@ -29,6 +30,18 @@ function SessionComp() {
           }}
         >
           <JoinSession
+            onClose={() => {
+              router.push("/");
+            }}
+          />
+        </Modal>
+      ) : view == "peerId" ? (
+        <Modal
+          onClose={() => {
+            router.push("/");
+          }}
+        >
+          <PeerId
             onClose={() => {
               router.push("/");
             }}
