@@ -18,7 +18,8 @@ import { getDocs, collection, where, query } from "firebase/firestore";
 import { appFirestore } from "../composables/firebaseConfig/config";
 import VerificationOverlay from "./VerificationOverlay";
 import { useRouter } from "next/navigation";
-import { authSignUp } from "@/composables/authSignupFunction";
+import { authSignUp, triggerEmailVerification } from "@/composables/authSignupFunction";
+import { sendEmailVerification } from "firebase/auth";
 
 function SignUpComponent() {
   const { signinWithGithub, githubError } = useGithubSignin();
@@ -84,6 +85,11 @@ function SignUpComponent() {
   };
 
   const handleSubmit = async (e) => {
+
+const result = await triggerEmailVerification(user);
+console.log(result);
+
+
     e.preventDefault();
     const { firstname, lastname, email, password, username } = user;
     const formErrors = signupFormValidation(user);
@@ -408,8 +414,7 @@ function SignUpComponent() {
               </Link>
             </p>
           </div>
-        </form>
-     
+        </form>  
             }
       <ErrorModal
         errorMessage={errorMessage}
