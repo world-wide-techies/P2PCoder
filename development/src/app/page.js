@@ -86,7 +86,7 @@ function Home() {
       const currentName = e.target.value;
       setTabName(currentName, tabExt);
     }
-    
+
     function setTabName(name, ext) {
       const newItems = items.map((item, idx) => ({
         ...item,
@@ -96,12 +96,16 @@ function Home() {
       const extEl = document.createElement('span');
       extEl.textContent = ext;
       extEl.classList.add(
-        ext === '.js' ? 'text-yellow-500' : 
-        ext === '.css' ? 'text-blue-500' : 
-        ext === '.html' ? 'text-orange-500' : 
-        ext === '.p2p' ? 'text-[#5F5BD7]' :
-        'untitled'
-      )
+        ext === '.js'
+          ? 'text-yellow-500'
+          : ext === '.css'
+          ? 'text-blue-500'
+          : ext === '.html'
+          ? 'text-orange-500'
+          : ext === '.p2p'
+          ? 'text-[#5F5BD7]'
+          : 'untitled'
+      );
       currentTabTitleEl.replaceChildren(name, extEl);
     }
   };
@@ -183,12 +187,17 @@ function Home() {
             {items.map((item) => {
               if (item?.active && item.title === 'Welcome') {
                 return (
-                  <div className="p-11">
+                  <div className="p-11" key={item.id}>
                     <Welcome />
                   </div>
                 );
               } else if (item.active && item.title == 'collab') {
-                return <div> <SessionComp /> </div>;
+                return (
+                  <div>
+                    {' '}
+                    <SessionComp />{' '}
+                  </div>
+                );
               } else if (item.active && item.title != 'Welcome') {
                 return <Collab key={item.id} />;
               }

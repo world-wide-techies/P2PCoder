@@ -1,52 +1,48 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { OnboardingHeader } from "./onboardingHeader";
-import Link from "next/link";
-import Image from "next/image";
-import googleIcon from "../../public/assets/onboardingIcons/google.png";
-import github_lightMode from "../../public/assets/onboardingIcons/github_lightMode.png";
-import github_darkMode from "../../public/assets/onboardingIcons/github_darkMode.png";
-import { useTheme } from "next-themes";
-import UserLogin from "@/composables/userLoginFunction";
+'use client';
+import React, { useEffect, useState } from 'react';
+import { OnboardingHeader } from './onboardingHeader';
+import Link from 'next/link';
+import Image from 'next/image';
+import googleIcon from '../../public/assets/onboardingIcons/google.png';
+import github_lightMode from '../../public/assets/onboardingIcons/github_lightMode.png';
+import github_darkMode from '../../public/assets/onboardingIcons/github_darkMode.png';
+import { useTheme } from 'next-themes';
+import UserLogin from '@/composables/userLoginFunction';
 import {
   emailValidator,
   passwordValidator,
-} from "@/composables/emailPasswordValidator";
-
-import closeWhite from ".././../public/assets/forgotPasswordForm/close_white.png";
-import closeBlack from ".././../public/assets/onboardingIcons/close_black.png";
-import { useRouter } from "next/navigation";
-
-import { useGithubSignin } from "@/composables/authGithubSigninPopup";
-import { PasswordToggle } from "./passwordToggleFunction";
-import closeIcon from "../../public/assets/onboardingIcons/close_light.png";
-import closeDark from "../../public/assets/onboardingIcons/closecircledark.png";
-import { useGoogleSignin } from "@/composables/authGoogleSigninPoppup";
-import ErrorModal from "./errorModal_comp";
+} from '@/composables/emailPasswordValidator';
+import { useGithubSignin } from '@/composables/authGithubSigninPopup';
+import { PasswordToggle } from './passwordToggleFunction';
+import closeIcon from '../../public/assets/onboardingIcons/close_light.png';
+import closeDark from '../../public/assets/onboardingIcons/closecircledark.png';
+import { useGoogleSignin } from '@/composables/authGoogleSigninPoppup';
+import ErrorModal from './errorModal_comp';
+import { useRouter } from 'next/navigation';
 
 function UserLoginComp() {
   const { signinWithGithub, githubError } = useGithubSignin();
   const { signinWithGoogle, googleError } = useGoogleSignin();
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     setErrorMessage(githubError || googleError);
-    if (errorMessage !== "") {
+    if (errorMessage !== '') {
       setTimeout(() => {
-        setErrorMessage("");
+        setErrorMessage('');
       }, 6000);
     }
   }, [githubError, googleError]);
 
   const handleClose = () => {
-    setErrorMessage("");
+    setErrorMessage('');
   };
 
   const { theme, setTheme } = useTheme();
-  const [emailAddress, setEmailAddress] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [emailAddress, setEmailAddress] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const router = useRouter();
   const [closeLogin, setCloseLogin] = useState(false);
 
@@ -62,7 +58,7 @@ function UserLoginComp() {
 
   const handleCloseLogin = () => {
     setCloseLogin(true);
-    router.push("/");
+    router.push('/');
   };
 
   const loginUser = async (e) => {
@@ -75,59 +71,52 @@ function UserLoginComp() {
       try {
         const result = await UserLogin(emailAddress, password);
         if (result.loggedIn) {
-          console.log("Logged in", result.message);
+          console.log('Logged in', result.message);
         } else {
-          console.log("user does not exist", result.message);
+          console.log('user does not exist', result.message);
         }
       } catch (error) {
-        console.log("error", error);
+        console.log('error', error);
       }
     } else {
       if (validEmail !== true) {
         setEmailError(validEmail);
       } else {
-        setEmailError("");
+        setEmailError('');
       }
 
       if (validPassword !== true) {
         setPasswordError(validPassword);
       } else {
-        setPasswordError("");
+        setPasswordError('');
       }
     }
   };
 
   return (
     <form
-      className="space-y-6 p-10 bg-white dark:bg-[#1E1E2A] dark:text-white w-auto min-w-[600px] font-nohemi rounded-[24px]"
-      onSubmit={loginUser}
-    >
-      <div className="space-y-8">
-        <div className="space-y-3">
-          <div className="flex justify-between">
-            <OnboardingHeader
-              h1={"Welcome back"}
-              p={"Enjoy extra features when you create an account with us."}
-            />
-
-            <Image
-              src={theme === "dark" ? closeWhite : closeBlack}
-              alt="closeBtn"
-              width={24}
-              height={24}
-              className="w-6 h-6 ml-8 mb-[20px]"
-              onClick={handleCloseLogin}
-            />
-          </div>
-
+      className="space-y-6 p-10 bg-white dark:bg-[#1E1E2A] dark:text-white"
+      onSubmit={loginUser}>
+      <div className="space-y-3">
+        <div className="flex justify-between">
+          <OnboardingHeader
+            h1={'Welcome back'}
+            p={'Enjoy extra features when you create an account with us.'}
+          />
+          <Image
+            src={theme === 'dark' ? closeIcon : closeDark}
+            alt="close icon"
+            className="w-6 h-6 mr-4 mt-2"
+          />
+        </div>
+        <div className="flex flex-row justify-between gap-3">
           <div className="flex flex-row justify-between gap-3">
             <button
               onClick={(e) => {
                 e.preventDefault();
                 signinWithGoogle();
               }}
-              className="flex flex-row flex-nowrap justify-center gap-2 bg-[#DCDCE5] dark:bg-[#363647] items-center p-3 rounded-md w-full"
-            >
+              className="flex flex-row flex-nowrap justify-center gap-2 bg-[#DCDCE5] dark:bg-[#363647] items-center p-3 rounded-md w-full shadow-md">
               <Image
                 src={googleIcon}
                 alt="google_icon"
@@ -140,10 +129,9 @@ function UserLoginComp() {
                 e.preventDefault();
                 signinWithGithub();
               }}
-              className="flex flex-row flex-nowrap justify-center gap-2 bg-[#DCDCE5] dark:bg-[#363647] items-center px-3 rounded-md w-full"
-            >
+              className="flex flex-row flex-nowrap justify-center gap-2 bg-[#DCDCE5] dark:bg-[#363647] items-center px-3 rounded-md w-full shadow-md">
               <Image
-                src={theme === "dark" ? github_darkMode : github_lightMode}
+                src={theme === 'dark' ? github_darkMode : github_lightMode}
                 alt="google_icon"
                 className="w-6 h-auto"
               />
@@ -167,7 +155,7 @@ function UserLoginComp() {
               name="email"
               id="email"
               className={`p-3 rounded-xl dark:bg-[#363647] bg-[#ebebf0] w-full h-[48px] text-sm placeholder-[#67667A] font-normal focus:ring-2 focus:ring-[#5F5BD7] focus:border-transparent outline-none ${
-                emailError && "border border-[#ec6d6a]"
+                emailError && 'border border-[#ec6d6a]'
               }`}
               placeholder="Enter Email Address"
               onChange={emailChange}
@@ -185,16 +173,15 @@ function UserLoginComp() {
               handleInputChange={passwordChange}
               inputValue={password}
               customClass={`p-3 rounded-xl dark:bg-[#363647] bg-[#ebebf0] w-full h-[48px] text-sm placeholder-[#67667A] font-normal focus:ring-2 focus:ring-[#5F5BD7] focus:border-transparent outline-none ${
-                passwordError && "border border-[#ec6d6a]"
+                passwordError && 'border border-[#ec6d6a]'
               }`}
             />
             {passwordError && (
               <p className="text-sm text-red-500">{passwordError}</p>
             )}
             <Link
-              href={"/?view=recoveraccount"}
-              className="float-right text-[#5F5BD7]"
-            >
+              href={'/?view=recoveraccount'}
+              className="float-right text-[#5F5BD7]">
               Forgot password?
             </Link>
           </div>
@@ -202,8 +189,7 @@ function UserLoginComp() {
           <div className="space-y-3">
             <button
               type="submit"
-              className="bg-[#5F5BD7] text-white text-center font-bold block w-full p-3 rounded-md"
-            >
+              className="bg-[#5F5BD7] text-white text-center font-bold block w-full p-3 rounded-md">
               Log in
             </button>
 
@@ -211,19 +197,18 @@ function UserLoginComp() {
               {"Don't have an account with us?"}
               <Link
                 href="/?view=signup"
-                className="text-violet-800 mx-1.5 dark:text-white font-bold"
-              >
+                className="text-violet-800 mx-1.5 dark:text-white font-bold">
                 Create your account
               </Link>
             </p>
           </div>
         </div>
-        <ErrorModal
-          errorMessage={errorMessage}
-          style={"fixed  top-0 right-0 mr-2 "}
-          onClose={() => handleClose()}
-        />
       </div>
+      <ErrorModal
+        errorMessage={errorMessage}
+        style={'fixed  top-0 right-0 mr-2 '}
+        onClose={() => handleClose()}
+      />
     </form>
   );
 }
