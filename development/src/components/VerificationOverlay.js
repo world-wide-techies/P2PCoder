@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import closeIcon from "../../public/assets/onboardingIcons/close_black.png";
 import closeIconWhite from "../../public/assets/onboardingIcons/close_light.png";
-import { triggerEmailVerification } from "@/composables/authSignupFunction";
+// import { triggerEmailVerification } from "@/composables/authSignupFunction";
 import { useTheme } from "next-themes";
 
 const VerificationOverlay = ({ email }) => {
@@ -38,7 +38,7 @@ const VerificationOverlay = ({ email }) => {
           <a
             className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-md text-center"
             href={`mailto:${email}`}
-            onClick={sendEmailVerification}
+            // onClick={sendEmailVerification}
           >
             Open mail app
           </a>

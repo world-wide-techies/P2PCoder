@@ -10,18 +10,22 @@ import { PasswordToggle } from "./passwordToggleFunction";
 import { useGithubSignin } from "@/composables/authGithubSigninPopup";
 import { useGoogleSignin } from "@/composables/authGoogleSigninPoppup";
 import { signupFormValidation } from "@/composables/signupFormValidation";
-import { authSignUp } from "@/composables/authSignupFunction";
 import { useTheme } from "next-themes";
 import closeIcon from "../../public/assets/onboardingIcons/closecirclelight.png";
 import closeIconDark from "../../public/assets/onboardingIcons/closecircledark.png";
 import ErrorModal from "./errorModal_comp";
 import { getDocs, collection, where, query } from "firebase/firestore";
 import { appFirestore } from "../composables/firebaseConfig/config";
+import VerificationOverlay from "./VerificationOverlay";
+import { useRouter } from "next/navigation";
+import { authSignUp } from "@/composables/authSignupFunction";
 
 function SignUpComponent() {
   const { signinWithGithub, githubError } = useGithubSignin();
   const { signinWithGoogle, googleError } = useGoogleSignin();
   const [errorMessage, setErrorMessage] = useState("");
+  const [isEmailSent, setIsEmailSent] = useState(false);
+  const [canSubmit, setCanSubmit] = useState(false);
   useEffect(() => {
     setErrorMessage(githubError || googleError);
     if (errorMessage !== "") {
@@ -35,6 +39,7 @@ function SignUpComponent() {
     setErrorMessage("");
   };
 
+  const router = useRouter();
   const { theme, setTheme } = useTheme();
   const [user, setUser] = useState({
     firstname: "",
@@ -82,6 +87,7 @@ function SignUpComponent() {
     e.preventDefault();
     const { firstname, lastname, email, password, username } = user;
     const formErrors = signupFormValidation(user);
+    setIsEmailSent(true) //this is to display the verification modal when the create account button is clicked
 
     if (Object.keys(formErrors).length === 0) {
       try {
@@ -109,9 +115,27 @@ function SignUpComponent() {
     }
   };
 
+  //the useEffect below is to ensure the form is filled before the button is enabled
+
+  useEffect(() => {
+    if(user.firstname !== "" && user.lastname !== "" && user.email !== "" && user.password !== "" && user.username !== "" && user.confirm_password !=="")
+ { setCanSubmit(true)} else{
+  setCanSubmit(false)
+ }
+    
+  }, [user.firstname, user.lastname, user.email, user.password, user.username, user.confirm_password])
+  
+
+  //this function is to close the create account modal
+  const handleCloseButton = () => {
+    router.push("/")
+    }
+    
+
+
   return (
     <div>
-      {showForm ? (
+    {isEmailSent ? <VerificationOverlay /> :
         <form
           className="space-y-5 p-12  bg-[#F3F3F6] dark:bg-[#1E1E2A] w-auto min-w-[800px] min-h-[730px] font-nohemi rounded-3xl drop-shadow-lg"
           onSubmit={handleSubmit}
@@ -125,7 +149,7 @@ function SignUpComponent() {
               src={theme === "dark" ? closeIconDark : closeIcon}
               alt="close icon"
               className="w-6 h-6 mr-4 mt-2"
-              onClick={handleCloseForm}
+              onClick={handleCloseButton}
             />
           </div>
 
@@ -363,9 +387,14 @@ function SignUpComponent() {
 
           <div className="space-y-3">
             <button
-              type="submit"
-              className="bg-[#5f5bd7] text-white text-center text-lg font-semibold block w-full p-3 rounded-md mt-8"
-            >
+              // type="submit"
+              className={`${
+                !canSubmit ? 'opacity-50' : 'opacity-100'
+              } bg-purple-500 text-white text-center text-lg font-semibold block w-full p-3 rounded-md mt-8`}
+              
+              onClick={handleSubmit}
+              disabled={!canSubmit ? true : false}
+              >
               Create Account
             </button>
 
@@ -380,8 +409,8 @@ function SignUpComponent() {
             </p>
           </div>
         </form>
-      ) : null}
-
+     
+            }
       <ErrorModal
         errorMessage={errorMessage}
         style={"fixed  top-0 right-0 mr-2 "}
