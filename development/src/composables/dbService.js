@@ -1,14 +1,5 @@
 import { appFirestore, appAuth } from "./firebaseConfig/config";
-import {
-  setDoc,
-  doc,
-  updateDoc,
-  getDoc,
-  getDocs,
-  collection,
-  query,
-  where,
-} from "firebase/firestore";
+import { setDoc, doc, updateDoc, getDoc } from "firebase/firestore";
 
 async function addSession(userSessionData) {
   const { sessionName, peerId, language, userName, peerName } = userSessionData;
