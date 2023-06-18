@@ -4,9 +4,18 @@ import closeIcon from "../../public/assets/onboardingIcons/close_black.png";
 import closeIconWhite from "../../public/assets/onboardingIcons/close_light.png";
 // import { triggerEmailVerification } from "@/composables/authSignupFunction";
 import { useTheme } from "next-themes";
+// import { useRouter } from "next/navigation";
 
-const VerificationOverlay = ({ email }) => {
+const VerificationOverlay = ({ email, onClose }) => {
+  // const router = useRouter();
   const { theme, setTheme } = useTheme();
+
+  //this function is to close the create account modal
+  const handleCloseButton = () => {
+ onClose();
+    }
+    
+
 
   return (
     <div className="w-full">
@@ -20,6 +29,7 @@ const VerificationOverlay = ({ email }) => {
                   src={theme === "dark" ? closeIconWhite : closeIcon}
                   alt="close Icon"
                   className="w-9 h-9"
+                  onClick={handleCloseButton}
                 />
               </Link>
             </span>

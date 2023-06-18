@@ -16,16 +16,14 @@ import closeIconDark from "../../public/assets/onboardingIcons/closecircledark.p
 import ErrorModal from "./errorModal_comp";
 import { getDocs, collection, where, query } from "firebase/firestore";
 import { appFirestore } from "../composables/firebaseConfig/config";
-import VerificationOverlay from "./VerificationOverlay";
 import { useRouter } from "next/navigation";
 import { authSignUp, triggerEmailVerification } from "@/composables/authSignupFunction";
-import { sendEmailVerification } from "firebase/auth";
+
 
 function SignUpComponent() {
   const { signinWithGithub, githubError } = useGithubSignin();
   const { signinWithGoogle, googleError } = useGoogleSignin();
   const [errorMessage, setErrorMessage] = useState("");
-  const [isEmailSent, setIsEmailSent] = useState(false);
   const [canSubmit, setCanSubmit] = useState(false);
   useEffect(() => {
     setErrorMessage(githubError || googleError);
@@ -53,12 +51,7 @@ function SignUpComponent() {
 
   const [errors, setErrors] = useState({});
   const [usernameAvailable, setUsernameAvailable] = useState(null);
-  const [showForm, setShowForm] = useState(true);
-
-  const handleCloseForm = () => {
-    setShowForm(false);
-  };
-
+ 
   const handleChange = async (e) => {
     const { name, value } = e.target;
     setUser((prevUser) => ({ ...prevUser, [name]: value }));
@@ -85,15 +78,12 @@ function SignUpComponent() {
   };
 
   const handleSubmit = async (e) => {
-
-const result = await triggerEmailVerification(user);
-console.log(result);
-
+// const result = await triggerEmailVerification(user);
+// console.log(result);
 
     e.preventDefault();
     const { firstname, lastname, email, password, username } = user;
     const formErrors = signupFormValidation(user);
-    setIsEmailSent(true) //this is to display the verification modal when the create account button is clicked
 
     if (Object.keys(formErrors).length === 0) {
       try {
@@ -141,7 +131,6 @@ console.log(result);
 
   return (
     <div>
-    {isEmailSent ? <VerificationOverlay /> :
         <form
           className="space-y-5 p-12  bg-[#F3F3F6] dark:bg-[#1E1E2A] w-auto min-w-[800px] min-h-[730px] font-nohemi rounded-3xl drop-shadow-lg"
           onSubmit={handleSubmit}
@@ -394,11 +383,17 @@ console.log(result);
           <div className="space-y-3">
             <button
               // type="submit"
+              
               className={`${
                 !canSubmit ? 'opacity-50' : 'opacity-100'
               } bg-purple-500 text-white text-center text-lg font-semibold block w-full p-3 rounded-md mt-8`}
               
-              onClick={handleSubmit}
+              // onClick={handleSubmit}
+              onClick={() => {
+                handleSubmit();
+                router.push("/?view=verifyEmail");
+              }}
+              
               disabled={!canSubmit ? true : false}
               >
               Create Account
@@ -415,7 +410,7 @@ console.log(result);
             </p>
           </div>
         </form>  
-            }
+            
       <ErrorModal
         errorMessage={errorMessage}
         style={"fixed  top-0 right-0 mr-2 "}

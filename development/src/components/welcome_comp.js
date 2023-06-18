@@ -6,31 +6,41 @@ import SignUpComponent from "./signup_comp";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import UserLoginComp from "./userLogin_comp";
+import VerificationOverlay from "./VerificationOverlay";
 
 const Welcome = () => {
   const router = useRouter();
   const view = useSearchParams().get("view");
   return (
     <div>
-      {view == "login" ? (
-        <Modal
-          onClose={() => {
-            router.push("/");
-          }}
-        >
-          <UserLoginComp />
-        </Modal>
-      ) : view == "signup" ? (
-        <Modal
-          onClose={() => {
-            router.push("/");
-          }}
-        >
-          <SignUpComponent />
-        </Modal>
-      ) : (
-        <div></div>
-      )}
+    {view === "login" ? (
+      <Modal
+        onClose={() => {
+          router.push("/");
+        }}
+      >
+        <UserLoginComp />
+      </Modal>
+    ) : view === "signup" ? (
+      <Modal
+        onClose={() => {
+          router.push("/");
+        }}
+      >
+        <SignUpComponent />
+      </Modal>
+    ) : view === "verifyEmail" ? (
+      <Modal
+        onClose={() => {
+          router.push("/login");
+        }}
+      >
+        <VerificationOverlay />
+      </Modal>
+    ) : (
+      <div></div>
+    )}
+    
       <div className="flex w-full justify-center items-end mx-auto">
         <div className="w-1/3 flex justify-center mx-auto">
           <Onboarding />
