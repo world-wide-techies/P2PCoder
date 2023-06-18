@@ -4,7 +4,7 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 import { appAuth, appFirestore } from "./firebaseConfig/config";
-import { doc, setDoc, collection } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 
 async function authSignUp(firstname, lastname, email, password, username) {
   try {
