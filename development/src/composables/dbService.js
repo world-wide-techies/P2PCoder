@@ -116,7 +116,7 @@ async function updateSession(updatedSessionData) {
   }
 }
 
-async function addUserToExistingSession(appAuth, appFirestore, peerId) {
+async function addUserToExistingSession(peerId) {
   try {
     if (!appAuth || !peerId) {
       throw new Error("User or session ID is missing");
