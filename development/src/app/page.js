@@ -214,8 +214,7 @@ function Home() {
               } else if (item.active && item.title == "collab") {
                 return (
                   <div>
-                    {" "}
-                    <SessionComp />{" "}
+                    <SessionComp />
                   </div>
                 );
               } else if (item.active && item.title != "Welcome") {
