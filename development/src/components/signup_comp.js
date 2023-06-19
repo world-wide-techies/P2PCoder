@@ -23,7 +23,6 @@ import {
 } from "@/composables/authSignupFunction";
 import VerificationOverlay from "./verificationOverlay";
 
-
 function SignUpComponent() {
   const { signinWithGithub, githubError } = useGithubSignin();
   const { signinWithGoogle, googleError } = useGoogleSignin();
@@ -83,14 +82,11 @@ function SignUpComponent() {
   };
 
   const handleSubmit = async (e) => {
-    // const result = await triggerEmailVerification(user);
-    // console.log(result);
-
     e.preventDefault();
-   
+
     const { firstname, lastname, email, password, username } = user;
     const formErrors = signupFormValidation(user);
-router.push("/?view=verificationOverlay")
+    router.push("/?view=verificationOverlay");
     if (Object.keys(formErrors).length === 0) {
       try {
         const signUpUser = await authSignUp(
@@ -117,8 +113,6 @@ router.push("/?view=verificationOverlay")
     }
   };
 
-  //the useEffect below is to ensure the form is filled before the button is enabled
-
   useEffect(() => {
     if (
       user.firstname !== "" &&
@@ -141,10 +135,9 @@ router.push("/?view=verificationOverlay")
     user.confirm_password,
   ]);
 
-  //this function is to close the create account modal
- /* const handleCloseButton = () => {
+  const handleCloseButton = () => {
     router.push("/");
-  };*/
+  };
 
   return (
     <div>
@@ -161,7 +154,7 @@ router.push("/?view=verificationOverlay")
             src={theme === "dark" ? closeIconDark : closeIcon}
             alt="close icon"
             className="w-6 h-6 mr-4 mt-2"
-           // onClick={handleCloseButton}
+            // onClick={handleCloseButton}
           />
         </div>
 
@@ -427,7 +420,6 @@ router.push("/?view=verificationOverlay")
         </div>
       </form>
 
-      
       <ErrorModal
         errorMessage={errorMessage}
         style={"fixed  top-0 right-0 mr-2 "}

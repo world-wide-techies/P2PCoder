@@ -15,8 +15,7 @@ async function authSignUp(firstname, lastname, email, password, username) {
       email,
       password
     );
-    console.log("testing A"); //this line is to check if the function runs
-    console.log("User created:", userCredential); //this line is to check what is inside the userCredential object 'to be sure it is not empty'
+
     
     const user = userCredential.user;
     if (user) {
@@ -28,9 +27,8 @@ async function authSignUp(firstname, lastname, email, password, username) {
         email,
       };
 
-      console.log("testing B"); //this line is to check if the function is called
-      await triggerEmailVerification(user); //i added this line to ensure that the email verification function is called immediately after the user is created
-      await completeSignUp(newUser, username); // this complete signup function should only be called after users email is verified
+      await triggerEmailVerification(user); 
+      await completeSignUp(newUser, username); 
     }
     return { success: true, userCredential }; 
   } catch (error) {
@@ -40,12 +38,9 @@ async function authSignUp(firstname, lastname, email, password, username) {
 
 async function triggerEmailVerification(user) {
   try {
-    console.log("Triggering email verification for user:", user); // to check if this function is called and to see the data inside the user object to ensure it is not empty
     await sendEmailVerification(user);
-    console.log('Email verification sent successfully'); // to check if sendEmailVerfication function is called and to see if it was successful
     return true;
-  } catch (error) {
-    console.log('Failed to send email verification:', error); // to check if sendEmailVerfication function failed
+  } catch (error) { 
     return false;
   }
 }
@@ -55,7 +50,6 @@ async function completeSignUp(user, username) {
   const codersCollection = collection(appFirestore, `CODERS/${user.uid}`);
   const newDocRef = doc(codersCollection);
   const fullname = `${user.firstname} ${user.lastname}`;
-  console.log("testing C");
   await setDoc(newDocRef, {
     fullname,
     username,
