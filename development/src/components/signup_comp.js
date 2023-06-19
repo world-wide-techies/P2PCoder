@@ -17,6 +17,7 @@ import closeIconDark from "../../public/assets/onboardingIcons/closecircledark.p
 import ErrorModal from "./errorModal_comp";
 import { getDocs, collection, where, query } from "firebase/firestore";
 import { appFirestore } from "../composables/firebaseConfig/config";
+import { useRouter } from "next/navigation";
 
 function SignUpComponent() {
   const { signinWithGithub, githubError } = useGithubSignin();
@@ -48,9 +49,11 @@ function SignUpComponent() {
   const [errors, setErrors] = useState({});
   const [usernameAvailable, setUsernameAvailable] = useState(null);
   const [showForm, setShowForm] = useState(true);
+  const router = useRouter();
 
   const handleCloseForm = () => {
     setShowForm(false);
+    router.push("/");
   };
 
   const handleChange = async (e) => {
