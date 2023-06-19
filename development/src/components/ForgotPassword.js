@@ -79,7 +79,7 @@ const ForgotPassword = () => {
             name="email_address"
             type="email"
             placeholder="Enter Email Address"
-            className={`max-w-3xl h-10 bg-neutral-100 rounded px-1 outline-none  dark:bg-[#363647] ${
+            className={`max-w-3xl h-10 bg-neutral-100 rounded px-5 outline-none  dark:bg-[#363647] ${
               error && "border border-red-500"
             }`}
             aria-label="email"
