@@ -29,14 +29,6 @@ const Welcome = () => {
         >
           <SignUpComponent />
         </Modal>
-      ) : view === "verificationOverlay" ? (
-        <Modal
-          onClose={() => {
-            router.push("/");
-          }}
-        >
-          <VerificationOverlay />
-        </Modal>
       ) : (
         <div></div>
       )}

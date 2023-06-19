@@ -6,7 +6,7 @@ import closeIconWhite from "../../public/assets/onboardingIcons/close_light.png"
 import { useTheme } from "next-themes";
 // import { useRouter } from "next/navigation";
 
-const VerificationOverlay = ({ email, onClose }) => {
+function VerificationOverlay({ email, onClose }) {
   // const router = useRouter();
   const { theme, setTheme } = useTheme();
 
@@ -51,5 +51,5 @@ const VerificationOverlay = ({ email, onClose }) => {
       </div>
     </div>
   );
-};
+}
 export default VerificationOverlay;

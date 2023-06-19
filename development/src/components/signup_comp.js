@@ -21,7 +21,8 @@ import {
   authSignUp,
   triggerEmailVerification,
 } from "@/composables/authSignupFunction";
-import VerificationOverlay from "./VerificationOverlay";
+import VerificationOverlay from "./verificationOverlay";
+
 
 function SignUpComponent() {
   const { signinWithGithub, githubError } = useGithubSignin();
@@ -86,7 +87,7 @@ function SignUpComponent() {
     // console.log(result);
 
     e.preventDefault();
-    router.push("/?view=verificationOverlay");
+   
     const { firstname, lastname, email, password, username } = user;
     const formErrors = signupFormValidation(user);
 
@@ -141,9 +142,9 @@ function SignUpComponent() {
   ]);
 
   //this function is to close the create account modal
-  const handleCloseButton = () => {
+ /* const handleCloseButton = () => {
     router.push("/");
-  };
+  };*/
 
   return (
     <div>
@@ -160,7 +161,7 @@ function SignUpComponent() {
             src={theme === "dark" ? closeIconDark : closeIcon}
             alt="close icon"
             className="w-6 h-6 mr-4 mt-2"
-            onClick={handleCloseButton}
+           // onClick={handleCloseButton}
           />
         </div>
 
@@ -426,6 +427,7 @@ function SignUpComponent() {
         </div>
       </form>
 
+      
       <ErrorModal
         errorMessage={errorMessage}
         style={"fixed  top-0 right-0 mr-2 "}
