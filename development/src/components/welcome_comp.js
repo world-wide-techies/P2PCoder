@@ -13,34 +13,34 @@ const Welcome = () => {
   const view = useSearchParams().get("view");
   return (
     <div>
-    {view === "login" ? (
-      <Modal
-        onClose={() => {
-          router.push("/");
-        }}
-      >
-        <UserLoginComp />
-      </Modal>
-    ) : view === "signup" ? (
-      <Modal
-        onClose={() => {
-          router.push("/");
-        }}
-      >
-        <SignUpComponent />
-      </Modal>
-    ) : view === "verifyEmail" ? (
-      <Modal
-        onClose={() => {
-          router.push("/login");
-        }}
-      >
-        <VerificationOverlay />
-      </Modal>
-    ) : (
-      <div></div>
-    )}
-    
+      {view === "login" ? (
+        <Modal
+          onClose={() => {
+            router.push("/");
+          }}
+        >
+          <UserLoginComp />
+        </Modal>
+      ) : view === "signup" ? (
+        <Modal
+          onClose={() => {
+            router.push("/");
+          }}
+        >
+          <SignUpComponent />
+        </Modal>
+      ) : view === "verificationOverlay" ? (
+        <Modal
+          onClose={() => {
+            router.push("/");
+          }}
+        >
+          <VerificationOverlay />
+        </Modal>
+      ) : (
+        <div></div>
+      )}
+
       <div className="flex w-full justify-center items-end mx-auto">
         <div className="w-1/3 flex justify-center mx-auto">
           <Onboarding />
