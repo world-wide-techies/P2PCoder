@@ -19,7 +19,11 @@ const Welcome = () => {
             router.push("/");
           }}
         >
-          <UserLoginComp />
+          <UserLoginComp
+            onClose={() => {
+              router.push("/");
+            }}
+          />
         </Modal>
       ) : view == "signup" ? (
         <Modal
