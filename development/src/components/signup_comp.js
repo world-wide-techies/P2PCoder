@@ -17,7 +17,7 @@ import ErrorModal from "./errorModal_comp";
 import { getDocs, collection, where, query } from "firebase/firestore";
 import { appFirestore } from "../composables/firebaseConfig/config";
 import { useRouter } from "next/navigation";
-import { authSignUp, triggerEmailVerification } from "@/composables/authSignupFunction";
+import { authSignUp } from "@/composables/authSignupFunction";
 
 
 function SignUpComponent() {
@@ -78,9 +78,6 @@ function SignUpComponent() {
   };
 
   const handleSubmit = async (e) => {
-// const result = await triggerEmailVerification(user);
-// console.log(result);
-
     e.preventDefault();
     const { firstname, lastname, email, password, username } = user;
     const formErrors = signupFormValidation(user);
@@ -110,9 +107,7 @@ function SignUpComponent() {
       setErrors(formErrors);
     }
   };
-
-  //the useEffect below is to ensure the form is filled before the button is enabled
-
+  
   useEffect(() => {
     if(user.firstname !== "" && user.lastname !== "" && user.email !== "" && user.password !== "" && user.username !== "" && user.confirm_password !=="")
  { setCanSubmit(true)} else{
@@ -121,8 +116,6 @@ function SignUpComponent() {
     
   }, [user.firstname, user.lastname, user.email, user.password, user.username, user.confirm_password])
   
-
-  //this function is to close the create account modal
   const handleCloseButton = () => {
     router.push("/")
     }
