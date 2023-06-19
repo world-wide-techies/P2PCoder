@@ -6,7 +6,7 @@ import SignUpComponent from "./signup_comp";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import UserLoginComp from "./userLogin_comp";
-import VerificationOverlay from "./VerificationOverlay";
+
 
 const Welcome = () => {
   const router = useRouter();

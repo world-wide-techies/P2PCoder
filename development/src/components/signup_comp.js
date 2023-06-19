@@ -90,7 +90,7 @@ function SignUpComponent() {
    
     const { firstname, lastname, email, password, username } = user;
     const formErrors = signupFormValidation(user);
-
+router.push("/?view=verificationOverlay")
     if (Object.keys(formErrors).length === 0) {
       try {
         const signUpUser = await authSignUp(

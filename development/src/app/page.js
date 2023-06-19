@@ -13,6 +13,7 @@ import ErrorModal from "@/components/errorModal_comp";
 import UserLoginComp from "@/components/userLogin_comp";
 import SignUpComponent from "@/components/signup_comp";
 import SessionComp from "@/components/session_comp";
+import VerificationOverlay from "@/components/verificationOverlay";
 
 function Home() {
   const { items, setItems, errorMessage, setErrorMessage } = useTabContext();
@@ -173,7 +174,11 @@ function Home() {
                   router.push("/");
                 }}
               >
-                <UserLoginComp />
+                <UserLoginComp
+                  onClose={() => {
+                    router.push("/");
+                  }}
+                />
               </Modal>
             ) : view == "signup" ? (
               <Modal
