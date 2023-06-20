@@ -30,7 +30,7 @@ const Welcome = () => {
       >
         <SignUpComponent />
       </Modal>
-    )  : view == "recoveraccount" ? (
+    ) : view == "recoveraccount" ? (
       <Modal
         onClose={() => {
           router.push("/");
