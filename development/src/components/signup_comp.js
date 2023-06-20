@@ -17,11 +17,13 @@ import closeIconDark from "../../public/assets/onboardingIcons/closecircledark.p
 import ErrorModal from "./errorModal_comp";
 import { getDocs, collection, where, query } from "firebase/firestore";
 import { appFirestore } from "../composables/firebaseConfig/config";
+import { useRouter } from "next/navigation";
 
 function SignUpComponent() {
   const { signinWithGithub, githubError } = useGithubSignin();
   const { signinWithGoogle, googleError } = useGoogleSignin();
   const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter()
   useEffect(() => {
     setErrorMessage(githubError || googleError);
     if (errorMessage !== "") {
@@ -51,6 +53,7 @@ function SignUpComponent() {
 
   const handleCloseForm = () => {
     setShowForm(false);
+    router.push("/");
   };
 
   const handleChange = async (e) => {
@@ -113,7 +116,7 @@ function SignUpComponent() {
     <div>
       {showForm ? (
         <form
-          className="space-y-5 p-12  bg-[#F3F3F6] dark:bg-[#1E1E2A] w-auto min-w-[800px] min-h-[730px] font-nohemi rounded-3xl drop-shadow-lg"
+          className="space-y-5 p-12  bg-[#F3F3F6] dark:bg-[#1E1E2A] w-auto min-w-[800px] min-h-[730px] font-nohemi rounded-[24px] drop-shadow-lg"
           onSubmit={handleSubmit}
         >
           <div className="flex justify-between">

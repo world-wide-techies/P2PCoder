@@ -119,13 +119,13 @@ function Home() {
 
   return (
     <>
-      <main className="h-full bg-[#DCDCE5] dark:bg-[#2F2F3A] relative">
+      <main className="h-full bg-[#F3F3F6] dark:bg-[#2F2F3A] relative">
         <ErrorModal
           errorMessage={errorMessage}
           style={"absolute z-50 top-3 right-0 mr-2 "}
           onClose={() => setErrorMessage("")}
         />
-        <div className="relative h-full border-gray-300 border-b-[1px] dark:border-gray-700 ">
+        <div className="relative h-full border-[#DCDCE5] border-b-[1px] dark:border-gray-700 ">
           <EditorNavBar />
         </div>
         <div className="relative flex w-full">
@@ -198,7 +198,7 @@ function Home() {
                   router.push("/");
                 }}
               >
-                <ForgotPassword/>
+                <ForgotPassword />
               </Modal>
             ) : (
               <div></div>

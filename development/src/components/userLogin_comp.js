@@ -95,18 +95,19 @@ function UserLoginComp({ onClose }) {
 
   return (
     <form
-      className="space-y-6 p-10 bg-white dark:bg-[#1E1E2A] dark:text-white"
-      onSubmit={loginUser}>
+      className="space-y-6 p-10 bg-[#F3F3F6] dark:bg-[#1E1E2A] dark:text-white w-auto min-w-[700px] font-nohemi rounded-[24px]"
+      onSubmit={loginUser}
+    >
       <div className="space-y-3">
         <div className="flex justify-between">
           <OnboardingHeader
-            h1={'Welcome back'}
-            p={'Enjoy extra features when you create an account with us.'}
+            h1={"Welcome back"}
+            p={"Enjoy extra features when you create an account with us."}
           />
 
           <button
             type="button"
-            onClick={() => onClose()}
+            onClick={handleCloseLogin}
             className="w-6 h-6 mr-4 mt-2"
           >
             <Image
@@ -115,41 +116,40 @@ function UserLoginComp({ onClose }) {
             />
           </button>
         </div>
+
         <div className="flex flex-row justify-between gap-3">
-          <div className="flex flex-row justify-between gap-3">
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                signinWithGoogle();
-              }}
-              className="flex flex-row flex-nowrap justify-center gap-2 bg-[#DCDCE5] dark:bg-[#363647] items-center p-3 rounded-md w-full shadow-md">
-              <Image
-                src={googleIcon}
-                alt="google_icon"
-                className="w-6 h-auto"
-              />
-              <p className="text-[14px]">Create Account with Google</p>
-            </button>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                signinWithGithub();
-              }}
-              className="flex flex-row flex-nowrap justify-center gap-2 bg-[#DCDCE5] dark:bg-[#363647] items-center px-3 rounded-md w-full shadow-md">
-              <Image
-                src={theme === 'dark' ? github_darkMode : github_lightMode}
-                alt="google_icon"
-                className="w-6 h-auto"
-              />
-              <p className="text-[14px]">Create Account with Github</p>
-            </button>
-          </div>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              signinWithGoogle();
+            }}
+            className="flex flex-row flex-nowrap justify-center gap-2 bg-[#DCDCE5] dark:bg-[#363647] items-center px-3 py-3 rounded-md w-full"
+          >
+            <Image src={googleIcon} alt="google_icon" className="w-6 h-auto" />
+            <p className="text-[14px]">
+              Create Account with Google
+            </p>
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              signinWithGithub();
+            }}
+            className="flex flex-row flex-nowrap justify-center gap-2 bg-[#DCDCE5] dark:bg-[#363647] items-center px-3 py-3 rounded-md w-full"
+          >
+            <Image
+              src={theme === "dark" ? github_darkMode : github_lightMode}
+              alt="google_icon"
+              className="w-6 h-auto"
+            />
+            <p className="text-[14px]">Create Account with Github</p>
+          </button>
         </div>
 
         <div className="flex items-center text-center">
-          <div className="border-b-2 border-gray-200 w-full relative flex justify-center"></div>
+          <div className="border-b-2 border-[#B6B6C9] w-full relative flex justify-center"></div>
           <p className="flex justify-center w-1/6">OR</p>
-          <div className="border-b-2 border-gray-200 w-full relative flex justify-center"></div>
+          <div className="border-b-2 border-[#B6B6C9] w-full relative flex justify-center"></div>
         </div>
 
         <div className="space-y-8">
@@ -160,8 +160,8 @@ function UserLoginComp({ onClose }) {
               aria-label="email"
               name="email"
               id="email"
-              className={`p-3 rounded-xl dark:bg-[#363647] bg-[#ebebf0] w-full h-[48px] text-sm placeholder-[#67667A] font-normal focus:ring-2 focus:ring-[#5F5BD7] focus:border-transparent outline-none ${
-                emailError && 'border border-[#ec6d6a]'
+              className={`p-3 border-[1px] border-[#DCDCE5] rounded-xl dark:bg-[#363647] bg-[#ebebf0] w-full h-[48px] text-sm placeholder-[#67667A] font-normal focus:ring-2 focus:ring-[#5F5BD7] focus:border-transparent outline-none ${
+                emailError && "border border-[#ec6d6a]"
               }`}
               placeholder="Enter Email Address"
               onChange={emailChange}
@@ -178,16 +178,17 @@ function UserLoginComp({ onClose }) {
               placeholder="Enter password"
               handleInputChange={passwordChange}
               inputValue={password}
-              customClass={`p-3 rounded-xl dark:bg-[#363647] bg-[#ebebf0] w-full h-[48px] text-sm placeholder-[#67667A] font-normal focus:ring-2 focus:ring-[#5F5BD7] focus:border-transparent outline-none ${
-                passwordError && 'border border-[#ec6d6a]'
+              customClass={`p-3 border-[1px] border-[#DCDCE5] rounded-xl dark:bg-[#363647] bg-[#ebebf0] w-full h-[48px] text-sm placeholder-[#67667A] font-normal focus:ring-2 focus:ring-[#5F5BD7] focus:border-transparent outline-none ${
+                passwordError && "border border-[#ec6d6a]"
               }`}
             />
             {passwordError && (
               <p className="text-sm text-red-500">{passwordError}</p>
             )}
             <Link
-              href={'/?view=recoveraccount'}
-              className="float-right text-[#5F5BD7]">
+              href={"/?view=recoveraccount"}
+              className="float-right text-[#5F5BD7] mb-6"
+            >
               Forgot password?
             </Link>
           </div>
@@ -195,7 +196,8 @@ function UserLoginComp({ onClose }) {
           <div className="space-y-3">
             <button
               type="submit"
-              className="bg-[#5F5BD7] text-white text-center font-bold block w-full p-3 rounded-md">
+              className="bg-[#5F5BD7] text-white text-center font-bold block w-full p-3 rounded-md"
+            >
               Log in
             </button>
 
@@ -203,7 +205,8 @@ function UserLoginComp({ onClose }) {
               {"Don't have an account with us?"}
               <Link
                 href="/?view=signup"
-                className="text-violet-800 mx-1.5 dark:text-white font-bold">
+                className="text-violet-800 mx-1.5 dark:text-white font-bold"
+              >
                 Create your account
               </Link>
             </p>
@@ -212,7 +215,7 @@ function UserLoginComp({ onClose }) {
       </div>
       <ErrorModal
         errorMessage={errorMessage}
-        style={'fixed  top-0 right-0 mr-2 '}
+        style={"fixed  top-0 right-0 mr-2 "}
         onClose={() => handleClose()}
       />
     </form>
