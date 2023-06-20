@@ -1,22 +1,23 @@
-'use client';
-import Welcome from '@/components/welcome_comp';
-import EditorNavBar from '@/components/navbar_components/editorNavbar_comp';
-import SideNavBarControl from '@/components/navbar_components/sidebar_components/sideBarNavControl';
-import TabBarControls from '@/components/navbar_components/tabbar_components/tabBarControls_comp';
-import { useSearchParams, useRouter } from 'next/navigation';
-import { Modal } from '@/components/modal';
-import { OpenTabModal } from '@/components/openTabModal_comp';
-import { useTabContext } from '@/composables/tabContext';
-import Collab from '@/components/collab_comp';
-import { useEffect } from 'react';
-import ErrorModal from '@/components/errorModal_comp';
-import UserLoginComp from '@/components/userLogin_comp';
-import SignUpComponent from '@/components/signup_comp';
-import SessionComp from '@/components/session_comp';
+"use client";
+import Welcome from "@/components/welcome_comp";
+import EditorNavBar from "@/components/navbar_components/editorNavbar_comp";
+import SideNavBarControl from "@/components/navbar_components/sidebar_components/sideBarNavControl";
+import TabBarControls from "@/components/navbar_components/tabbar_components/tabBarControls_comp";
+import { useSearchParams, useRouter } from "next/navigation";
+import { Modal } from "@/components/modal";
+import { OpenTabModal } from "@/components/openTabModal_comp";
+import { useTabContext } from "@/composables/tabContext";
+import Collab from "@/components/collab_comp";
+import { useEffect } from "react";
+import ErrorModal from "@/components/errorModal_comp";
+import UserLoginComp from "@/components/userLogin_comp";
+import SignUpComponent from "@/components/signup_comp";
+import SessionComp from "@/components/session_comp";
+import VerificationOverlay from "@/components/VerificationOverlay";
 
 function Home() {
   const { items, setItems, errorMessage, setErrorMessage } = useTabContext();
-  const view = useSearchParams().get('view');
+  const view = useSearchParams().get("view");
   const router = useRouter();
 
   const handleTabActive = (tab) => {
@@ -50,7 +51,7 @@ function Home() {
   };
 
   const handleTabRename = (tab, event) => {
-    if (!event.target.classList.contains('tab-title')) return;
+    if (!event.target.classList.contains("tab-title")) return;
 
     const index = items.findIndex((i, k) => k === tab);
     const currentTabTitleEl = event.target;
@@ -58,31 +59,31 @@ function Home() {
     const initialName = currentTab.title;
     const tabExt = currentTab.ext;
 
-    const form = document.createElement('form');
+    const form = document.createElement("form");
     currentTabTitleEl.replaceChildren(form);
-    const inputField = document.createElement('input');
+    const inputField = document.createElement("input");
     inputField.value = initialName;
     form.appendChild(inputField);
     const currentTabChild = currentTabTitleEl.firstChild;
     currentTabChild[0].focus();
     currentTabChild[0].select();
 
-    currentTabChild.addEventListener('submit', tabRenameSubmitHandler, {
+    currentTabChild.addEventListener("submit", tabRenameSubmitHandler, {
       once: true,
     });
-    currentTabChild.addEventListener('focusout', tabRenameFocusHandler, {
+    currentTabChild.addEventListener("focusout", tabRenameFocusHandler, {
       once: true,
     });
 
     function tabRenameSubmitHandler(e) {
-      currentTabChild.removeEventListener('focusout', tabRenameFocusHandler);
+      currentTabChild.removeEventListener("focusout", tabRenameFocusHandler);
       e.preventDefault();
       const newName = e.target[0].value;
       setTabName(newName, tabExt);
     }
 
     function tabRenameFocusHandler(e) {
-      currentTabChild.removeEventListener('submit', tabRenameSubmitHandler);
+      currentTabChild.removeEventListener("submit", tabRenameSubmitHandler);
       const currentName = e.target.value;
       setTabName(currentName, tabExt);
     }
@@ -93,7 +94,7 @@ function Home() {
         title: idx === index ? name : item.title,
       }));
       setItems(newItems);
-      const extEl = document.createElement('span');
+      const extEl = document.createElement("span");
       extEl.textContent = ext;
       extEl.classList.add(
         ext === '.js'
@@ -112,7 +113,7 @@ function Home() {
 
   useEffect(() => {
     setTimeout(() => {
-      setErrorMessage('');
+      setErrorMessage("");
     }, 6000);
   }, [errorMessage]);
 
@@ -121,8 +122,8 @@ function Home() {
       <main className="h-full bg-[#DCDCE5] dark:bg-[#2F2F3A] relative">
         <ErrorModal
           errorMessage={errorMessage}
-          style={'absolute z-50 top-3 right-0 mr-2 '}
-          onClose={() => setErrorMessage('')}
+          style={"absolute z-50 top-3 right-0 mr-2 "}
+          onClose={() => setErrorMessage("")}
         />
         <div className="relative h-full border-gray-300 border-b-[1px] dark:border-gray-700 ">
           <EditorNavBar />
@@ -155,18 +156,19 @@ function Home() {
         </div>
         <div className="bg-white dark:bg-[#1E1E2A]  ml-24 w-[92.9%] h-screen flex flex-col justify-start">
           <>
-            {view == 'quicklinks' ? (
+            {view == "quicklinks" ? (
               <Modal
                 onClose={() => {
-                  router.push('/');
-                }}>
+                  router.push("/");
+                }}
+              >
                 <OpenTabModal
                   onClose={() => {
-                    router.push('/');
+                    router.push("/");
                   }}
                 />
               </Modal>
-            ) : view == 'login' ? (
+            ) : view == "login" ? (
               <Modal
                 onClose={() => {
                   router.push('/');
@@ -177,7 +179,7 @@ function Home() {
                   }}
                 />
               </Modal>
-            ) : view == 'signup' ? (
+            ) : view == "signup" ? (
               <Modal
                 onClose={() => {
                   router.push('/');
@@ -188,12 +190,24 @@ function Home() {
                   }}
                 />
               </Modal>
+            ) : view === "verificationOverlay" ? (
+              <Modal
+                onClose={() => {
+                  router.push("/");
+                }}
+              >
+                <VerificationOverlay
+                  onClose={() => {
+                    router.push("/");
+                  }}
+                />
+              </Modal>
             ) : (
               <div></div>
             )}
 
             {items.map((item) => {
-              if (item?.active && item.title === 'Welcome') {
+              if (item?.active && item.title === "Welcome") {
                 return (
                   <div className="p-11" key={item.id}>
                     <Welcome />
