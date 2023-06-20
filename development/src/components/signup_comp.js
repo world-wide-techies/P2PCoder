@@ -21,7 +21,7 @@ import {
   authSignUp,
   triggerEmailVerification,
 } from "@/composables/authSignupFunction";
-import VerificationOverlay from "./verificationOverlay";
+
 
 function SignUpComponent() {
   const { signinWithGithub, githubError } = useGithubSignin();
