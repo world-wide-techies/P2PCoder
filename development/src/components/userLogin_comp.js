@@ -127,7 +127,7 @@ function UserLoginComp({ onClose }) {
           >
             <Image src={googleIcon} alt="google_icon" className="w-6 h-auto" />
             <p className="text-[14px]">
-              Create Account with Google
+              Sign in with Google
             </p>
           </button>
           <button
@@ -142,7 +142,7 @@ function UserLoginComp({ onClose }) {
               alt="google_icon"
               className="w-6 h-auto"
             />
-            <p className="text-[14px]">Create Account with Github</p>
+            <p className="text-[14px]">Sign in with Github</p>
           </button>
         </div>
 
@@ -187,7 +187,7 @@ function UserLoginComp({ onClose }) {
             )}
             <Link
               href={"/?view=recoveraccount"}
-              className="float-right text-[#5F5BD7] mb-6"
+              className="float-right mb-6"
             >
               Forgot password?
             </Link>
