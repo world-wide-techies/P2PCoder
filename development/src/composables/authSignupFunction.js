@@ -27,12 +27,8 @@ async function authSignUp(firstname, lastname, email, password, username) {
         email,
       };
 
-<<<<<<< HEAD
       await triggerEmailVerification(user); 
-      await completeSignUp(newUser, username); 
-=======
       await completeSignUp(newUser, user.uid, username);
->>>>>>> 1a9300023e99ecd2df4a40b2d5ad24e0e18314f3
     }
     return { success: true, userCredential }; 
   } catch (error) {
@@ -49,16 +45,9 @@ async function triggerEmailVerification(user) {
   }
 }
 
-<<<<<<< HEAD
-
-async function completeSignUp(user, username) {
-  const codersCollection = collection(appFirestore, `CODERS/${user.uid}`);
-  const newDocRef = doc(codersCollection);
-=======
 async function completeSignUp(user, uid, username) {
   const newDocRef = doc(appFirestore, "CODERS", uid);
 
->>>>>>> 1a9300023e99ecd2df4a40b2d5ad24e0e18314f3
   const fullname = `${user.firstname} ${user.lastname}`;
 
   const dataToSet = {
