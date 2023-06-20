@@ -30,15 +30,7 @@ const Welcome = () => {
       >
         <SignUpComponent />
       </Modal>
-    ) : view === "verifyEmail" ? (
-      <Modal
-        onClose={() => {
-          router.push("/login");
-        }}
-      >
-        <VerificationOverlay />
-      </Modal>
-    ) : view == "recoveraccount" ? (
+    )  : view == "recoveraccount" ? (
       <Modal
         onClose={() => {
           router.push("/");
