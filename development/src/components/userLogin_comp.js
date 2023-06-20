@@ -1,48 +1,48 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import { OnboardingHeader } from './onboardingHeader';
-import Link from 'next/link';
-import Image from 'next/image';
-import googleIcon from '../../public/assets/onboardingIcons/google.png';
-import github_lightMode from '../../public/assets/onboardingIcons/github_lightMode.png';
-import github_darkMode from '../../public/assets/onboardingIcons/github_darkMode.png';
-import { useTheme } from 'next-themes';
-import UserLogin from '@/composables/userLoginFunction';
+"use client";
+import React, { useEffect, useState } from "react";
+import { OnboardingHeader } from "./onboardingHeader";
+import Link from "next/link";
+import Image from "next/image";
+import googleIcon from "../../public/assets/onboardingIcons/google.png";
+import github_lightMode from "../../public/assets/onboardingIcons/github_lightMode.png";
+import github_darkMode from "../../public/assets/onboardingIcons/github_darkMode.png";
+import { useTheme } from "next-themes";
+import UserLogin from "@/composables/userLoginFunction";
 import {
   emailValidator,
   passwordValidator,
-} from '@/composables/emailPasswordValidator';
-import { useGithubSignin } from '@/composables/authGithubSigninPopup';
-import { PasswordToggle } from './passwordToggleFunction';
-import closeIcon from '../../public/assets/onboardingIcons/close_light.png';
-import closeDark from '../../public/assets/onboardingIcons/closecircledark.png';
-import { useGoogleSignin } from '@/composables/authGoogleSigninPoppup';
-import ErrorModal from './errorModal_comp';
-import { useRouter } from 'next/navigation';
+} from "@/composables/emailPasswordValidator";
+import { useGithubSignin } from "@/composables/authGithubSigninPopup";
+import { PasswordToggle } from "./passwordToggleFunction";
+import closeIcon from "../../public/assets/onboardingIcons/close_light.png";
+import closeDark from "../../public/assets/onboardingIcons/closecircledark.png";
+import { useGoogleSignin } from "@/composables/authGoogleSigninPoppup";
+import ErrorModal from "./errorModal_comp";
+import { useRouter } from "next/navigation";
 
 function UserLoginComp({ onClose }) {
   const { signinWithGithub, githubError } = useGithubSignin();
   const { signinWithGoogle, googleError } = useGoogleSignin();
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     setErrorMessage(githubError || googleError);
-    if (errorMessage !== '') {
+    if (errorMessage !== "") {
       setTimeout(() => {
-        setErrorMessage('');
+        setErrorMessage("");
       }, 6000);
     }
   }, [githubError, googleError]);
 
   const handleClose = () => {
-    setErrorMessage('');
+    setErrorMessage("");
   };
 
   const { theme, setTheme } = useTheme();
-  const [emailAddress, setEmailAddress] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [emailAddress, setEmailAddress] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const router = useRouter();
   const [closeLogin, setCloseLogin] = useState(false);
 
@@ -58,7 +58,7 @@ function UserLoginComp({ onClose }) {
 
   const handleCloseLogin = () => {
     setCloseLogin(true);
-    router.push('/');
+    router.push("/");
   };
 
   const loginUser = async (e) => {
@@ -71,24 +71,24 @@ function UserLoginComp({ onClose }) {
       try {
         const result = await UserLogin(emailAddress, password);
         if (result.loggedIn) {
-          console.log('Logged in', result.message);
+          console.log("Logged in", result.message);
         } else {
-          console.log('user does not exist', result.message);
+          console.log("user does not exist", result.message);
         }
       } catch (error) {
-        console.log('error', error);
+        console.log("error", error);
       }
     } else {
       if (validEmail !== true) {
         setEmailError(validEmail);
       } else {
-        setEmailError('');
+        setEmailError("");
       }
 
       if (validPassword !== true) {
         setPasswordError(validPassword);
       } else {
-        setPasswordError('');
+        setPasswordError("");
       }
     }
   };

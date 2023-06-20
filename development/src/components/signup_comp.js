@@ -50,6 +50,7 @@ function SignUpComponent() {
   const [errors, setErrors] = useState({});
   const [usernameAvailable, setUsernameAvailable] = useState(null);
   const [showForm, setShowForm] = useState(true);
+  const router = useRouter();
 
   const handleCloseForm = () => {
     setShowForm(false);
