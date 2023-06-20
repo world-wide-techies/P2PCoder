@@ -7,6 +7,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import UserLoginComp from "./userLogin_comp";
 import VerificationOverlay from "./VerificationOverlay";
+import { ForgotPassword } from "./ForgotPassword";
 
 const Welcome = () => {
   const router = useRouter();
@@ -37,7 +38,15 @@ const Welcome = () => {
       >
         <VerificationOverlay />
       </Modal>
-    ) : (
+    ) : view == "recoveraccount" ? (
+      <Modal
+        onClose={() => {
+          router.push("/");
+        }}
+      >
+        <ForgotPassword />
+      </Modal>
+    )  : (
       <div></div>
     )}
     
