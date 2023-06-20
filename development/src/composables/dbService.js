@@ -1,9 +1,11 @@
-import { appFirestore, appAuth, } from "./firebaseConfig/config";
+import React from "react";
+
+import { appFirestore, appAuth } from "./firebaseConfig/config";
 import { setDoc, doc, updateDoc, getDoc } from "firebase/firestore";
 
-async function addSession(userSessionData) {
-  const { sessionName, peerId, language, userName, peerName } = userSessionData;
-  if (!sessionName || !peerId || !language || !userName || !peerName) {
+async function createSession(sessionData) {
+  const { sessionName, activeLanguage, peerSessionId } = sessionData;
+  if (!sessionName || !activeLanguage || !peerSessionId) {
     throw new Error("Kindly provide all fields");
   }
 
@@ -13,16 +15,14 @@ async function addSession(userSessionData) {
   }
 
   const coders = doc(appFirestore, `CODERS/${user.uid}`);
-  const session = doc(coders, `SESSION/${peerId}`);
+  const session = doc(coders, `SESSION/${peerSessionId}`);
 
   try {
     const sessionData = {
       sessionName: sessionName,
-      peerName: peerName,
-      peerId: peerId,
-      language: language,
+      peerId: peerSessionId,
+      language: activeLanguage,
       createdAt: new Date(),
-      userName: userName,
     };
     const docRef = await setDoc(session, sessionData, { merge: true });
     return "session added";
@@ -78,16 +78,8 @@ async function addCollabCodeEditor(codeEditorData) {
 }
 
 async function updateSession(updatedSessionData) {
-  const { editorCode, sessionName, peerId, language, userName, peerName } =
-    updatedSessionData;
-  if (
-    !editorCode ||
-    !sessionName ||
-    !peerId ||
-    !language ||
-    !userName ||
-    !peerName
-  ) {
+  const { editorCode, peerSessionId, activeLanguage } = updatedSessionData;
+  if (!editorCode || !peerSessionId || !activeLanguage) {
     throw new Error("Kindly provide all fields");
   }
 
@@ -97,17 +89,15 @@ async function updateSession(updatedSessionData) {
   }
 
   const coders = doc(appFirestore, `CODERS/${user.uid}`);
-  const session = doc(coders, `SESSION/${peerId}`);
+  const session = doc(coders, `SESSION/${peerSessionId}`);
 
   try {
     const sessionData = {
       codes: editorCode,
       sessionName: sessionName,
-      peerName: peerName,
-      peerId: peerId,
+      peerId: peerSessionId,
       language: language,
       endedAt: new Date(),
-      userName: userName,
     };
     const docRef = await updateDoc(session, sessionData);
     return "session updated!";
@@ -116,4 +106,41 @@ async function updateSession(updatedSessionData) {
   }
 }
 
-export { addCollabCodeEditor, addSession, getUserDetails, updateSession };
+async function addUserToExistingSession(peerId) {
+  try {
+    if (!appAuth || !peerId) {
+      throw new Error("User or session ID is missing");
+    }
+
+    const currentUser = appAuth.currentUser;
+
+    if (!currentUser) {
+      throw new Error("User is not authenicated");
+    }
+    const uid = currentUser.uid;
+
+    const sessionRef = doc(appFirestore, "CODERS", uid, "SESSION", peerId);
+
+    const sessionSnap = await getDoc(sessionRef);
+
+    if (!sessionSnap.exists()) {
+      throw new Error(`Session with ID ${peerId} does not exist`);
+    }
+
+    await updateDoc(sessionRef, {
+      session: uid,
+    });
+
+    return { success: true, message: "User successfully added to session" };
+  } catch (err) {
+    return { success: false, message: err.message };
+  }
+}
+
+export {
+  addCollabCodeEditor,
+  createSession,
+  getUserDetails,
+  updateSession,
+  addUserToExistingSession,
+};

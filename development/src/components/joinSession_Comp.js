@@ -1,9 +1,15 @@
 import { useEffect } from "react";
+import { addUserToExistingSession } from "@/composables/dbService";
 import { useState } from "react";
 import ErrorModal from "./errorModal_comp";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+
 function JoinSession() {
   const [sessionId, setSessionId] = useState("");
   const [error, setError] = useState("");
+  const [isUserAdded, setIsUserAdded] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (error !== "") {
@@ -17,11 +23,20 @@ function JoinSession() {
     setError("");
   };
 
-  const handleJoinSession = (e) => {
+  const handleJoinSession = async (e) => {
     e.preventDefault();
+    setIsUserAdded(false);
+
     if (!sessionId) {
       setError("Session ID is required");
     } else {
+      const result = await addUserToExistingSession(sessionId);
+      if (!result.success) {
+        setError(result.message);
+      } else {
+        setIsUserAdded(true);
+        router.push("/");
+      }
     }
   };
   return (
@@ -40,12 +55,14 @@ function JoinSession() {
             placeholder="Enter Session ID"
             className="py-3 mt-2 mb-4 px-4 h-12 w-full font-normal dark:bg-[#1E1E2A] text-sm rounded-lg"
           />
-          <button
-            onClick={handleJoinSession}
-            className="w-full py-[10px] px-[29px] text-white mt-[15px] rounded-lg bg-blue-500 text-center font-medium text-lg active:opacity-[0.8]"
-          >
-            Join Peer Session
-          </button>
+          <Link href={isUserAdded ? "/Collab" : "#"}>
+            <button
+              onClick={handleJoinSession}
+              className="w-full py-[10px] px-[29px] text-white mt-[15px] rounded-lg bg-blue-500 text-center font-medium text-lg active:opacity-[0.8]"
+            >
+              Join Peer Session
+            </button>
+          </Link>
         </div>
       </div>
 
@@ -57,4 +74,5 @@ function JoinSession() {
     </div>
   );
 }
+
 export default JoinSession;

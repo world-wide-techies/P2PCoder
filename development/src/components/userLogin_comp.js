@@ -12,15 +12,15 @@ import {
   emailValidator,
   passwordValidator,
 } from "@/composables/emailPasswordValidator";
-
 import { useGithubSignin } from "@/composables/authGithubSigninPopup";
 import { PasswordToggle } from "./passwordToggleFunction";
 import closeIcon from "../../public/assets/onboardingIcons/close_light.png";
 import closeDark from "../../public/assets/onboardingIcons/closecircledark.png";
 import { useGoogleSignin } from "@/composables/authGoogleSigninPoppup";
 import ErrorModal from "./errorModal_comp";
+import { useRouter } from "next/navigation";
 
-function UserLoginComp() {
+function UserLoginComp({ onClose }) {
   const { signinWithGithub, githubError } = useGithubSignin();
   const { signinWithGoogle, googleError } = useGoogleSignin();
   const [errorMessage, setErrorMessage] = useState("");
@@ -43,13 +43,22 @@ function UserLoginComp() {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const router = useRouter();
+  const [closeLogin, setCloseLogin] = useState(false);
 
   const emailChange = (e) => {
     setEmailAddress(e.target.value);
+    setEmailError(false);
   };
 
   const passwordChange = (e) => {
     setPassword(e.target.value);
+    setPasswordError(false);
+  };
+
+  const handleCloseLogin = () => {
+    setCloseLogin(true);
+    router.push("/");
   };
 
   const loginUser = async (e) => {
@@ -95,95 +104,116 @@ function UserLoginComp() {
             h1={"Welcome back"}
             p={"Enjoy extra features when you create an account with us."}
           />
-          <Image
-            src={theme === "dark" ? closeIcon : closeDark}
-            alt="close icon"
+
+          <button
+            type="button"
+            onClick={() => handleCloseLogin()}
             className="w-6 h-6 mr-4 mt-2"
-          />
-        </div>
-        <div className="flex flex-row justify-between gap-3">
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              signinWithGoogle();
-            }}
-            className="flex flex-row flex-nowrap justify-center gap-2 bg-gray-200 dark:bg-[#363647] items-center p-3 rounded-md w-full shadow-md"
-          >
-            <Image src={googleIcon} alt="google_icon" className="w-6 h-auto" />
-            <p className="text-[10px]">Create Account with Google</p>
-          </button>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              signinWithGithub();
-            }}
-            className="flex flex-row flex-nowrap justify-center gap-2 bg-gray-200 dark:bg-[#363647] items-center p-3 rounded-md w-full shadow-md"
           >
             <Image
-              src={theme === "dark" ? github_darkMode : github_lightMode}
-              alt="google_icon"
-              className="w-6 h-auto"
+              src={theme === "dark" ? closeIcon : closeDark}
+              alt="close icon"
             />
-            <p className="text-[10px]">Create Account with Github</p>
           </button>
         </div>
-      </div>
-
-      <div className="flex items-center text-center">
-        <div className="border-b-2 border-gray-200 w-full relative flex justify-center"></div>
-        <p className="flex justify-center w-1/6">OR</p>
-        <div className="border-b-2 border-gray-200 w-full relative flex justify-center"></div>
-      </div>
-
-      <div className="space-y-8">
-        <div>
-          <label htmlFor="email">Email Address</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            className="dark:bg-[#363647] border-[1px] p-3 rounded-lg bg-gray-100 w-full"
-            placeholder="Enter Email Address"
-            onChange={emailChange}
-            value={emailAddress}
-          />
-          {emailError && <p className="text-sm text-red-500">{emailError}</p>}
-        </div>
-
-        <div>
-          <label htmlFor="password">Password</label>
-          <PasswordToggle
-            inputId="password"
-            placeholder="Enter password"
-            handleInputChange={passwordChange}
-            inputValue={password}
-            customClass={`border ${
-              passwordError ? "border-[#ec6d6a]" : "border-none"
-            } p-3 rounded-lg dark:bg-[#363647] bg-gray-100 w-full`}
-          />
-          {passwordError && (
-            <p className="text-sm text-red-500">{passwordError}</p>
-          )}
-          <button className="float-right">Forgot password?</button>
-        </div>
-
-        <div className="space-y-3">
-          <button
-            type="submit"
-            className="bg-[#5f5bd7] text-white text-center font-bold block w-full p-3 rounded-md"
-          >
-            Log in
-          </button>
-
-          <p className="text-center">
-            {"Don't have an account with us?"}
-            <Link
-              href="/?view=signup"
-              className="text-violet-800 mx-1.5 dark:text-white font-semibold"
+        <div className="flex flex-row justify-between gap-3">
+          <div className="flex flex-row justify-between gap-3">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                signinWithGoogle();
+              }}
+              className="flex flex-row flex-nowrap justify-center gap-2 bg-[#DCDCE5] dark:bg-[#363647] items-center p-3 rounded-md w-full shadow-md"
             >
-              Create your account
+              <Image
+                src={googleIcon}
+                alt="google_icon"
+                className="w-6 h-auto"
+              />
+              <p className="text-[14px]">Create Account with Google</p>
+            </button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                signinWithGithub();
+              }}
+              className="flex flex-row flex-nowrap justify-center gap-2 bg-[#DCDCE5] dark:bg-[#363647] items-center px-3 rounded-md w-full shadow-md"
+            >
+              <Image
+                src={theme === "dark" ? github_darkMode : github_lightMode}
+                alt="google_icon"
+                className="w-6 h-auto"
+              />
+              <p className="text-[14px]">Create Account with Github</p>
+            </button>
+          </div>
+        </div>
+
+        <div className="flex items-center text-center">
+          <div className="border-b-2 border-gray-200 w-full relative flex justify-center"></div>
+          <p className="flex justify-center w-1/6">OR</p>
+          <div className="border-b-2 border-gray-200 w-full relative flex justify-center"></div>
+        </div>
+
+        <div className="space-y-8">
+          <div>
+            <label htmlFor="email">Email Address</label>
+            <input
+              type="email"
+              aria-label="email"
+              name="email"
+              id="email"
+              className={`p-3 rounded-xl dark:bg-[#363647] bg-[#ebebf0] w-full h-[48px] text-sm placeholder-[#67667A] font-normal focus:ring-2 focus:ring-[#5F5BD7] focus:border-transparent outline-none ${
+                emailError && "border border-[#ec6d6a]"
+              }`}
+              placeholder="Enter Email Address"
+              onChange={emailChange}
+              value={emailAddress}
+            />
+            {emailError && <p className="text-sm text-red-500">{emailError}</p>}
+          </div>
+
+          <div>
+            <label htmlFor="password">Password*</label>
+            <PasswordToggle
+              inputId="password"
+              aria-label="password"
+              placeholder="Enter password"
+              handleInputChange={passwordChange}
+              inputValue={password}
+              customClass={`p-3 rounded-xl dark:bg-[#363647] bg-[#ebebf0] w-full h-[48px] text-sm placeholder-[#67667A] font-normal focus:ring-2 focus:ring-[#5F5BD7] focus:border-transparent outline-none ${
+                passwordError && "border border-[#ec6d6a]"
+              }`}
+            />
+            {passwordError && (
+              <p className="text-sm text-red-500">{passwordError}</p>
+            )}
+            <Link
+              href={"/?view=recoveraccount"}
+              className="float-right text-[#5F5BD7]"
+            >
+              Forgot password?
             </Link>
-          </p>
+          </div>
+
+          <div className="space-y-3">
+            <button
+              type="submit"
+              className="bg-[#5F5BD7] text-white text-center font-bold block w-full p-3 rounded-md"
+            >
+              Log in
+            </button>
+
+            <p className="text-center">
+              {"Don't have an account with us?"}
+              <Link
+                href="/?view=signup"
+                className="text-violet-800 mx-1.5 dark:text-white font-bold"
+              >
+                Create your account
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
       <ErrorModal

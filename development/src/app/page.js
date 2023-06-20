@@ -13,7 +13,7 @@ import ErrorModal from "@/components/errorModal_comp";
 import UserLoginComp from "@/components/userLogin_comp";
 import SignUpComponent from "@/components/signup_comp";
 import SessionComp from "@/components/session_comp";
-import VerificationOverlay from "@/components/verificationOverlay";
+import VerificationOverlay from "@/components/VerificationOverlay";
 
 function Home() {
   const { items, setItems, errorMessage, setErrorMessage } = useTabContext();
@@ -97,15 +97,15 @@ function Home() {
       const extEl = document.createElement("span");
       extEl.textContent = ext;
       extEl.classList.add(
-        ext === ".js"
-          ? "text-yellow-500"
-          : ext === ".css"
-          ? "text-blue-500"
-          : ext === ".html"
-          ? "text-orange-500"
-          : ext === ".p2p"
-          ? "text-[#5F5BD7]"
-          : "untitled"
+        ext === '.js'
+          ? 'text-yellow-500'
+          : ext === '.css'
+          ? 'text-blue-500'
+          : ext === '.html'
+          ? 'text-orange-500'
+          : ext === '.p2p'
+          ? 'text-[#5F5BD7]'
+          : 'untitled'
       );
       currentTabTitleEl.replaceChildren(name, extEl);
     }
@@ -171,22 +171,24 @@ function Home() {
             ) : view == "login" ? (
               <Modal
                 onClose={() => {
-                  router.push("/");
-                }}
-              >
+                  router.push('/');
+                }}>
                 <UserLoginComp
                   onClose={() => {
-                    router.push("/");
+                    router.push('/');
                   }}
                 />
               </Modal>
             ) : view == "signup" ? (
               <Modal
                 onClose={() => {
-                  router.push("/");
-                }}
-              >
-                <SignUpComponent />
+                  router.push('/');
+                }}>
+                <SignUpComponent
+                  onClose={() => {
+                    router.push('/');
+                  }}
+                />
               </Modal>
             ) : view === "verificationOverlay" ? (
               <Modal
@@ -207,17 +209,17 @@ function Home() {
             {items.map((item) => {
               if (item?.active && item.title === "Welcome") {
                 return (
-                  <div className="p-11">
+                  <div className="p-11" key={item.id}>
                     <Welcome />
                   </div>
                 );
-              } else if (item.active && item.title == "collab") {
+              } else if (item.active && item.title == 'collab') {
                 return (
-                  <div>
+                  <div key={item.id}>
                     <SessionComp />
                   </div>
                 );
-              } else if (item.active && item.title != "Welcome") {
+              } else if (item.active && item.title != 'Welcome') {
                 return <Collab key={item.id} />;
               }
             })}

@@ -22,7 +22,6 @@ import {
   triggerEmailVerification,
 } from "@/composables/authSignupFunction";
 
-
 function SignUpComponent() {
   const { signinWithGithub, githubError } = useGithubSignin();
   const { signinWithGoogle, googleError } = useGoogleSignin();
@@ -55,6 +54,13 @@ function SignUpComponent() {
 
   const [errors, setErrors] = useState({});
   const [usernameAvailable, setUsernameAvailable] = useState(null);
+  const [showForm, setShowForm] = useState(true);
+
+
+  const handleCloseForm = () => {
+    setShowForm(false);
+    router.push("/");
+  };
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
