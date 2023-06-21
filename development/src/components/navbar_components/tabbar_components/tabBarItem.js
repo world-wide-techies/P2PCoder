@@ -12,7 +12,7 @@ function TabBarItems({ title, ext, onClose, active, onClick, onDoubleClick }) {
       onDoubleClick={onDoubleClick}
       className={
         active
-          ? 'flex justify-between items-center bg-white border-[#5F5BD7] dark:border-gray-400 dark:bg-[#1E1E2A] border-t-2 space-x-4 h-14 p-3 cursor-pointer'
+          ? 'flex justify-between items-center bg-white border-[#5F5BD7] dark:border-gray-400 dark:bg-[#1E1E2A] border-t-4 space-x-4 h-14 p-3 cursor-pointer'
           : 'flex justify-between items-center  dark:bg-[#2F2F3A] dark:text-white space-x-4 h-14 p-3 cursor-pointer'
       }>
       {ext && (
