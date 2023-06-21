@@ -1,4 +1,4 @@
-import { appAuth } from './firebaseConfig/config';
+import { appAuth } from "./firebaseConfig/config";
 
 function isUserSignedIn() {
   const user = appAuth.currentUser;

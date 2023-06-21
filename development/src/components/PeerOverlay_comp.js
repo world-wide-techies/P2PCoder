@@ -27,7 +27,7 @@ function PeerSession({ onClose }) {
   }, [error]);
 
   function createPeerSession() {
-    if (!sessionName && !activeLanguage) {
+    if (!sessionName || !activeLanguage) {
       setError('Session name and Programming language are required');
     } else {
       route.push('/?view=peerId');

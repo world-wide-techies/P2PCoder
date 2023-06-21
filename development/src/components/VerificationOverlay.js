@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import closeIcon from "../../public/assets/onboardingIcons/close_black.png";
 import closeIconWhite from "../../public/assets/onboardingIcons/close_light.png";
-import { triggerEmailVerification } from "@/composables/authSignupFunction";
+
 import { useTheme } from "next-themes";
 
 const VerificationOverlay = ({ email }) => {
