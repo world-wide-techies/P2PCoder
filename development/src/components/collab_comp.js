@@ -16,7 +16,7 @@ const Collab = () => {
   return (
     <div className="w-full flex">
       <div className={isVideoOn ? "w-2/3 xl:w-3/4" : "w-[95vw]"}>
-        <CodingEditor />
+        <CodingEditor peerid={sessionData.peerSessionId} />
       </div>
       {isVideoOn && (
         <div className="w-1/3 xl:w-1/4 flex flex-col items-start justify-start p-6 space-y-12 h-full">
