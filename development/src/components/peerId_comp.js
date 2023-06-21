@@ -46,7 +46,7 @@ function PeerId() {
                     <div className='font-nohemi font-normal text-sm leading-4 '>PeerSession ID</div>
                     <div className='font-semibold text-lg font-nohemi leading-5'>{peerSessionId}</div>
                 </div>
-                <button className='bg-[#5F5BD7] w-24 h-9 rounded-lg flex justify-center my-3 items-center' onClick={handleCopyId}>
+                <button className='bg-[#5F5BD7] p-3 rounded-lg flex justify-center my-3 items-center' onClick={handleCopyId}>
                 <svg 
                         width="20"
                         height="12"
@@ -69,7 +69,6 @@ function PeerId() {
                             strokeLinejoin="round"
                         />
                     </svg>
-                    <div className='font-normal text-sm leading-4 text-white font-nohemi'>Copy ID</div>
                 </button>
             </div>
             <div className='font-normal text-black text-sm leading-4 font-nohemi dark:text-white'>{copyMessage}</div>
