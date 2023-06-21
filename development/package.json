@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently \"next dev\" \"node server.js\"",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "api": "node ./pages/api/socket.js",
+    "stream": "node server.js"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.14",
@@ -26,6 +28,10 @@
     "socket.io": "^4.6.2",
     "socket.io-client": "^4.6.2",
     "tailwindcss": "3.3.2",
-    "twilio": "^4.11.2"
+    "twilio": "^4.11.2",
+    "utf-8-validate": "^5.0.10"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
   }
 }
