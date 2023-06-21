@@ -97,15 +97,15 @@ function Home() {
       const extEl = document.createElement("span");
       extEl.textContent = ext;
       extEl.classList.add(
-        ext === '.js'
-          ? 'text-yellow-500'
-          : ext === '.css'
-          ? 'text-blue-500'
-          : ext === '.html'
-          ? 'text-orange-500'
-          : ext === '.p2p'
-          ? 'text-[#5F5BD7]'
-          : 'untitled'
+        ext === ".js"
+          ? "text-yellow-500"
+          : ext === ".css"
+          ? "text-blue-500"
+          : ext === ".html"
+          ? "text-orange-500"
+          : ext === ".p2p"
+          ? "text-[#5F5BD7]"
+          : "untitled"
       );
       currentTabTitleEl.replaceChildren(name, extEl);
     }
@@ -119,13 +119,13 @@ function Home() {
 
   return (
     <>
-      <main className="h-full bg-[#DCDCE5] dark:bg-[#2F2F3A] relative">
+      <main className="h-full bg-[#F3F3F6] dark:bg-[#2F2F3A] relative">
         <ErrorModal
           errorMessage={errorMessage}
           style={"absolute z-50 top-3 right-0 mr-2 "}
           onClose={() => setErrorMessage("")}
         />
-        <div className="relative h-full border-gray-300 border-b-[1px] dark:border-gray-700 ">
+        <div className="relative h-full border-[#DCDCE5] border-b-[1px] dark:border-gray-700 ">
           <EditorNavBar />
         </div>
         <div className="relative flex w-full">
@@ -171,22 +171,24 @@ function Home() {
             ) : view == "login" ? (
               <Modal
                 onClose={() => {
-                  router.push('/');
-                }}>
+                  router.push("/");
+                }}
+              >
                 <UserLoginComp
                   onClose={() => {
-                    router.push('/');
+                    router.push("/");
                   }}
                 />
               </Modal>
             ) : view == "signup" ? (
               <Modal
                 onClose={() => {
-                  router.push('/');
-                }}>
+                  router.push("/");
+                }}
+              >
                 <SignUpComponent
                   onClose={() => {
-                    router.push('/');
+                    router.push("/");
                   }}
                 />
               </Modal>
@@ -213,13 +215,13 @@ function Home() {
                     <Welcome />
                   </div>
                 );
-              } else if (item.active && item.title == 'collab') {
+              } else if (item.active && item.title == "collab") {
                 return (
                   <div key={item.id}>
                     <SessionComp />
                   </div>
                 );
-              } else if (item.active && item.title != 'Welcome') {
+              } else if (item.active && item.title != "Welcome") {
                 return <Collab key={item.id} />;
               }
             })}

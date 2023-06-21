@@ -2,11 +2,9 @@ import Onboarding from "./onboarding_comp";
 import Image from "next/image";
 import welcome from "../../public/assets/dashboard/welcome_comp.svg";
 import { Modal } from "./modal";
-import SignUpComponent from "./signup_comp";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import UserLoginComp from "./userLogin_comp";
-import VerificationOverlay from "./VerificationOverlay";
 import { ForgotPassword } from "./ForgotPassword";
 
 const Welcome = () => {
