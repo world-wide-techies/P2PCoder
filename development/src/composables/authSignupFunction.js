@@ -6,6 +6,8 @@ import {
 import { appAuth, appFirestore } from "./firebaseConfig/config";
 import { doc, setDoc } from "firebase/firestore";
 
+
+
 async function authSignUp(firstname, lastname, email, password, username) {
   try {
     const userCredential = await createUserWithEmailAndPassword(
@@ -13,6 +15,8 @@ async function authSignUp(firstname, lastname, email, password, username) {
       email,
       password
     );
+
+    
     const user = userCredential.user;
     if (user) {
       await updateProfile(user, { displayName: `${firstname} ${lastname}` });
@@ -23,9 +27,10 @@ async function authSignUp(firstname, lastname, email, password, username) {
         email,
       };
 
+      await triggerEmailVerification(user); 
       await completeSignUp(newUser, user.uid, username);
     }
-    return { success: true, user };
+    return { success: true, userCredential }; 
   } catch (error) {
     return { success: false, error: error.message };
   }
@@ -34,9 +39,9 @@ async function authSignUp(firstname, lastname, email, password, username) {
 async function triggerEmailVerification(user) {
   try {
     await sendEmailVerification(user);
-    return { success: true };
-  } catch (error) {
-    return { success: false, error: error.message };
+    return true;
+  } catch (error) { 
+    return false;
   }
 }
 

@@ -4,6 +4,8 @@ import welcome from "../../public/assets/dashboard/welcome_comp.svg";
 import { Modal } from "./modal";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import UserLoginComp from "./userLogin_comp";
+import { ForgotPassword } from "./ForgotPassword";
 
 const Welcome = () => {
   const router = useRouter();

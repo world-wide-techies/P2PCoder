@@ -1,11 +1,11 @@
 import Image from "next/image";
-import Link from "next/link";
 import closeIcon from "../../public/assets/onboardingIcons/close_black.png";
 import closeIconWhite from "../../public/assets/onboardingIcons/close_light.png";
-import { triggerEmailVerification } from "@/composables/authSignupFunction";
 import { useTheme } from "next-themes";
 
-const VerificationOverlay = ({ email }) => {
+
+function VerificationOverlay({ email, onClose }) {
+
   const { theme, setTheme } = useTheme();
 
   return (
@@ -15,13 +15,12 @@ const VerificationOverlay = ({ email }) => {
           <h1>
             Account Verification{" "}
             <span className="absolute right-6 ">
-              <Link href="/login">
-                <Image
-                  src={theme === "dark" ? closeIconWhite : closeIcon}
-                  alt="close Icon"
-                  className="w-9 h-9"
-                />
-              </Link>
+              <Image
+                src={theme === "dark" ? closeIconWhite : closeIcon}
+                alt="close Icon"
+                className="w-9 h-9"
+                onClick={() => onClose()}
+              />
             </span>
           </h1>
         </div>
@@ -38,7 +37,6 @@ const VerificationOverlay = ({ email }) => {
           <a
             className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-md text-center"
             href={`mailto:${email}`}
-            onClick={sendEmailVerification}
           >
             Open mail app
           </a>
@@ -49,5 +47,5 @@ const VerificationOverlay = ({ email }) => {
       </div>
     </div>
   );
-};
+}
 export default VerificationOverlay;

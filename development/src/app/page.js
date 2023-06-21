@@ -13,7 +13,7 @@ import ErrorModal from "@/components/errorModal_comp";
 import UserLoginComp from "@/components/userLogin_comp";
 import SignUpComponent from "@/components/signup_comp";
 import SessionComp from "@/components/session_comp";
-import { ForgotPassword } from "@/components/ForgotPassword";
+import VerificationOverlay from "@/components/VerificationOverlay";
 
 function Home() {
   const { items, setItems, errorMessage, setErrorMessage } = useTabContext();
@@ -192,13 +192,17 @@ function Home() {
                   }}
                 />
               </Modal>
-            ) : view == "recoveraccount" ? (
+            ) : view === "verificationOverlay" ? (
               <Modal
                 onClose={() => {
                   router.push("/");
                 }}
               >
-                <ForgotPassword />
+                <VerificationOverlay
+                  onClose={() => {
+                    router.push("/");
+                  }}
+                />
               </Modal>
             ) : (
               <div></div>
