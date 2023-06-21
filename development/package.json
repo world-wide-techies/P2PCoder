@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "stage":"next dev",
     "dev": "concurrently \"next dev\" \"node server.js\"",
     "build": "next build",
     "start": "next start",
