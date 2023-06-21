@@ -5,16 +5,15 @@ import { useTabContext } from "@/composables/tabContext";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
 
-function CodingEditor() {
+function CodingEditor({ peerid }) {
   const { theme, setTheme } = useTheme();
   const { items } = useTabContext();
   const [codes, setCodes] = useState("");
-  const [room, setRoom] = useState("1234");
   const language = items.filter((e) => e.active)[0].ext;
   const socket = io("http://localhost:3001");
 
   useEffect(() => {
-    socket.emit("join-room", room);
+    socket.emit("join-room", peerid);
     socket.on("text-update", (data) => {
       items.filter((e) => e.active)[0].code = data;
       setCodes(data);
@@ -31,7 +30,7 @@ function CodingEditor() {
 
   const onChange = (newValue, e) => {
     items.filter((e) => e.active)[0].code = newValue;
-    socket.emit("text-update", { room, newValue });
+    socket.emit("text-update", { peerid, newValue });
     setCodes(newValue);
   };
 
