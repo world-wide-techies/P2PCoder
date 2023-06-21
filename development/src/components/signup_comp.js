@@ -18,8 +18,7 @@ import { getDocs, collection, where, query } from "firebase/firestore";
 import { appFirestore } from "../composables/firebaseConfig/config";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
-  authSignUp,
-  triggerEmailVerification,
+  authSignUp
 } from "@/composables/authSignupFunction";
 
 function SignUpComponent() {
@@ -141,9 +140,6 @@ function SignUpComponent() {
     user.confirm_password,
   ]);
 
-  const handleCloseButton = () => {
-    router.push("/");
-  };
 
   return (
     <div>
@@ -160,7 +156,6 @@ function SignUpComponent() {
             src={theme === "dark" ? closeIconDark : closeIcon}
             alt="close icon"
             className="w-6 h-6 mr-4 mt-2"
-            // onClick={handleCloseButton}
           />
         </div>
 
@@ -398,17 +393,12 @@ function SignUpComponent() {
 
         <div className="space-y-3">
           <button
-            // type="submit"
+        
 
             className={`${
               !canSubmit ? "opacity-50" : "opacity-100"
             } bg-purple-500 text-white text-center text-lg font-semibold block w-full p-3 rounded-md mt-8`}
-            /*onClick={handleSubmit}
-                  onClick={() => {
-                    handleSubmit();
-                    router.push("/?view=verifyEmail");
-                  }}</div>*/
-
+    
             disabled={!canSubmit ? true : false}
           >
             Create Account

@@ -1,16 +1,13 @@
 import Image from "next/image";
-import Link from "next/link";
 import closeIcon from "../../public/assets/onboardingIcons/close_black.png";
 import closeIconWhite from "../../public/assets/onboardingIcons/close_light.png";
-// import { triggerEmailVerification } from "@/composables/authSignupFunction";
 import { useTheme } from "next-themes";
-// import { useRouter } from "next/navigation";
+
 
 function VerificationOverlay({ email, onClose }) {
-  // const router = useRouter();
+
   const { theme, setTheme } = useTheme();
 
-  //this function is to close the create account modal
   return (
     <div className="w-full">
       <div className="space-y-6 w-full  bg-neutral-100 dark:bg-[#2F2F3A] p-9 rounded-2xl drop-shadow-md ">
@@ -40,7 +37,6 @@ function VerificationOverlay({ email, onClose }) {
           <a
             className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-md text-center"
             href={`mailto:${email}`}
-            // onClick={sendEmailVerification}
           >
             Open mail app
           </a>
