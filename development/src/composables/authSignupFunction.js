@@ -1,21 +1,13 @@
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification,
+} from "firebase/auth";
 import { appAuth, appFirestore } from "./firebaseConfig/config";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 
-async function isUsernameAvailable(username) {
+async function authSignUp(firstname, lastname, email, password, username) {
   try {
-    const useRef = doc(appFirestore, "users", username);
-    const userSnapshot = await getDoc(useRef);
-    return !userSnapshot.exists();
-  } catch (error) {
-    throw new Error(error);
-  }
-}
-
-async function authSignUp(name, email, password, username) {
-  try {
-    const isAvailable = await isUsernameAvailable(username);
-
     const userCredential = await createUserWithEmailAndPassword(
       appAuth,
       email,
@@ -23,14 +15,49 @@ async function authSignUp(name, email, password, username) {
     );
     const user = userCredential.user;
     if (user) {
-      await updateProfile(user, { displayName: name });
-      await setDoc(doc(appFirestore, "users", username), { userId: user.uid });
+      await updateProfile(user, { displayName: `${firstname} ${lastname}` });
+
+      const newUser = {
+        firstname,
+        lastname,
+        email,
+      };
+
+      await completeSignUp(newUser, user.uid, username);
     }
-    return user;
+    return { success: true, user };
   } catch (error) {
-    const errorMessage = error.message;
-    throw new Error(errorMessage);
+    return { success: false, error: error.message };
   }
 }
 
-export { isUsernameAvailable, authSignUp };
+async function triggerEmailVerification(user) {
+  try {
+    await sendEmailVerification(user);
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+}
+
+async function completeSignUp(user, uid, username) {
+  const newDocRef = doc(appFirestore, "CODERS", uid);
+
+  const fullname = `${user.firstname} ${user.lastname}`;
+
+  const dataToSet = {
+    fullname,
+    username,
+    email: user.email,
+    createdAt: new Date(),
+  };
+
+  try {
+    await setDoc(newDocRef, dataToSet);
+    console.log("Document successfully written.");
+  } catch (error) {
+    console.error("Error writing document: ", error);
+  }
+}
+
+export { authSignUp, completeSignUp, triggerEmailVerification };

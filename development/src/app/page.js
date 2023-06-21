@@ -1,21 +1,23 @@
-'use client';
-import Welcome from '@/components/welcome_comp';
-import EditorNavBar from '@/components/navbar_components/editorNavbar_comp';
-import SideNavBarControl from '@/components/navbar_components/sidebar_components/sideBarNavControl';
-import TabBarControls from '@/components/navbar_components/tabbar_components/tabBarControls_comp';
-import { useSearchParams, useRouter } from 'next/navigation';
-import { Modal } from '@/components/modal';
-import { OpenTabModal } from '@/components/openTabModal_comp';
-import { useTabContext } from '@/composables/tabContext';
-import Collab from '@/components/collab_comp';
-import { useEffect } from 'react';
-import ErrorModal from '@/components/errorModal_comp';
-import UserLoginComp from '@/components/userLogin_comp';
-import SignUpComponent from '@/components/signup_comp';
+"use client";
+import Welcome from "@/components/welcome_comp";
+import EditorNavBar from "@/components/navbar_components/editorNavbar_comp";
+import SideNavBarControl from "@/components/navbar_components/sidebar_components/sideBarNavControl";
+import TabBarControls from "@/components/navbar_components/tabbar_components/tabBarControls_comp";
+import { useSearchParams, useRouter } from "next/navigation";
+import { Modal } from "@/components/modal";
+import { OpenTabModal } from "@/components/openTabModal_comp";
+import { useTabContext } from "@/composables/tabContext";
+import Collab from "@/components/collab_comp";
+import { useEffect } from "react";
+import ErrorModal from "@/components/errorModal_comp";
+import UserLoginComp from "@/components/userLogin_comp";
+import SignUpComponent from "@/components/signup_comp";
+import SessionComp from "@/components/session_comp";
+import { ForgotPassword } from "@/components/ForgotPassword";
 
 function Home() {
   const { items, setItems, errorMessage, setErrorMessage } = useTabContext();
-  const view = useSearchParams().get('view');
+  const view = useSearchParams().get("view");
   const router = useRouter();
 
   const handleTabActive = (tab) => {
@@ -49,64 +51,81 @@ function Home() {
   };
 
   const handleTabRename = (tab, event) => {
-    const index = items.findIndex((i, k) => k === tab);
-    const currentTab = event.target;
-    const initialName = currentTab.textContent;
+    if (!event.target.classList.contains("tab-title")) return;
 
-    const form = document.createElement('form');
-    currentTab.replaceChildren(form);
-    const inputField = document.createElement('input');
+    const index = items.findIndex((i, k) => k === tab);
+    const currentTabTitleEl = event.target;
+    const currentTab = items[tab];
+    const initialName = currentTab.title;
+    const tabExt = currentTab.ext;
+
+    const form = document.createElement("form");
+    currentTabTitleEl.replaceChildren(form);
+    const inputField = document.createElement("input");
     inputField.value = initialName;
     form.appendChild(inputField);
-    const currentTabChild = currentTab.firstChild;
+    const currentTabChild = currentTabTitleEl.firstChild;
     currentTabChild[0].focus();
     currentTabChild[0].select();
 
-    currentTabChild.addEventListener('submit', tabRenameSubmitHandler, {
+    currentTabChild.addEventListener("submit", tabRenameSubmitHandler, {
       once: true,
     });
-    currentTabChild.addEventListener('focusout', tabRenameFocusHandler, {
+    currentTabChild.addEventListener("focusout", tabRenameFocusHandler, {
       once: true,
     });
 
     function tabRenameSubmitHandler(e) {
-      currentTabChild.removeEventListener('focusout', tabRenameFocusHandler);
+      currentTabChild.removeEventListener("focusout", tabRenameFocusHandler);
       e.preventDefault();
       const newName = e.target[0].value;
-      setTabName(newName);
+      setTabName(newName, tabExt);
     }
 
     function tabRenameFocusHandler(e) {
-      currentTabChild.removeEventListener('submit', tabRenameSubmitHandler);
+      currentTabChild.removeEventListener("submit", tabRenameSubmitHandler);
       const currentName = e.target.value;
-      setTabName(currentName);
+      setTabName(currentName, tabExt);
     }
 
-    function setTabName(name) {
+    function setTabName(name, ext) {
       const newItems = items.map((item, idx) => ({
         ...item,
         title: idx === index ? name : item.title,
       }));
       setItems(newItems);
-      currentTab.replaceChildren(name);
+      const extEl = document.createElement("span");
+      extEl.textContent = ext;
+      extEl.classList.add(
+        ext === ".js"
+          ? "text-yellow-500"
+          : ext === ".css"
+          ? "text-blue-500"
+          : ext === ".html"
+          ? "text-orange-500"
+          : ext === ".p2p"
+          ? "text-[#5F5BD7]"
+          : "untitled"
+      );
+      currentTabTitleEl.replaceChildren(name, extEl);
     }
   };
 
   useEffect(() => {
     setTimeout(() => {
-      setErrorMessage('');
+      setErrorMessage("");
     }, 6000);
   }, [errorMessage]);
 
   return (
     <>
-      <main className="h-full bg-[#DCDCE5] dark:bg-[#2F2F3A] relative">
+      <main className="h-full bg-[#F3F3F6] dark:bg-[#2F2F3A] relative">
         <ErrorModal
           errorMessage={errorMessage}
-          style={'absolute z-50 top-3 right-0 mr-2 '}
-          onClose={() => setErrorMessage('')}
+          style={"absolute z-50 top-3 right-0 mr-2 "}
+          onClose={() => setErrorMessage("")}
         />
-        <div className="relative h-full border-gray-300 border-b-[1px] dark:border-gray-700 ">
+        <div className="relative h-full border-[#DCDCE5] border-b-[1px] dark:border-gray-700 ">
           <EditorNavBar />
         </div>
         <div className="relative flex w-full">
@@ -137,45 +156,68 @@ function Home() {
         </div>
         <div className="bg-white dark:bg-[#1E1E2A]  ml-24 w-[92.9%] h-screen flex flex-col justify-start">
           <>
-            {view == 'quicklinks' ? (
+            {view == "quicklinks" ? (
               <Modal
                 onClose={() => {
-                  router.push('/');
-                }}>
+                  router.push("/");
+                }}
+              >
                 <OpenTabModal
                   onClose={() => {
-                    router.push('/');
+                    router.push("/");
                   }}
                 />
               </Modal>
-            ) : view == 'login' ? (
+            ) : view == "login" ? (
               <Modal
                 onClose={() => {
-                  router.push('/');
-                }}>
-                <UserLoginComp />
+                  router.push("/");
+                }}
+              >
+                <UserLoginComp
+                  onClose={() => {
+                    router.push("/");
+                  }}
+                />
               </Modal>
-            ) : view == 'signup' ? (
+            ) : view == "signup" ? (
               <Modal
                 onClose={() => {
-                  router.push('/');
-                }}>
-                <SignUpComponent />
+                  router.push("/");
+                }}
+              >
+                <SignUpComponent
+                  onClose={() => {
+                    router.push("/");
+                  }}
+                />
+              </Modal>
+            ) : view == "recoveraccount" ? (
+              <Modal
+                onClose={() => {
+                  router.push("/");
+                }}
+              >
+                <ForgotPassword />
               </Modal>
             ) : (
               <div></div>
             )}
 
             {items.map((item) => {
-              if (item?.active && item.title === 'Welcome') {
+              if (item?.active && item.title === "Welcome") {
                 return (
-                  <div className="p-11">
+                  <div className="p-11" key={item.id}>
                     <Welcome />
                   </div>
                 );
-              } else if (item.active && item.title == 'collab') {
-                return <div> Collab Component </div>;
-              } else if (item.active && item.title != 'Welcome') {
+              } else if (item.active && item.title == "collab") {
+                return (
+                  <div key={item.id}>
+                    <SessionComp />
+                  </div>
+                );
+              } else if (item.active && item.title != "Welcome") {
                 return <Collab key={item.id} />;
               }
             })}
