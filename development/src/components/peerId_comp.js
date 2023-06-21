@@ -11,39 +11,39 @@ import { useRouter } from 'next/navigation';
 import { createSession } from '@/composables/dbService';
 
 function PeerId({ onClose }) {
-  const { theme, setTheme } = useTheme();
-  const { sessionData, setSessionData } = useSessionContext();
+    const { theme, setTheme } = useTheme();
+    const { sessionData, setSessionData } = useSessionContext();
 
-  const [copyMessage, setCopyMessage] = useState('');
-  const [peerSessionId, setPeerSessionId] = useState('');
-  const { handleLanguage } = useTabContext();
+    const [copyMessage, setCopyMessage] = useState('');
+    const [peerSessionId, setPeerSessionId] = useState('');
+    const { handleLanguage } = useTabContext();
 
-  const router = useRouter();
+    const router = useRouter();
 
-  useEffect(() => {
-    setPeerSessionId(generatePeerIdCharacter());
-  }, []);
+    useEffect(() => {
+        setPeerSessionId(generatePeerIdCharacter());
+    }, []);
 
-  const handleClick = async () => {
-    await setSessionData({ ...sessionData, peerSessionId });
-    createSession({ ...sessionData, peerSessionId });
+    const handleClick = async () => {
+        await setSessionData({ ...sessionData, peerSessionId });
+        createSession({ ...sessionData, peerSessionId });
 
-    await handleLanguage(sessionData.activeLanguage);
-    router.push('/');
-  };
-  const handleClose = () => {
-    setSessionData({});
-    onClose();
-  };
+        await handleLanguage(sessionData.activeLanguage);
+        router.push('/');
+    };
+    const handleClose = () => {
+        setSessionData({});
+        onClose();
+    };
 
-  const handleCopyId = async () => {
-    try {
-      await navigator.clipboard.writeText(peerSessionId);
-      setCopyMessage('ID copied to clipboard:', peerSessionId);
-    } catch (error) {
-      setCopyMessage('Failed to copy ID to clipboard:', error);
-    }
-  };
+    const handleCopyId = async () => {
+        try {
+            await navigator.clipboard.writeText(peerSessionId);
+            setCopyMessage('ID copied to clipboard:', peerSessionId);
+        } catch (error) {
+            setCopyMessage('Failed to copy ID to clipboard:', error);
+        }
+    };
 
     if (!isOpen) {
         return null;
@@ -61,7 +61,7 @@ function PeerId({ onClose }) {
                     <div className='font-semibold text-lg font-nohemi leading-5'>{peerSessionId}</div>
                 </div>
                 <button className='bg-[#5F5BD7] w-24 h-9 rounded-lg flex justify-center my-3 items-center' onClick={handleCopyId}>
-                <svg 
+                    <svg
                         width="20"
                         height="12"
                         viewBox="0 0 12 12"
