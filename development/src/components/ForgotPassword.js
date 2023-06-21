@@ -46,7 +46,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex flex-row justify-center items-center w-full ">
+    <div className="flex flex-row justify-center items-center w-full font-nohemi ">
       <div className="w-full px-12 py-10 max-w-3xl flex flex-col justify-center gap-y-4 bg-white dark:bg-[#1E1E2A] rounded-3xl shadow-lg">
         <div className="flex flex-row justify-between">
           <h3 className="text-indigo-500 dark:text-white text-3xl font-bold leading-4 ">
@@ -79,7 +79,7 @@ const ForgotPassword = () => {
             name="email_address"
             type="email"
             placeholder="Enter Email Address"
-            className={`max-w-3xl h-10 bg-neutral-100 rounded px-1 outline-none  dark:bg-[#363647] ${
+            className={`max-w-3xl h-10 bg-neutral-100 rounded px-5 outline-none  dark:bg-[#363647] ${
               error && "border border-red-500"
             }`}
             aria-label="email"

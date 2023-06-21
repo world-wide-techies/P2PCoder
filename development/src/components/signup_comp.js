@@ -116,7 +116,7 @@ function SignUpComponent() {
     <div>
       {showForm ? (
         <form
-          className="space-y-5 p-12  bg-[#F3F3F6] dark:bg-[#1E1E2A] w-auto min-w-[800px] min-h-[730px] font-nohemi rounded-3xl drop-shadow-lg"
+          className="space-y-5 p-12  bg-[#F3F3F6] dark:bg-[#1E1E2A] w-auto min-w-[800px] min-h-[730px] font-nohemi rounded-[24px] drop-shadow-lg"
           onSubmit={handleSubmit}
         >
           <div className="flex justify-between">
@@ -324,7 +324,7 @@ function SignUpComponent() {
                   aria-label="password"
                   inputValue={user.password}
                   handleInputChange={handleChange}
-                  placeholder="**********"
+                  placeholder="Enter password"
                   customClass={`border ${
                     errors.password ? "border-[#ec6d6a]" : "border-[#DCDCE5]"
                   } p-3 rounded-xl dark:bg-[#363647] bg-[#ebebf0] w-full h-[48px] text-sm placeholder-[#67667A] font-normal focus:ring-2 focus:ring-[#5F5BD7] focus:border-transparent outline-none`}
