@@ -1,36 +1,51 @@
-import { appAuth } from '@/composables/firebaseConfig/config';
-import { isUserSignedIn } from '@/composables/verifySignedIn';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { appAuth } from "@/composables/firebaseConfig/config";
+import { handleLogout } from "@/composables/signOutFunction";
+import { isUserSignedIn } from "@/composables/verifySignedIn";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const btnNav = [
-  '/assets/sideBottomNavControls/logout.png',
-  '/assets/sideBottomNavControls/settings.png',
+  "/assets/sideBottomNavControls/logout.png",
+  "/assets/sideBottomNavControls/settings.png",
 ];
 function SideBottomNavControl() {
   const router = useRouter();
   const [auth, setAuth] = useState(false);
-
+  const user = appAuth.currentUser;
   useEffect(() => {
     if (isUserSignedIn()) {
       setAuth(true);
     } else {
       setAuth(false);
     }
-  }, [appAuth]);
+  }, [user]);
+
+  const signUserOut = async () => {
+    await handleLogout();
+    setAuth(isUserSignedIn());
+  };
 
   return (
     <div className="flex flex-col justify-start items-center space-y-2">
       {auth ? (
         btnNav.map((e, i) => {
-          return (
-            <button
-              key={i}
-              className="hover:bg-gray-200 dark:hover:bg-gray-700 w-16 h-16 flex items-center justify-center hover:rounded-lg">
-              <Image src={e} width={35} height={35} alt={`nav_btn_icon${i}`} />
-            </button>
-          );
+          if (e.includes("logout")) {
+            return (
+              <button
+                key={i}
+                onClick={signUserOut}
+                className="hover:bg-gray-200 dark:hover:bg-gray-700 w-16 h-16 flex items-center justify-center hover:rounded-lg"
+              >
+                <Image
+                  src={e}
+                  width={35}
+                  height={35}
+                  alt={`nav_btn_icon${i}`}
+                />
+              </button>
+            );
+          }
         })
       ) : (
         <button className="hover:bg-gray-200 dark:hover:bg-gray-700 w-16 h-16 flex items-center justify-center hover:rounded-lg">
