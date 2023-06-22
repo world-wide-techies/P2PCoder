@@ -4,12 +4,14 @@ import { useState } from "react";
 import ErrorModal from "./errorModal_comp";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useTabContext } from "@/composables/tabContext";
 
 function JoinSession() {
   const [sessionId, setSessionId] = useState("");
   const [error, setError] = useState("");
   const [isUserAdded, setIsUserAdded] = useState(false);
   const router = useRouter();
+  const { handleLanguage } = useTabContext();
 
   useEffect(() => {
     if (error !== "") {
@@ -35,7 +37,7 @@ function JoinSession() {
         setError(result.message);
       } else {
         setIsUserAdded(true);
-        await handleLanguage(result.sessionLanguage)
+        await handleLanguage(result.sessionLanguage);
         router.push("/");
       }
     }
