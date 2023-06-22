@@ -10,7 +10,8 @@ async function createSession(sessionData) {
   }
 
   const user = appAuth.currentUser;
-  console.log(user);
+  console.log(user.displayName);
+  console.log(user.username);
   if (user == null) {
     throw new Error("User not found!");
   }
@@ -23,9 +24,11 @@ async function createSession(sessionData) {
       sessionName: sessionName,
       peerId: peerSessionId,
       language: activeLanguage,
-      codersName: user.displayName | user.uid,
+      codersName: user.displayName || user.username,
       createdAt: new Date(),
     };
+
+    console.log(codersName);
     const docRef = await setDoc(session, sessionData, { merge: true });
     return "session added";
   } catch (error) {

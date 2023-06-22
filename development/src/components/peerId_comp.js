@@ -98,7 +98,9 @@ function PeerId({ onClose }) {
       <div className="font-normal text-black text-sm leading-4 font-nohemi dark:text-white">
         {copyMessage}
       </div>
-      <button className=" font-nohemi text-white rounded-lg bg-[#5F5BD7] w-full h-12">
+      <button 
+      onClick={handleClick}
+      className=" font-nohemi text-white rounded-lg bg-[#5F5BD7] w-full h-12">
         Continue
       </button>
     </div>
