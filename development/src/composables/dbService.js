@@ -3,21 +3,20 @@ import React from "react";
 import { appFirestore, appAuth } from "./firebaseConfig/config";
 import { setDoc, doc, updateDoc, getDoc } from "firebase/firestore";
 
-async function createSession(sessionData) {
-  const { sessionName, activeLanguage, peerSessionId } = sessionData;
+async function createSession(userSessionData) {
+  const { sessionName, activeLanguage, peerSessionId } = userSessionData;
   if (!sessionName || !activeLanguage || !peerSessionId) {
     throw new Error("Kindly provide all fields");
   }
 
   const user = appAuth.currentUser;
-  console.log(user.displayName);
-  console.log(user.username);
+
   if (user == null) {
     throw new Error("User not found!");
   }
 
-  const coders = doc(appFirestore, `CODERS/${user.uid}`);
-  const session = doc(coders, `SESSION/${peerSessionId}`);
+  const coders = doc(appFirestore, `CODERS/${peerSessionId}`);
+  const session = doc(coders, `SESSION/${user.uid}`);
 
   try {
     const sessionData = {
@@ -28,8 +27,13 @@ async function createSession(sessionData) {
       createdAt: new Date(),
     };
 
-    console.log(codersName);
-    const docRef = await setDoc(session, sessionData, { merge: true });
+    console.log(sessionData);
+    const userDocRef = await setDoc(
+      coders,
+      { sessionId: user.uid },
+      { merge: true }
+    );
+    const sesDocRef = await setDoc(session, sessionData, { merge: true });
     return "session added";
   } catch (error) {
     console.error("Error adding document: ", error);
@@ -124,19 +128,35 @@ async function addUserToExistingSession(peerId) {
     }
     const uid = currentUser.uid;
 
-    const sessionRef = doc(appFirestore, "CODERS", uid, "SESSION", peerId);
-
-    const sessionSnap = await getDoc(sessionRef);
-
-    if (!sessionSnap.exists()) {
+    const coders = doc(appFirestore, "CODERS", peerId);
+    const codersSnap = await getDoc(coders);
+    if (!codersSnap.exists()) {
       throw new Error(`Session with ID ${peerId} does not exist`);
     }
 
-    await updateDoc(sessionRef, {
-      session: uid,
-    });
+    const sessionId = codersSnap.data().sessionId;
 
-    return { success: true, message: "User successfully added to session" };
+    const sessionRef = doc(
+      appFirestore,
+      "CODERS",
+      peerId,
+      "SESSION",
+      sessionId
+    );
+
+    const sessionRefSnap = await getDoc(sessionRef);
+    const activeLanguage = sessionRefSnap.data().language;
+   
+    const collabUserData = {
+      collaboratorName: currentUser.displayName || currentUser.userName,
+    };
+    const sesDocRef = await setDoc(sessionRef, collabUserData, { merge: true });
+
+    return {
+      sessionLanguage: activeLanguage,
+      success: true,
+      message: "User successfully added to session",
+    };
   } catch (err) {
     return { success: false, message: err.message };
   }

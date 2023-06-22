@@ -9,6 +9,7 @@ import { useSessionContext } from "@/composables/sessionContext";
 import { useTabContext } from "@/composables/tabContext";
 import { useRouter } from "next/navigation";
 import { createSession } from "@/composables/dbService";
+import { appAuth } from "@/composables/firebaseConfig/config";
 
 function PeerId({ onClose }) {
   const { theme, setTheme } = useTheme();
@@ -19,13 +20,13 @@ function PeerId({ onClose }) {
   const { handleLanguage } = useTabContext();
 
   const router = useRouter();
-
+const user = appAuth.currentUser
   useEffect(() => {
     setPeerSessionId(generatePeerIdCharacter());
   }, []);
 
   const handleClick = async () => {
-    await setSessionData({ ...sessionData, peerSessionId });
+    await setSessionData({ ...sessionData, peerSessionId, user });
     createSession({ ...sessionData, peerSessionId });
 
     await handleLanguage(sessionData.activeLanguage);

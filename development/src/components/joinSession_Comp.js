@@ -35,6 +35,7 @@ function JoinSession() {
         setError(result.message);
       } else {
         setIsUserAdded(true);
+        await handleLanguage(result.sessionLanguage)
         router.push("/");
       }
     }
