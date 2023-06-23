@@ -7,7 +7,7 @@ import WebCamRecorder from "./webcam_comp";
 import { useStoreSession } from "@/composables/dbService";
 
 const Collab = () => {
-  const { sessionData, setSessionData } = useSessionContext();
+  const { sessionData } = useSessionContext();
   const [isVideoOn, setIsVideoOn] = useState(true);
   const { storeSession, getStoreSessionDetails } = useStoreSession();
 
