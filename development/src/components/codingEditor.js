@@ -10,18 +10,18 @@ function CodingEditor({ peerid }) {
   const { items } = useTabContext();
   const [codes, setCodes] = useState("");
   const language = items.filter((e) => e.active)[0].ext;
-  //socket = io("http://localhost:3001");
+  socket = io("http://localhost:3001");
 
   useEffect(() => {
-    // // socket.emit("join-room", peerid);
-    // // socket.on("text-update", (data) => {
-    // //   items.filter((e) => e.active)[0].code = data;
-    // //   setCodes(data);
-    // // });
+    socket.emit("join-room", peerid);
+    socket.on("text-update", (data) => {
+      items.filter((e) => e.active)[0].code = data;
+      setCodes(data);
+    });
 
-    // return () => {
-    //   socket.off("text-update");
-    // };
+    return () => {
+      socket.off("text-update");
+    };
   }, [codes]);
 
   const editorDidMount = (editor, monaco) => {
