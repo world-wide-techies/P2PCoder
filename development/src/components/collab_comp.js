@@ -4,19 +4,21 @@ import { useSessionContext } from "@/composables/sessionContext";
 import { useState } from "react";
 import { useEffect } from "react";
 import WebCamRecorder from "./webcam_comp";
+import { useStoreSession } from "@/composables/dbService";
 
 const Collab = () => {
-  const { sessionData } = useSessionContext();
+  const { sessionData, setSessionData } = useSessionContext();
   const [isVideoOn, setIsVideoOn] = useState(true);
+  const { storeSession, getStoreSessionDetails } = useStoreSession();
 
   useEffect(() => {
+    getStoreSessionDetails(sessionData.peerSessionId);
     setIsVideoOn(sessionData.peerSessionId ? true : false);
   }, [sessionData]);
-
   return (
     <div className="w-full flex">
       <div className={isVideoOn ? "w-2/3 xl:w-3/4" : "w-[95vw]"}>
-        <CodingEditor peerid={sessionData.peerSessionId} />
+        <CodingEditor peerid={storeSession.peerId} />
       </div>
       {isVideoOn && (
         <div className="w-1/3 xl:w-1/4 flex flex-col items-start justify-start p-6 space-y-12 h-full">
@@ -24,7 +26,7 @@ const Collab = () => {
             <p className="text-gray-400">Peer Session ID</p>
             <div className="flex space-x-3 items-center">
               <p className="text-2xl font-bold text-gray-400">
-                {sessionData.peerSessionId}
+                {storeSession.peerId}
               </p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -45,12 +47,12 @@ const Collab = () => {
           <div className="space-y-6">
             <WebCamRecorder
               onBlobChanged={() => {}}
-              peername={"Barbara"}
+              peername={storeSession.collaboratorName}
               isUser={false}
             />
             <WebCamRecorder
               onBlobChanged={() => {}}
-              peername={"You"}
+              peername={storeSession.codersName}
               isUser={true}
             />
           </div>

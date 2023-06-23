@@ -10,6 +10,7 @@ import { useTabContext } from "@/composables/tabContext";
 import { useRouter } from "next/navigation";
 import { createSession } from "@/composables/dbService";
 import { appAuth } from "@/composables/firebaseConfig/config";
+import ErrorModal from "./errorModal_comp";
 
 function PeerId({ onClose }) {
   const { theme, setTheme } = useTheme();
@@ -18,20 +19,40 @@ function PeerId({ onClose }) {
   const [copyMessage, setCopyMessage] = useState("");
   const [peerSessionId, setPeerSessionId] = useState("");
   const { handleLanguage } = useTabContext();
+  const [error, setError] = useState("");
 
   const router = useRouter();
-const user = appAuth.currentUser
+
   useEffect(() => {
     setPeerSessionId(generatePeerIdCharacter());
   }, []);
 
-  const handleClick = async () => {
-    await setSessionData({ ...sessionData, peerSessionId, user });
-    createSession({ ...sessionData, peerSessionId });
+  useEffect(() => {
+    if (error !== "") {
+      setTimeout(() => {
+        setError("");
+      }, 6000);
+    }
+  }, [error]);
 
-    await handleLanguage(sessionData.activeLanguage);
-    router.push("/");
+  const handleErrorClose = () => {
+    setError("");
   };
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    await setSessionData({ ...sessionData, peerSessionId });
+    const result = await createSession({ ...sessionData, peerSessionId });
+    console.log(result.success);
+    if (!result.success) {
+      setError(result.message);
+      console.log(error);
+    } else {
+      await handleLanguage(sessionData.activeLanguage);
+      router.push("/");
+    }
+  };
+
   const handleClose = () => {
     setSessionData({});
     onClose();
@@ -99,11 +120,18 @@ const user = appAuth.currentUser
       <div className="font-normal text-black text-sm leading-4 font-nohemi dark:text-white">
         {copyMessage}
       </div>
-      <button 
-      onClick={handleClick}
-      className=" font-nohemi text-white rounded-lg bg-[#5F5BD7] w-full h-12">
+      <button
+        onClick={handleClick}
+        className=" font-nohemi text-white rounded-lg bg-[#5F5BD7] w-full h-12"
+      >
         Continue
       </button>
+
+      <ErrorModal
+        errorMessage={error}
+        style={"fixed  top-0 right-0 mr-2 "}
+        onClose={() => handleErrorClose()}
+      />
     </div>
   );
 }

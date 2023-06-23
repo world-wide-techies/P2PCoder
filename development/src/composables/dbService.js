@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { appFirestore, appAuth } from "./firebaseConfig/config";
-import { setDoc, doc, updateDoc, getDoc } from "firebase/firestore";
+import { setDoc, doc, updateDoc, getDoc, onSnapshot } from "firebase/firestore";
 
 async function createSession(userSessionData) {
   const { sessionName, activeLanguage, peerSessionId } = userSessionData;
@@ -23,43 +23,58 @@ async function createSession(userSessionData) {
       sessionName: sessionName,
       peerId: peerSessionId,
       language: activeLanguage,
-      codersName: user.displayName || user.username,
+      codersName: user.username || user.displayName,
       createdAt: new Date(),
     };
 
-    console.log(sessionData);
     const userDocRef = await setDoc(
       coders,
       { sessionId: user.uid },
       { merge: true }
     );
-    const sesDocRef = await setDoc(session, sessionData, { merge: true });
-    return "session added";
+    await setDoc(session, sessionData, { merge: true });
+    return {
+      sessionLanguage: activeLanguage,
+      success: true,
+      message: "Session successfully created!",
+    };
   } catch (error) {
-    console.error("Error adding document: ", error);
+    return { success: false, message: error.message };
   }
 }
 
-async function getUserDetails(peerId) {
-  const user = appAuth.currentUser;
-  if (user == null) {
-    throw new Error("User not found!");
-  }
+function useStoreSession() {
+  const [storeSession, setStoreSession] = useState({});
 
-  const coders = doc(appFirestore, `CODERS/${user.uid}`);
-  const userSession = doc(coders, `SESSION/${peerId}`);
-  try {
-    const sessionData = await getDoc(userSession);
-
-    if (!sessionData.exists()) {
-      throw new Error("Session not found!");
+  async function getStoreSessionDetails(peerId) {
+    const user = appAuth.currentUser;
+    if (user == null) {
+      throw new Error("User not found!");
     }
 
-    const docData = sessionData.data();
-    return docData;
-  } catch (error) {
-    console.error("Error adding document: ", error);
+    const coders = doc(appFirestore, `CODERS/${peerId}`);
+
+    const codersSnap = await getDoc(coders);
+    if (!codersSnap.exists()) {
+      throw new Error(`Session with ID ${peerId} does not exist`);
+    }
+
+    try {
+      const sessionId = codersSnap.data().sessionId;
+
+      const userSession = doc(coders, `SESSION/${sessionId}`);
+
+      const sessionData = await getDoc(userSession);
+      onSnapshot(userSession, (querySnapShot) => {
+        const docData = querySnapShot.data();
+        setStoreSession(docData);
+      });
+    } catch (error) {
+      console.error("Error retrieving document: ", error);
+    }
   }
+
+  return { storeSession, getStoreSessionDetails };
 }
 
 async function addCollabCodeEditor(codeEditorData) {
@@ -146,9 +161,9 @@ async function addUserToExistingSession(peerId) {
 
     const sessionRefSnap = await getDoc(sessionRef);
     const activeLanguage = sessionRefSnap.data().language;
-   
+
     const collabUserData = {
-      collaboratorName: currentUser.displayName || currentUser.userName,
+      collaboratorName: currentUser.displayName || currentUser.username,
     };
     const sesDocRef = await setDoc(sessionRef, collabUserData, { merge: true });
 
@@ -165,7 +180,7 @@ async function addUserToExistingSession(peerId) {
 export {
   addCollabCodeEditor,
   createSession,
-  getUserDetails,
   updateSession,
   addUserToExistingSession,
+  useStoreSession,
 };
