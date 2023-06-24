@@ -285,8 +285,12 @@ export default function WebCamRecorder({ onBlobChanged, peername, isUser }) {
           ) : (
             <div></div>
           )}
-          <div className="bg-gray-500 p-3 py-1 rounded-2xl">
-            <p>{peername}</p>
+          <div //className="bg-gray-500 p-3 py-1 rounded-2xl"
+            className={`bg-gray-500 p-3 py-1 rounded-2xl ${
+              !peername && `italic text-sm  font-extralight  text-gray-300`
+            }`}
+          >
+            <p>{peername ? peername : "Awaiting user..."}</p>
           </div>
         </div>
       </div>
