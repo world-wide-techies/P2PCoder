@@ -14,6 +14,8 @@ import UserLoginComp from "@/components/userLogin_comp";
 import SignUpComponent from "@/components/signup_comp";
 import SessionComp from "@/components/session_comp";
 import { ForgotPassword } from "@/components/ForgotPassword";
+import VerificationOverlay from "@/components/VerificationOverlay";
+import VerificationSuccessful from "@/components/VerificationSuccessful_comp";
 
 function Home() {
   const { items, setItems, errorMessage, setErrorMessage } = useTabContext();
@@ -199,6 +201,30 @@ function Home() {
                 }}
               >
                 <ForgotPassword />
+              </Modal>
+            ) : view === "verificationOverlay" ? (
+              <Modal
+                onClose={() => {
+                  router.push("/");
+                }}
+              >
+                <VerificationOverlay
+                  onClose={() => {
+                    router.push("/");
+                  }}
+                />
+              </Modal>
+            ) : view === "verificationSuccessful" ? (
+              <Modal
+                onClose={() => {
+                  router.push("/");
+                }}
+              >
+                <VerificationSuccessful
+                  onClose={() => {
+                    router.push("/");
+                  }}
+                />
               </Modal>
             ) : (
               <div></div>
