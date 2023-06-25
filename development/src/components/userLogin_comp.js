@@ -43,6 +43,7 @@ function UserLoginComp({ onClose }) {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [loginError, setLoginError] = useState("");
   const router = useRouter();
   const [closeLogin, setCloseLogin] = useState(false);
 
@@ -73,10 +74,10 @@ function UserLoginComp({ onClose }) {
         if (result.loggedIn) {
           console.log("Logged in", result.message);
         } else {
-          console.log("user does not exist", result.message);
+          setErrorMessage(result.message);
         }
       } catch (error) {
-        console.log("error", error);
+        setErrorMessage(error);
       }
     } else {
       if (validEmail !== true) {
@@ -126,9 +127,7 @@ function UserLoginComp({ onClose }) {
             className="flex flex-row flex-nowrap justify-center gap-2 bg-[#DCDCE5] dark:bg-[#363647] items-center px-3 py-3 rounded-md w-full"
           >
             <Image src={googleIcon} alt="google_icon" className="w-6 h-auto" />
-            <p className="text-[14px]">
-              Sign in with Google
-            </p>
+            <p className="text-[14px]">Sign in with Google</p>
           </button>
           <button
             onClick={(e) => {
@@ -168,6 +167,7 @@ function UserLoginComp({ onClose }) {
               value={emailAddress}
             />
             {emailError && <p className="text-sm text-red-500">{emailError}</p>}
+            {loginError && <p className="text-sm text-red-500">{loginError}</p>}
           </div>
 
           <div>
@@ -185,10 +185,7 @@ function UserLoginComp({ onClose }) {
             {passwordError && (
               <p className="text-sm text-red-500">{passwordError}</p>
             )}
-            <Link
-              href={"/?view=recoveraccount"}
-              className="float-right mb-6"
-            >
+            <Link href={"/?view=recoveraccount"} className="float-right mb-6">
               Forgot password?
             </Link>
           </div>
