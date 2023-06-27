@@ -48,7 +48,7 @@ function PeerId({ onClose }) {
       setError(result.message);
       console.log(error);
     } else {
-      await handleLanguage(sessionData.activeLanguage);
+      await handleLanguage(sessionData.activeLanguage, true);
       router.push("/");
     }
   };

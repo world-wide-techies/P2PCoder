@@ -1,26 +1,24 @@
 import React from "react";
 import CodingEditor from "./codingEditor";
 import { useSessionContext } from "@/composables/sessionContext";
-import { useState } from "react";
 import { useEffect } from "react";
 import WebCamRecorder from "./webcam_comp";
 import { useStoreSession } from "@/composables/dbService";
 
-const Collab = () => {
+const Collab = ({isCollabOn}) => {
   const { sessionData } = useSessionContext();
-  const [isVideoOn, setIsVideoOn] = useState(true);
   const { storeSession, getStoreSessionDetails } = useStoreSession();
 
   useEffect(() => {
     getStoreSessionDetails(sessionData.peerSessionId);
-    setIsVideoOn(sessionData.peerSessionId ? true : false);
   }, [sessionData]);
+  
   return (
     <div className="w-full flex">
-      <div className={isVideoOn ? "w-2/3 xl:w-3/4" : "w-[95vw]"}>
+      <div className={isCollabOn ? "w-2/3 xl:w-3/4" : "w-[95vw]"}>
         <CodingEditor peerid={storeSession.peerId} />
       </div>
-      {isVideoOn && (
+      {isCollabOn && (
         <div className="w-1/3 xl:w-1/4 flex flex-col items-start justify-start p-6 space-y-12 h-full">
           <div>
             <p className="text-gray-400">Peer Session ID</p>

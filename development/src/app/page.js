@@ -244,7 +244,7 @@ function Home() {
                   </div>
                 );
               } else if (item.active && item.title != "Welcome") {
-                return <Collab key={item.id} />;
+                return <Collab key={item.id} isCollabOn={item.isCollab} />;
               }
             })}
           </>
