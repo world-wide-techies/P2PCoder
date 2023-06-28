@@ -41,7 +41,7 @@ function Onboarding() {
               href={"/?view=signup"}
               className="bg-[#5F5BD7] mt-10 hover:bg-[#4b45ff] text-white px-10 py-3 rounded-md dark:bg-[#5F5BD7] dark:hover:bg-[#4b45ff] flex flex-row w-auto flex-nowrap justify-center"
             >
-              Create an Account
+              Create Account
             </Link>
             <Link
               href={"/?view=login"}
