@@ -119,21 +119,22 @@ function UserLoginComp({ onClose }) {
 
         <div className="flex flex-row justify-between gap-3">
           <button
-            onClick={(e) => {
+            onClick={async (e) => {
               e.preventDefault();
-              signinWithGoogle();
+              const response = await signinWithGoogle();
+              response.success ? router.push("/") : "";
             }}
             className="flex flex-row flex-nowrap justify-center gap-2 bg-[#DCDCE5] dark:bg-[#363647] items-center px-3 py-3 rounded-md w-full"
           >
             <Image src={googleIcon} alt="google_icon" className="w-6 h-auto" />
-            <p className="text-[14px]">
-              Sign in with Google
-            </p>
+            <p className="text-[14px]">Sign in with Google</p>
           </button>
           <button
-            onClick={(e) => {
+            onClick={async (e) => {
               e.preventDefault();
               signinWithGithub();
+              const response = await signinWithGoogle();
+              response.success ? router.push("/") : "";
             }}
             className="flex flex-row flex-nowrap justify-center gap-2 bg-[#DCDCE5] dark:bg-[#363647] items-center px-3 py-3 rounded-md w-full"
           >
@@ -185,10 +186,7 @@ function UserLoginComp({ onClose }) {
             {passwordError && (
               <p className="text-sm text-red-500">{passwordError}</p>
             )}
-            <Link
-              href={"/?view=recoveraccount"}
-              className="float-right mb-6"
-            >
+            <Link href={"/?view=recoveraccount"} className="float-right mb-6">
               Forgot password?
             </Link>
           </div>

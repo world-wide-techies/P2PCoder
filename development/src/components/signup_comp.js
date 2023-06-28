@@ -134,9 +134,10 @@ function SignUpComponent() {
 
           <div className="flex justify-between items-center space-x-3 w-full">
             <button
-              onClick={(e) => {
+              onClick={async (e) => {
                 e.preventDefault();
-                signinWithGoogle();
+                const response = await signinWithGoogle();
+                response.success ? router.push("/") : "";
               }}
               className="w-1/2 p-3 bg-[#DCDCE5] dark:bg-[#363647] text-lg font-normal rounded-lg  flex justify-center items-center"
             >
@@ -151,7 +152,8 @@ function SignUpComponent() {
             <button
               onClick={(e) => {
                 e.preventDefault();
-                signinWithGithub();
+                const response = signinWithGithub();
+                response.success ? router.push("/") : "";
               }}
               className="w-1/2  p-3 bg-[#DCDCE5] text-lg font-normal  dark:bg-[#363647] rounded-lg  flex justify-center items-center"
             >

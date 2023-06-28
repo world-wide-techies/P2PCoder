@@ -18,7 +18,7 @@ function useGithubSignin() {
       }
       const user = res.user;
       setIsPending(false);
-      return user;
+      return { success: true };
     } catch (error) {
       const errorCode = error.code;
       let errorMessage = error.message;
