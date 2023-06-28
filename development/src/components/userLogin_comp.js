@@ -43,6 +43,7 @@ function UserLoginComp({ onClose }) {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [loginError, setLoginError] = useState("");
   const router = useRouter();
   const [closeLogin, setCloseLogin] = useState(false);
 
@@ -73,10 +74,10 @@ function UserLoginComp({ onClose }) {
         if (result.loggedIn) {
           console.log("Logged in", result.message);
         } else {
-          console.log("user does not exist", result.message);
+          setErrorMessage(result.message);
         }
       } catch (error) {
-        console.log("error", error);
+        setErrorMessage(error);
       }
     } else {
       if (validEmail !== true) {
@@ -169,6 +170,7 @@ function UserLoginComp({ onClose }) {
               value={emailAddress}
             />
             {emailError && <p className="text-sm text-red-500">{emailError}</p>}
+            {loginError && <p className="text-sm text-red-500">{loginError}</p>}
           </div>
 
           <div>

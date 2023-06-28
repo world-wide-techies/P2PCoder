@@ -17,7 +17,7 @@ import closeIconDark from "../../public/assets/onboardingIcons/closecircledark.p
 import ErrorModal from "./errorModal_comp";
 import { getDocs, collection, where, query } from "firebase/firestore";
 import { appFirestore } from "../composables/firebaseConfig/config";
-import { useRouter } from "next/navigation";
+import VerificationOverlay from "./VerificationOverlay";
 
 function SignUpComponent() {
   const { signinWithGithub, githubError } = useGithubSignin();
@@ -46,10 +46,11 @@ function SignUpComponent() {
     confirm_password: "",
   });
 
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
   const [usernameAvailable, setUsernameAvailable] = useState(null);
+  const [showVerificationOverlay, setShowVerificationOverlay] = useState(false);
   const [showForm, setShowForm] = useState(true);
-  const router = useRouter();
 
   const handleCloseForm = () => {
     setShowForm(false);
@@ -95,16 +96,19 @@ function SignUpComponent() {
           password,
           username
         );
-
+        console.log(signUpUser);
         if (signUpUser.success) {
           const createdUser = signUpUser.user;
           setFormSubmitted(true);
+          setShowVerificationOverlay(true);
 
+          console.log(createdUser);
           return createdUser;
         } else {
           setErrors({ firebaseError: signUpUser.error });
         }
       } catch (error) {
+        console.log("Caught an error", error);
         setErrors({ firebaseError: error.message });
       }
     } else {
@@ -386,6 +390,13 @@ function SignUpComponent() {
           </div>
         </form>
       ) : null}
+
+      {showVerificationOverlay && (
+        <VerificationOverlay
+          email={user.email}
+          onClose={() => setShowVerificationOverlay(false)}
+        />
+      )}
 
       <ErrorModal
         errorMessage={errorMessage}

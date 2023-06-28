@@ -22,10 +22,17 @@ async function authSignUp(firstname, lastname, email, password, username) {
         lastname,
         email,
       };
-
-      await completeSignUp(newUser, user.uid, username);
+      const completeSignupResponse = await completeSignUp(
+        newUser,
+        user.uid,
+        username
+      );
+      if (completeSignupResponse.success) {
+        return { success: true, user };
+      } else {
+        return { success: false, error: completeSignupResponse.error };
+      }
     }
-    return { success: true, user };
   } catch (error) {
     return { success: false, error: error.message };
   }
@@ -55,8 +62,10 @@ async function completeSignUp(user, uid, username) {
   try {
     await setDoc(newDocRef, dataToSet);
     console.log("Document successfully written.");
+    return { success: true };
   } catch (error) {
     console.error("Error writing document: ", error);
+    return { success: false, error: error.message };
   }
 }
 

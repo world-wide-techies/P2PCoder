@@ -105,9 +105,9 @@ function PeerSession({ onClose }) {
               <p className="font-bold text-xl">CSS</p>
             </div>
             <div
-              onClick={() => setActiveLanguage("javascript")}
+              onClick={() => setActiveLanguage("js")}
               className={` w-32 h-32 flex justify-center shadow-md items-center flex-col rounded-md cursor-pointer ${
-                activeLanguage === "javascript"
+                activeLanguage === "js"
                   ? "bg-blue-500 text-white"
                   : " bg-gray-200 dark:bg-[#3D3D48]"
               }`}
