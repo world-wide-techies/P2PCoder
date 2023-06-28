@@ -18,11 +18,13 @@ import ErrorModal from "./errorModal_comp";
 import { getDocs, collection, where, query } from "firebase/firestore";
 import { appFirestore } from "../composables/firebaseConfig/config";
 import VerificationOverlay from "./VerificationOverlay";
+import { useRouter } from "next/navigation";
 
 function SignUpComponent() {
   const { signinWithGithub, githubError } = useGithubSignin();
   const { signinWithGoogle, googleError } = useGoogleSignin();
   const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
   useEffect(() => {
     setErrorMessage(githubError || googleError);
     if (errorMessage !== "") {
