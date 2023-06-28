@@ -6,6 +6,7 @@ export const TabProvider = ({ children }) => {
   const barItems = [{ id: 1, title: 'Welcome', active: true }];
   const [items, setItems] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isVideoOn, setIsVideoOn] = useState(false);
 
   useEffect(() => {
     if (items.length == 0) {
@@ -23,7 +24,10 @@ export const TabProvider = ({ children }) => {
     }
   }, []);
 
-  const handleLanguage = (lang) => {
+  const handleLanguage = (lang, isCollabOn) => {
+    if (isCollabOn) {
+      setIsVideoOn(true)
+    }
     const oldItems = items.map((item) => ({
       ...item,
       active: false,
@@ -68,6 +72,7 @@ export const TabProvider = ({ children }) => {
                 : '',
             active: true,
             code: '',
+            isCollab: isVideoOn || isCollabOn
           },
         ];
         setItems(newItems);
@@ -86,6 +91,8 @@ export const TabProvider = ({ children }) => {
         handleLanguage,
         setErrorMessage,
         errorMessage,
+        isVideoOn,
+        setIsVideoOn,
       }}>
       {children}
     </TabContext.Provider>

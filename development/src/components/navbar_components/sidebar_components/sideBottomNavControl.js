@@ -1,4 +1,5 @@
 import { appAuth } from "@/composables/firebaseConfig/config";
+import { handleLogout } from "@/composables/signOutFunction";
 import { isUserSignedIn } from "@/composables/verifySignedIn";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -11,14 +12,19 @@ const btnNav = [
 function SideBottomNavControl() {
   const router = useRouter();
   const [auth, setAuth] = useState(false);
-
+  const user = appAuth.currentUser;
   useEffect(() => {
     if (isUserSignedIn()) {
       setAuth(true);
     } else {
       setAuth(false);
     }
-  }, [appAuth]);
+  }, [user]);
+
+  const signUserOut = async () => {
+    await handleLogout();
+    setAuth(isUserSignedIn());
+  };
 
   return (
     <div className="flex flex-col justify-start items-center space-y-2">

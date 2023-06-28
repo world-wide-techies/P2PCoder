@@ -1,42 +1,42 @@
-import { useTheme } from 'next-themes';
-import Image from 'next/image';
-import HTML from '../../public/assets/codeEditorIcons/symbol.png';
-import CSS from '../../public/assets/codeEditorIcons/CSS3.png';
-import JS from '../../public/assets/codeEditorIcons/Group.png';
-import closeIconWhite from '../../public/assets/onboardingIcons/close_light.png';
-import closeIconBlack from '../../public/assets/onboardingIcons/close_black.png';
-import React, { useEffect, useState } from 'react';
+import { useTheme } from "next-themes";
+import Image from "next/image";
+import HTML from "../../public/assets/codeEditorIcons/symbol.png";
+import CSS from "../../public/assets/codeEditorIcons/CSS3.png";
+import JS from "../../public/assets/codeEditorIcons/Group.png";
+import closeIconWhite from "../../public/assets/onboardingIcons/close_light.png";
+import closeIconBlack from "../../public/assets/onboardingIcons/close_black.png";
+import React, { useEffect, useState } from "react";
 
-import { useRouter } from 'next/navigation';
-import ErrorModal from './errorModal_comp';
-import { useSessionContext } from '@/composables/sessionContext';
+import { useRouter } from "next/navigation";
+import ErrorModal from "./errorModal_comp";
+import { useSessionContext } from "@/composables/sessionContext";
 
 function PeerSession({ onClose }) {
   const { setSessionData } = useSessionContext();
-  const [activeLanguage, setActiveLanguage] = useState('');
-  const [sessionName, setSessionName] = useState('');
+  const [activeLanguage, setActiveLanguage] = useState("");
+  const [sessionName, setSessionName] = useState("");
   const route = useRouter();
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    if (error !== '') {
+    if (error !== "") {
       setTimeout(() => {
-        setError('');
+        setError("");
       }, 6000);
     }
   }, [error]);
 
   function createPeerSession() {
-    if (!sessionName && !activeLanguage) {
-      setError('Session name and Programming language are required');
+    if (!sessionName || !activeLanguage) {
+      setError("Session name and Programming language are required");
     } else {
-      route.push('/?view=peerId');
+      route.push("/?view=peerId");
       setSessionData({ sessionName, activeLanguage });
     }
   }
 
   const handleErrorClose = () => {
-    setError('');
+    setError("");
   };
 
   const handleClose = () => {
@@ -54,7 +54,7 @@ function PeerSession({ onClose }) {
           </div>
           <button onClick={handleClose}>
             <Image
-              src={theme === 'dark' ? closeIconWhite : closeIconBlack}
+              src={theme === "dark" ? closeIconWhite : closeIconBlack}
               className="w-5 h-5"
               alt="close_btn"
             />
@@ -80,34 +80,38 @@ function PeerSession({ onClose }) {
           </div>
           <div
             className="space-x-3 flex "
-            onChange={(e) => setActiveLanguage(e.target.activeLanguage)}>
+            onChange={(e) => setActiveLanguage(e.target.activeLanguage)}
+          >
             <div
-              onClick={() => setActiveLanguage('html')}
+              onClick={() => setActiveLanguage("html")}
               className={` w-32 h-32 flex justify-center items-center flex-col  shadow-md rounded-md cursor-pointer ${
-                activeLanguage === 'html'
-                  ? 'bg-blue-500 text-white'
-                  : '  bg-gray-200 dark:bg-[#3D3D48]'
-              }`}>
+                activeLanguage === "html"
+                  ? "bg-blue-500 text-white"
+                  : "  bg-gray-200 dark:bg-[#3D3D48]"
+              }`}
+            >
               <Image src={HTML} className="w-8 h-9 mb-4" alt="html" />
               <div className="font-bold text-xl">HTML</div>
             </div>
             <div
-              onClick={() => setActiveLanguage('css')}
+              onClick={() => setActiveLanguage("css")}
               className={` w-32 h-32 flex justify-center items-center shadow-md flex-col rounded-md cursor-pointer ${
-                activeLanguage === 'css'
-                  ? 'bg-blue-500 text-white '
-                  : ' bg-gray-200 dark:bg-[#3D3D48]'
-              }`}>
+                activeLanguage === "css"
+                  ? "bg-blue-500 text-white "
+                  : " bg-gray-200 dark:bg-[#3D3D48]"
+              }`}
+            >
               <Image src={CSS} alt="language-icon" className="w-8 h-8 mb-4" />
               <p className="font-bold text-xl">CSS</p>
             </div>
             <div
-              onClick={() => setActiveLanguage('javascript')}
+              onClick={() => setActiveLanguage("js")}
               className={` w-32 h-32 flex justify-center shadow-md items-center flex-col rounded-md cursor-pointer ${
-                activeLanguage === 'javascript'
-                  ? 'bg-blue-500 text-white'
-                  : ' bg-gray-200 dark:bg-[#3D3D48]'
-              }`}>
+                activeLanguage === "js"
+                  ? "bg-blue-500 text-white"
+                  : " bg-gray-200 dark:bg-[#3D3D48]"
+              }`}
+            >
               <Image src={JS} alt="language-icon" className="w-8 h-9 mb-4" />
               <p className="font-bold text-xl">JS</p>
             </div>
@@ -116,14 +120,15 @@ function PeerSession({ onClose }) {
 
         <button
           onClick={createPeerSession}
-          className="w-full py-[24px] px-[29px] text-white mt-12 rounded-lg bg-[#5F5BD7] text-center font-medium text-lg">
+          className="w-full py-[24px] px-[29px] text-white mt-12 rounded-lg bg-[#5F5BD7] text-center font-medium text-lg"
+        >
           Create Peer Session
         </button>
       </div>
 
       <ErrorModal
         errorMessage={error}
-        style={'fixed  top-0 right-0 mr-2 '}
+        style={"fixed  top-0 right-0 mr-2 "}
         onClose={() => handleErrorClose()}
       />
     </div>
