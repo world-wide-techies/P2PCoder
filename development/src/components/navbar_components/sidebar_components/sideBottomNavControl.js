@@ -1,12 +1,12 @@
-import { appAuth } from '@/composables/firebaseConfig/config';
-import { isUserSignedIn } from '@/composables/verifySignedIn';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { appAuth } from "@/composables/firebaseConfig/config";
+import { isUserSignedIn } from "@/composables/verifySignedIn";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const btnNav = [
-  '/assets/sideBottomNavControls/logout.png',
-  '/assets/sideBottomNavControls/settings.png',
+  "/assets/sideBottomNavControls/logout.png",
+  "/assets/sideBottomNavControls/settings.png",
 ];
 function SideBottomNavControl() {
   const router = useRouter();
@@ -27,7 +27,8 @@ function SideBottomNavControl() {
           return (
             <button
               key={i}
-              className="hover:bg-gray-200 dark:hover:bg-gray-700 w-16 h-16 flex items-center justify-center hover:rounded-lg">
+              className="hover:bg-gray-200 dark:hover:bg-gray-700 w-16 h-16 flex items-center justify-center hover:rounded-lg"
+            >
               <Image src={e} width={35} height={35} alt={`nav_btn_icon${i}`} />
             </button>
           );
