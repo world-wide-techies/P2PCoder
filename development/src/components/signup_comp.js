@@ -12,12 +12,13 @@ import { useGoogleSignin } from "@/composables/authGoogleSigninPoppup";
 import { signupFormValidation } from "@/composables/signupFormValidation";
 import { authSignUp } from "@/composables/authSignupFunction";
 import { useTheme } from "next-themes";
-import closeIcon from "../../public/assets/onboardingIcons/closecirclelight.png";
+import closeIcon from "../../public/assets/onboardingIcons/close_light.png";
 import closeIconDark from "../../public/assets/onboardingIcons/closecircledark.png";
 import ErrorModal from "./errorModal_comp";
 import { getDocs, collection, where, query } from "firebase/firestore";
 import { appFirestore } from "../composables/firebaseConfig/config";
 import VerificationOverlay from "./VerificationOverlay";
+import { useRouter } from "next/navigation";
 
 function SignUpComponent() {
   const { signinWithGithub, githubError } = useGithubSignin();
@@ -51,6 +52,7 @@ function SignUpComponent() {
   const [usernameAvailable, setUsernameAvailable] = useState(null);
   const [showVerificationOverlay, setShowVerificationOverlay] = useState(false);
   const [showForm, setShowForm] = useState(true);
+  const router = useRouter();
 
   const handleCloseForm = () => {
     setShowForm(false);
@@ -129,7 +131,7 @@ function SignUpComponent() {
               p={"Enjoy extra features when you create an account with us."}
             />
             <Image
-              src={theme === "dark" ? closeIconDark : closeIcon}
+              src={theme === "dark" ? closeIcon : closeIconDark}
               alt="close icon"
               className="w-6 h-6 mr-4 mt-2"
               onClick={handleCloseForm}
