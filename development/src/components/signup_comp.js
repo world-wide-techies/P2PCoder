@@ -12,17 +12,19 @@ import { useGoogleSignin } from "@/composables/authGoogleSigninPoppup";
 import { signupFormValidation } from "@/composables/signupFormValidation";
 import { authSignUp } from "@/composables/authSignupFunction";
 import { useTheme } from "next-themes";
-import closeIcon from "../../public/assets/onboardingIcons/closecirclelight.png";
+import closeIcon from "../../public/assets/onboardingIcons/close_light.png";
 import closeIconDark from "../../public/assets/onboardingIcons/closecircledark.png";
 import ErrorModal from "./errorModal_comp";
 import { getDocs, collection, where, query } from "firebase/firestore";
 import { appFirestore } from "../composables/firebaseConfig/config";
 import VerificationOverlay from "./VerificationOverlay";
+import { useRouter } from "next/navigation";
 
 function SignUpComponent() {
   const { signinWithGithub, githubError } = useGithubSignin();
   const { signinWithGoogle, googleError } = useGoogleSignin();
   const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
   useEffect(() => {
     setErrorMessage(githubError || googleError);
     if (errorMessage !== "") {
@@ -51,6 +53,7 @@ function SignUpComponent() {
   const [usernameAvailable, setUsernameAvailable] = useState(null);
   const [showVerificationOverlay, setShowVerificationOverlay] = useState(false);
   const [showForm, setShowForm] = useState(true);
+  const router = useRouter();
 
   const handleCloseForm = () => {
     setShowForm(false);
@@ -129,7 +132,7 @@ function SignUpComponent() {
               p={"Enjoy extra features when you create an account with us."}
             />
             <Image
-              src={theme === "dark" ? closeIconDark : closeIcon}
+              src={theme === "dark" ? closeIcon : closeIconDark}
               alt="close icon"
               className="w-6 h-6 mr-4 mt-2"
               onClick={handleCloseForm}
@@ -138,9 +141,10 @@ function SignUpComponent() {
 
           <div className="flex justify-between items-center space-x-3 w-full">
             <button
-              onClick={(e) => {
+              onClick={async (e) => {
                 e.preventDefault();
-                signinWithGoogle();
+                const response = await signinWithGoogle();
+                response.success ? router.push("/") : "";
               }}
               className="w-1/2 p-3 bg-[#DCDCE5] dark:bg-[#363647] text-lg font-normal rounded-lg  flex justify-center items-center"
             >
@@ -155,7 +159,8 @@ function SignUpComponent() {
             <button
               onClick={(e) => {
                 e.preventDefault();
-                signinWithGithub();
+                const response = signinWithGithub();
+                response.success ? router.push("/") : "";
               }}
               className="w-1/2  p-3 bg-[#DCDCE5] text-lg font-normal  dark:bg-[#363647] rounded-lg  flex justify-center items-center"
             >

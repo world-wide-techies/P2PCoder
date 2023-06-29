@@ -120,9 +120,10 @@ function UserLoginComp({ onClose }) {
 
         <div className="flex flex-row justify-between gap-3">
           <button
-            onClick={(e) => {
+            onClick={async (e) => {
               e.preventDefault();
-              signinWithGoogle();
+              const response = await signinWithGoogle();
+              response.success ? router.push("/") : "";
             }}
             className="flex flex-row flex-nowrap justify-center gap-2 bg-[#DCDCE5] dark:bg-[#363647] items-center px-3 py-3 rounded-md w-full"
           >
@@ -130,9 +131,11 @@ function UserLoginComp({ onClose }) {
             <p className="text-[14px]">Sign in with Google</p>
           </button>
           <button
-            onClick={(e) => {
+            onClick={async (e) => {
               e.preventDefault();
               signinWithGithub();
+              const response = await signinWithGoogle();
+              response.success ? router.push("/") : "";
             }}
             className="flex flex-row flex-nowrap justify-center gap-2 bg-[#DCDCE5] dark:bg-[#363647] items-center px-3 py-3 rounded-md w-full"
           >

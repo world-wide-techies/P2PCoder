@@ -63,7 +63,7 @@ function EditorNavBar() {
                   <Image alt="moon" src={moon} width={20} height={20} />
                 )}
               </button>
-              {!auth && (items.length > 1 || items[0]?.title !== "Welcome") && (
+              {!isUserSignedIn() && (items.length > 1 || items[0]?.title !== "Welcome") && (
                 <>
                   <Link
                     href={"/?view=signup"}

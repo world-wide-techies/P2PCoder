@@ -22,8 +22,9 @@ function SideBottomNavControl() {
   }, [user]);
 
   const signUserOut = async () => {
-    await handleLogout();
+    const response = await handleLogout();
     setAuth(isUserSignedIn());
+    response.success ? router.push("/?view=login") : "";
   };
 
   return (
