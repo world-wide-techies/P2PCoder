@@ -4,7 +4,7 @@ import { appAuth } from "./firebaseConfig/config";
 async function handleLogout() {
   try {
     await signOut(appAuth);
-    return "Signed out successfully";
+    return {success: true};
   } catch (error) {
     console.log(error.message);
   }

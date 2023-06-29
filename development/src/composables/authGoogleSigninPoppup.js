@@ -11,7 +11,6 @@ function useGoogleSignin() {
   async function signinWithGoogle() {
     setError(null);
     setIsPending(true);
-
     try {
       const res = await signInWithPopup(appAuth, provider);
       if (!res) {
@@ -20,7 +19,8 @@ function useGoogleSignin() {
 
       const user = res.user;
       setIsPending(false);
-      return user;
+
+      return { success: true };
     } catch (error) {
       const errorCode = error.code;
       let errorMessage = error.message;

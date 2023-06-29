@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useTheme } from "next-themes";
+import { isUserSignedIn } from "@/composables/verifySignedIn";
 
 function Onboarding() {
   const { theme, setTheme } = useTheme();
@@ -34,18 +35,22 @@ function Onboarding() {
         </li>
       </ul>
       <div className="flex flex-col space-y-3">
-        <Link
-          href={"/?view=signup"}
-          className="bg-[#5F5BD7] mt-10 hover:bg-[#4b45ff] text-white px-10 py-3 rounded-md dark:bg-[#5F5BD7] dark:hover:bg-[#4b45ff] flex flex-row w-auto flex-nowrap justify-center"
-        >
-          Create an Account
-        </Link>
-        <Link
-          href={"/?view=login"}
-          className="px-56 py-3 bg-[#DCDCE5] dark:text-black rounded-md border flex justify-center"
-        >
-          Log In
-        </Link>
+        {!isUserSignedIn() && (
+          <>
+            <Link
+              href={"/?view=signup"}
+              className="bg-[#5F5BD7] mt-10 hover:bg-[#4b45ff] text-white px-10 py-3 rounded-md dark:bg-[#5F5BD7] dark:hover:bg-[#4b45ff] flex flex-row w-auto flex-nowrap justify-center"
+            >
+              Create Account
+            </Link>
+            <Link
+              href={"/?view=login"}
+              className="px-56 py-3 bg-[#DCDCE5] dark:text-black rounded-md border flex justify-center"
+            >
+              Log In
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );
