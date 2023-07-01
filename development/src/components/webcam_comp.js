@@ -1,7 +1,18 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { io } from "socket.io-client";
+import SimplePeer from "simple-peer";
+import { useSessionContext } from "@/composables/sessionContext";
 
-export default function WebCamRecorder({ onBlobChanged, peername, isUser }) {
-  const videoRef = useRef(null);
+export default function WebCamRecorder({
+  onBlobChanged,
+  peername,
+  peerDetails,
+  isUser,
+}) {
+  const socket = io.connect("http://localhost:3001");
+  const myVideoRef = useRef(null);
+  const userVideoRef = useRef(null);
+  const connectionRef = useRef(null);
   const [videoStream, setVideoStream] = useState(null);
   const [audioStream, setAudioStream] = useState(null);
   const [recorder, setRecorder] = useState(null);
@@ -10,6 +21,15 @@ export default function WebCamRecorder({ onBlobChanged, peername, isUser }) {
   const [videoEnabled, setVideoEnabled] = useState(false);
   const [isSession, setIsSession] = useState(false);
   const [blob, setBlob] = useState(false);
+  const [name, setName] = useState("");
+  const [caller, setCaller] = useState("");
+  const [callEnded, setCallEnded] = useState(false);
+  const [callerSignal, setCallerSignal] = useState("");
+  const [recievingCall, setRecievingCall] = useState("");
+  const [callAccepted, setCallAccepted] = useState(false);
+  const [idToCall, setIdToCall] = useState(false);
+  const [me, setMe] = useState(false);
+  const { sessionData } = useSessionContext();
 
   const stopAudio = () => {
     try {
@@ -70,7 +90,7 @@ export default function WebCamRecorder({ onBlobChanged, peername, isUser }) {
     navigator.mediaDevices
       .getUserMedia({ video: true })
       .then((stream) => {
-        videoRef.current.srcObject = stream;
+        myVideoRef.current.srcObject = stream;
         setVideoStream(stream);
       })
       .catch((err) => console.error(err));
@@ -118,6 +138,9 @@ export default function WebCamRecorder({ onBlobChanged, peername, isUser }) {
     }
   };
   useEffect(() => {
+    console.log(socket);
+    console.log(sessionData);
+    console.log(peerDetails);
     if (audioEnabled) {
       startAudioStream();
     } else {
@@ -128,6 +151,19 @@ export default function WebCamRecorder({ onBlobChanged, peername, isUser }) {
     if (videoEnabled) {
       console.log("Enabled");
       startVideoStream();
+
+      socket.on("me", (id) => {
+        setMe(id);
+      });
+
+      socket.on("callpeer", (data) => {
+        setRecievingCall(true);
+        setCaller(data.from);
+        setName(data.name);
+        setCallerSignal(data.signal);
+      });
+
+      callPeer(sessionData.peerSessionId);
     } else {
       if (videoStream != null) {
         stopVideoCam();
@@ -138,7 +174,64 @@ export default function WebCamRecorder({ onBlobChanged, peername, isUser }) {
     } else {
       setIsSession(false);
     }
-  }, [audioEnabled, videoEnabled]);
+
+    if (peerDetails.collaboratorsName) {
+      answerCall();
+    }
+  }, [audioEnabled, videoEnabled, peerDetails]);
+
+  const callPeer = (id) => {
+    const peer = new SimplePeer({
+      initiator: true,
+      trickle: false,
+      stream: videoStream,
+    });
+
+    peer.on("signal", (data) => {
+      socket.emit("callPeer", {
+        userToCall: id,
+        signalData: data,
+        from: me,
+        name: name,
+      });
+    });
+
+    peer.on("stream", (videoStream) => {
+      userVideoRef.current.srcObject = videoStream;
+    });
+
+    socket.on("callAccepted", (signal) => {
+      setCallAccepted(true);
+      peer.signal(signal);
+    });
+
+    connectionRef.current = peer;
+  };
+  const answerCall = () => {
+    setCallAccepted(true);
+
+    const peer = new SimplePeer({
+      initiator: false,
+      trickle: false,
+      stream: videoStream,
+    });
+
+    peer.on("signal", (data) => {
+      socket.emit("answerCall", { signal: data, to: caller });
+    });
+
+    peer.on("stream", (stream) => {
+      userVideoRef.current.srcObject = stream;
+    });
+
+    peer.signal(callerSignal);
+    connectionRef.current = peer;
+  };
+
+  const endCall = () => {
+    setCallEnded(true);
+    connectionRef.current.destroy();
+  };
 
   return (
     <div className="w-full relative flex items-center align-middle bg-black rounded-3xl shadow-gray-800">
@@ -148,10 +241,23 @@ export default function WebCamRecorder({ onBlobChanged, peername, isUser }) {
           height: `350px`,
           objectFit: "cover",
         }}
-        ref={videoRef}
+        ref={myVideoRef}
+        autoPlay
+        muted
+        className="top-0 left-0 w-full h-full aspect-video rounded-2xl shadow-gray-800"
+      />
+
+      <video
+        style={{
+          width: `100%`,
+          height: `350px`,
+          objectFit: "cover",
+        }}
+        ref={userVideoRef}
         autoPlay
         className="top-0 left-0 w-full h-full aspect-video rounded-2xl shadow-gray-800"
       />
+
       <div className="absolute z-50 inset-0 bg-opacity-5 w-full">
         <div className="bottom-0 absolute flex justify-between text-center items-center w-[80%] mb-3 ml-12">
           {isUser ? (
@@ -290,7 +396,29 @@ export default function WebCamRecorder({ onBlobChanged, peername, isUser }) {
               !peername && `italic text-sm  font-extralight  text-gray-300`
             }`}
           >
-            <p>{peername ? peername : "Awaiting user..."}</p>
+            <p>
+              {peerDetails.codersName
+                ? peerDetails.codersName
+                : "Awaiting user..."}
+            </p>
+
+            <button
+              onClick={() => {
+                e.preventDefault();
+                callPeer(sessionData.peerSessionId);
+              }}
+            >
+              create call
+            </button>
+
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                callPeer(sessionData.peerSessionId);
+              }}
+            >
+              Answer call
+            </button>
           </div>
         </div>
       </div>

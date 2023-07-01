@@ -30,6 +30,27 @@ io.on("connection", (socket) => {
   });
 });
 
+io.on("connection", (socket) => {
+  socket.emit("me", socket.id);
+
+  socket.on("disconnect", () => {
+    socket.broadcast.emit("callEnded");
+    console.log("Client disconnected");
+  });
+
+  socket.on("callPeer", (data) => {
+    io.to(data.userToCall).emit("callPeer", {
+      signal: data.signalData,
+      from: data.from,
+      name: data.name,
+    });
+  });
+
+  socket.on("answerCall", (data) =>
+    io.to(data.to).emit("callAccepted", data.signal)
+  );
+});
+
 server.listen(3001, () => {
   console.log("WebSocket server is running on port 3001");
 });
