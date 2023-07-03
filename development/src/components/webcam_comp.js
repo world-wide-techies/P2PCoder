@@ -228,7 +228,7 @@ export default function WebCamRecorder({
     setCallAccepted(true);
 
     const peer = new Peer({
-      initiator: false,
+      initiator: false,jj
       trickle: false,
       stream: videoStream,
     });
