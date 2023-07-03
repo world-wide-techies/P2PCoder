@@ -44,6 +44,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("callPeer", (data) => {
+    console.log(data);
     io.to(data.userToCall).emit("callPeer", {
       signal: data.signalData,
       from: data.from,
@@ -52,9 +53,10 @@ io.on("connection", (socket) => {
     console.log(data);
   });
 
-  socket.on("answerCall", (data) =>
-    io.to(data.to).emit("callAccepted", data.signal)
-  );
+  socket.on("answerCall", (data) => {
+    console.log(data);
+    io.to(data.to).emit("callAccepted", data.signal);
+  });
 });
 
 server.listen(3001, () => {

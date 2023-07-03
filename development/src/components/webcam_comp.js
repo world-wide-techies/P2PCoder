@@ -197,7 +197,7 @@ export default function WebCamRecorder({
   }, [audioEnabled, videoEnabled, peerDetails]);
 
   const callPeer = (id) => {
-   console.log(id)
+    console.log(id);
     const peer = new Peer({
       initiator: true,
       trickle: false,
@@ -211,6 +211,9 @@ export default function WebCamRecorder({
         from: sessionData.sessionName,
         name: peerDetails.codersName,
       });
+      console.log(data);
+      console.log(sessionData.sessionName);
+      console.log(name);
     });
 
     peer.on("stream", (currentVideoStream) => {
@@ -225,6 +228,7 @@ export default function WebCamRecorder({
     connectionRef.current = peer;
   };
   const answerCall = () => {
+    console.log("call answered");
     setCallAccepted(true);
 
     const peer = new Peer({
@@ -254,7 +258,7 @@ export default function WebCamRecorder({
     <div className="w-full relative flex items-center align-middle bg-black rounded-3xl shadow-gray-800">
       <video
         style={{
-          width: `100%`,
+          width: callAccepted ? "50%" : "100%",
           height: `350px`,
           objectFit: "cover",
         }}
@@ -263,17 +267,18 @@ export default function WebCamRecorder({
         muted
         className="top-0 left-0 w-full h-full aspect-video rounded-2xl shadow-gray-800"
       />
-
-      <video
-        style={{
-          width: `100%`,
-          height: `350px`,
-          objectFit: "cover",
-        }}
-        ref={userVideoRef}
-        autoPlay
-        className="top-0 left-0 w-full h-full aspect-video rounded-2xl shadow-gray-800"
-      />
+      {callAccepted && !callEnded && (
+        <video
+          style={{
+            width: `50%`,
+            height: `350px`,
+            objectFit: "cover",
+          }}
+          ref={userVideoRef}
+          autoPlay
+          className="top-0 left-0 w-full h-full aspect-video rounded-2xl shadow-gray-800"
+        />
+      )}
 
       <div className="absolute z-50 inset-0 bg-opacity-5 w-full">
         <div className="bottom-0 absolute flex justify-between text-center items-center w-[80%] mb-3 ml-12">
@@ -420,7 +425,7 @@ export default function WebCamRecorder({
             </p>
 
             <button
-              onClick={() => {
+              onClick={(e) => {
                 e.preventDefault();
                 callPeer(sessionData.peerSessionId);
               }}
@@ -431,7 +436,7 @@ export default function WebCamRecorder({
             <button
               onClick={(e) => {
                 e.preventDefault();
-                callPeer(sessionData.peerSessionId);
+                answerCall();
               }}
             >
               Answer call
