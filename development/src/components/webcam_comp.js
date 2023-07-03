@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
-import SimplePeer from "simple-peer";
+import Peer from "simple-peer";
 import { useSessionContext } from "@/composables/sessionContext";
 
 export default function WebCamRecorder({
@@ -141,6 +141,22 @@ export default function WebCamRecorder({
     console.log(socket);
     console.log(sessionData);
     console.log(peerDetails);
+
+    socket.emit("join-call", sessionData.peerSessionId);
+    callPeer(sessionData.peerSessionId);
+
+    socket.on("callpeer", (data) => {
+      console.log(data);
+      setRecievingCall(true);
+      setCaller(data.from);
+      setName(data.name);
+      setCallerSignal(data.signal);
+    });
+
+    // socket.on("me", (id) => {
+    //   setMe(id);
+    // });
+
     if (audioEnabled) {
       startAudioStream();
     } else {
@@ -152,16 +168,16 @@ export default function WebCamRecorder({
       console.log("Enabled");
       startVideoStream();
 
-      socket.on("me", (id) => {
-        setMe(id);
-      });
+      // socket.on("me", (id) => {
+      //   setMe(id);
+      // });
 
-      socket.on("callpeer", (data) => {
-        setRecievingCall(true);
-        setCaller(data.from);
-        setName(data.name);
-        setCallerSignal(data.signal);
-      });
+      // socket.on("callpeer", (data) => {
+      //   setRecievingCall(true);
+      //   setCaller(data.from);
+      //   setName(data.name);
+      //   setCallerSignal(data.signal);
+      // });
 
       callPeer(sessionData.peerSessionId);
     } else {
@@ -181,7 +197,8 @@ export default function WebCamRecorder({
   }, [audioEnabled, videoEnabled, peerDetails]);
 
   const callPeer = (id) => {
-    const peer = new SimplePeer({
+   console.log(id)
+    const peer = new Peer({
       initiator: true,
       trickle: false,
       stream: videoStream,
@@ -191,13 +208,13 @@ export default function WebCamRecorder({
       socket.emit("callPeer", {
         userToCall: id,
         signalData: data,
-        from: me,
-        name: name,
+        from: sessionData.sessionName,
+        name: peerDetails.codersName,
       });
     });
 
-    peer.on("stream", (videoStream) => {
-      userVideoRef.current.srcObject = videoStream;
+    peer.on("stream", (currentVideoStream) => {
+      userVideoRef.current.srcObject = currentVideoStream;
     });
 
     socket.on("callAccepted", (signal) => {
@@ -210,7 +227,7 @@ export default function WebCamRecorder({
   const answerCall = () => {
     setCallAccepted(true);
 
-    const peer = new SimplePeer({
+    const peer = new Peer({
       initiator: false,
       trickle: false,
       stream: videoStream,
@@ -220,8 +237,8 @@ export default function WebCamRecorder({
       socket.emit("answerCall", { signal: data, to: caller });
     });
 
-    peer.on("stream", (stream) => {
-      userVideoRef.current.srcObject = stream;
+    peer.on("stream", (currentVideoStream) => {
+      userVideoRef.current.srcObject = currentVideoStream;
     });
 
     peer.signal(callerSignal);

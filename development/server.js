@@ -13,24 +13,29 @@ const io = socketIO(server, {
   },
 });
 
+// io.on("connection", (socket) => {
+//   socket.on("join-room", (room) => {
+//     socket.join(room);
+//     console.log(`Client joined room: ${room}`);
+//   });
+
+//   socket.on("text-update", (data) => {
+//     // Broadcast the received update to all connected clients
+//     io.to(data.room).emit("text-update", data.newValue);
+//     console.log(data);
+//   });
+
+//   socket.on("disconnect", () => {
+//     console.log("Client disconnected");
+//   });
+// });
+
 io.on("connection", (socket) => {
-  socket.on("join-room", (room) => {
-    socket.join(room);
-    console.log(`Client joined room: ${room}`);
+  socket.on("join-call", (callId) => {
+    socket.join(peerId);
+    console.log(`Client joined call: ${callId}`);
   });
 
-  socket.on("text-update", (data) => {
-    // Broadcast the received update to all connected clients
-    io.to(data.room).emit("text-update", data.newValue);
-    console.log(data);
-  });
-
-  socket.on("disconnect", () => {
-    console.log("Client disconnected");
-  });
-});
-
-io.on("connection", (socket) => {
   socket.emit("me", socket.id);
 
   socket.on("disconnect", () => {
@@ -44,6 +49,7 @@ io.on("connection", (socket) => {
       from: data.from,
       name: data.name,
     });
+    console.log(data);
   });
 
   socket.on("answerCall", (data) =>
