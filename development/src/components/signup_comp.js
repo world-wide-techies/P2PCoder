@@ -53,7 +53,6 @@ function SignUpComponent() {
   const [usernameAvailable, setUsernameAvailable] = useState(null);
   const [showVerificationOverlay, setShowVerificationOverlay] = useState(false);
   const [showForm, setShowForm] = useState(true);
-  const router = useRouter();
 
   const handleCloseForm = () => {
     setShowForm(false);
