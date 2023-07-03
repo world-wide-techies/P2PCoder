@@ -138,9 +138,9 @@ export default function WebCamRecorder({
     }
   };
   useEffect(() => {
-    console.log(socket);
-    console.log(sessionData);
-    console.log(peerDetails);
+    // console.log(socket);
+    // console.log(sessionData);
+    // console.log(peerDetails);
 
     socket.emit("join-call", sessionData.peerSessionId);
     callPeer(sessionData.peerSessionId);
@@ -216,8 +216,8 @@ export default function WebCamRecorder({
       console.log(name);
     });
 
-    peer.on("stream", (currentVideoStream) => {
-      userVideoRef.current.srcObject = currentVideoStream;
+    peer.on("stream", (videoStream) => {
+      userVideoRef.current.srcObject = videoStream;
     });
 
     socket.on("callAccepted", (signal) => {

@@ -50,7 +50,7 @@ io.on("connection", (socket) => {
       from: data.from,
       name: data.name,
     });
-    console.log(data);
+    console.log(data.userToCall);
   });
 
   socket.on("answerCall", (data) => {
