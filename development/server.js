@@ -32,7 +32,7 @@ const io = socketIO(server, {
 
 io.on("connection", (socket) => {
   socket.on("join-call", (callId) => {
-    socket.join(peerId);
+    socket.join(callId);
     console.log(`Client joined call: ${callId}`);
   });
 
@@ -51,12 +51,13 @@ io.on("connection", (socket) => {
       name: data.name,
     });
     console.log(data.userToCall);
+    console.log(data.signalData);
   });
 
   socket.on("answerCall", (data) => {
-    console.log(data);
     io.to(data.to).emit("callAccepted", data.signal);
   });
+  console.log(`Call accepted: ${data}`);
 });
 
 server.listen(3001, () => {

@@ -143,8 +143,7 @@ export default function WebCamRecorder({
     // console.log(peerDetails);
 
     socket.emit("join-call", sessionData.peerSessionId);
-    callPeer(sessionData.peerSessionId);
-
+    
     socket.on("callpeer", (data) => {
       console.log(data);
       setRecievingCall(true);
@@ -244,7 +243,7 @@ export default function WebCamRecorder({
     peer.on("stream", (currentVideoStream) => {
       userVideoRef.current.srcObject = currentVideoStream;
     });
-
+    console.log(callerSignal);
     peer.signal(callerSignal);
     connectionRef.current = peer;
   };
@@ -258,7 +257,7 @@ export default function WebCamRecorder({
     <div className="w-full relative flex items-center align-middle bg-black rounded-3xl shadow-gray-800">
       <video
         style={{
-          width: callAccepted ? "50%" : "100%",
+          width: callAccepted ? `50%` : `100%`,
           height: `350px`,
           objectFit: "cover",
         }}
