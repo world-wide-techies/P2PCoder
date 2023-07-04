@@ -36,7 +36,7 @@ io.on("connection", (socket) => {
     console.log(`Client joined call: ${callId}`);
   });
 
-  socket.emit("me", socket.id);
+ // socket.emit("me", socket.id);
 
   socket.on("disconnect", () => {
     socket.broadcast.emit("callEnded");
@@ -44,7 +44,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("callPeer", (data) => {
-    console.log(data);
     io.to(data.userToCall).emit("callPeer", {
       signal: data.signalData,
       from: data.from,
@@ -56,8 +55,10 @@ io.on("connection", (socket) => {
 
   socket.on("answerCall", (data) => {
     io.to(data.to).emit("callAccepted", data.signal);
+ 
+    console.log(`Call accepted: ${data.signal}`);
   });
-  console.log(`Call accepted: ${data}`);
+ 
 });
 
 server.listen(3001, () => {
