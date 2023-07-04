@@ -53,7 +53,6 @@ function SignUpComponent() {
   const [usernameAvailable, setUsernameAvailable] = useState(null);
   const [showVerificationOverlay, setShowVerificationOverlay] = useState(false);
   const [showForm, setShowForm] = useState(true);
-  const router = useRouter();
 
   const handleCloseForm = () => {
     setShowForm(false);
@@ -99,19 +98,17 @@ function SignUpComponent() {
           password,
           username
         );
-        console.log(signUpUser);
+
         if (signUpUser.success) {
           const createdUser = signUpUser.user;
           setFormSubmitted(true);
           setShowVerificationOverlay(true);
 
-          console.log(createdUser);
           return createdUser;
         } else {
           setErrors({ firebaseError: signUpUser.error });
         }
       } catch (error) {
-        console.log("Caught an error", error);
         setErrors({ firebaseError: error.message });
       }
     } else {

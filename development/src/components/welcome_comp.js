@@ -1,9 +1,7 @@
 import Onboarding from "./onboarding_comp";
 import Image from "next/image";
 import welcome from "../../public/assets/dashboard/welcome_comp.svg";
-import { Modal } from "./modal";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
 
 const Welcome = () => {
   const router = useRouter();
