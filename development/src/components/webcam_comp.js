@@ -24,7 +24,7 @@ export default function WebCamRecorder({
   const [name, setName] = useState("");
   const [caller, setCaller] = useState("");
   const [callEnded, setCallEnded] = useState(false);
-  const [callerSignal, setCallerSignal] = useState("");
+  const [call, setCall] = useState({});
   const [recievingCall, setRecievingCall] = useState("");
   const [callAccepted, setCallAccepted] = useState(false);
   const [idToCall, setIdToCall] = useState(false);
@@ -137,20 +137,40 @@ export default function WebCamRecorder({
       setIsRecording(false);
     }
   };
+
+  async function getCall() {
+    await callPeer(sessionData.peerSessionId);
+  }
+
+  useEffect(() => {
+    socket.emit("join-call", sessionData.peerSessionId);
+    getCall();
+    // socket.on("me", (id) => setMe(id));
+
+    socket.on("callpeer", ({ from, signal }) => {
+      setCall({ isReceivingCall: true, from, signal });
+    });
+  }, []);
+
   useEffect(() => {
     // console.log(socket);
     // console.log(sessionData);
     // console.log(peerDetails);
 
-    socket.emit("join-call", sessionData.peerSessionId);
-    
-    socket.on("callpeer", (data) => {
-      console.log(data);
-      setRecievingCall(true);
-      setCaller(data.from);
-      setName(data.name);
-      setCallerSignal(data.signal);
-    });
+    // socket.emit("join-call", sessionData.peerSessionId);
+    // getCall();
+
+    // socket.on("callpeer", ({ from, signal }) => {
+    //   setCall({ isReceivingCall: true, from, signal });
+    // });
+    // socket.on("callpeer", (data) => {
+    //   console.log(data);
+    //   setCall(data);
+    //   setRecievingCall(true);
+    //   setCaller(data.from);
+    //   setName(data.name);
+    //   setCallerSignal(data.signal);
+    // });
 
     // socket.on("me", (id) => {
     //   setMe(id);
@@ -170,15 +190,6 @@ export default function WebCamRecorder({
       // socket.on("me", (id) => {
       //   setMe(id);
       // });
-
-      // socket.on("callpeer", (data) => {
-      //   setRecievingCall(true);
-      //   setCaller(data.from);
-      //   setName(data.name);
-      //   setCallerSignal(data.signal);
-      // });
-
-      callPeer(sessionData.peerSessionId);
     } else {
       if (videoStream != null) {
         stopVideoCam();
@@ -190,42 +201,50 @@ export default function WebCamRecorder({
       setIsSession(false);
     }
 
+    // socket.on("callpeer", ({ from, signal }) => {
+    //   setCall({ isReceivingCall: true, from, signal });
+    // });
+
     if (peerDetails.collaboratorsName) {
-      answerCall();
+      // answerCall();
     }
   }, [audioEnabled, videoEnabled, peerDetails]);
 
-  const callPeer = (id) => {
-    console.log(id);
-    const peer = new Peer({
-      initiator: true,
-      trickle: false,
-      stream: videoStream,
-    });
+  const callPeer = async (id) => {
+    try {
+      console.log(id);
+      const peer = new Peer({
+        initiator: true,
+        trickle: false,
 
-    peer.on("signal", (data) => {
-      socket.emit("callPeer", {
-        userToCall: id,
-        signalData: data,
-        from: sessionData.sessionName,
-        name: peerDetails.codersName,
+        stream: videoStream,
       });
-      console.log(data);
-      console.log(sessionData.sessionName);
-      console.log(name);
-    });
 
-    peer.on("stream", (videoStream) => {
-      userVideoRef.current.srcObject = videoStream;
-    });
+      peer.on("signal", (data) => {
+        socket.emit("callPeer", {
+          userToCall: id,
+          signalData: data,
+          from: sessionData.sessionName,
+        });
+        console.log(data);
+        console.log(sessionData.sessionName);
+      });
 
-    socket.on("callAccepted", (signal) => {
-      setCallAccepted(true);
-      peer.signal(signal);
-    });
+      peer.on("stream", (videoStream) => {
+        userVideoRef.current.srcObject = videoStream;
+      });
 
-    connectionRef.current = peer;
+      socket.on("callAccepted", (signal) => {
+        setCallAccepted(true);
+        peer.signal(signal);
+      });
+
+      connectionRef.current = peer;
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   const answerCall = () => {
     console.log("call answered");
     setCallAccepted(true);
@@ -233,6 +252,7 @@ export default function WebCamRecorder({
     const peer = new Peer({
       initiator: false,
       trickle: false,
+
       stream: videoStream,
     });
 
@@ -243,8 +263,8 @@ export default function WebCamRecorder({
     peer.on("stream", (currentVideoStream) => {
       userVideoRef.current.srcObject = currentVideoStream;
     });
-    console.log(callerSignal);
-    peer.signal(callerSignal);
+    console.log(call.signal);
+    peer.signal(call.signal);
     connectionRef.current = peer;
   };
 

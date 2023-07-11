@@ -4,12 +4,14 @@ import { useSessionContext } from "@/composables/sessionContext";
 import { useEffect } from "react";
 import WebCamRecorder from "./webcam_comp";
 import { useStoreSession } from "@/composables/dbService";
+import { appAuth } from "@/composables/firebaseConfig/config";
 
 const Collab = ({ isCollabOn }) => {
   const { sessionData } = useSessionContext();
   const { storeSession, getStoreSessionDetails } = useStoreSession();
-
+  const user = appAuth.currentUser;
   useEffect(() => {
+    console.log(user);
     getStoreSessionDetails(sessionData.peerSessionId);
   }, [sessionData]);
 
