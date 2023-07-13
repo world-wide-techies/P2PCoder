@@ -7,7 +7,7 @@ import { useStoreSession } from "@/composables/dbService";
 import { appAuth } from "@/composables/firebaseConfig/config";
 
 const Collab = ({ isCollabOn }) => {
-  const { sessionData, storeSessionData, setStoreSessionData } =
+  const { sessionData, setSessionData, storeSessionData, setStoreSessionData } =
     useSessionContext();
 
   const { storeSession, getStoreSessionDetails } = useStoreSession();
