@@ -15,13 +15,14 @@ const Collab = ({ isCollabOn }) => {
 
     getStoreSessionDetails(sessionData.peerSessionId);
     setSessionData(storeSession);
-    console.log(sessionData)
+    console.log(sessionData);
   }, [sessionData]);
 
   return (
     <div className="w-full flex">
       <div className={isCollabOn ? "w-2/3 xl:w-3/4" : "w-[95vw]"}>
         <CodingEditor peerid={storeSession.peerId} />
+        {console.log(sessionData)}
       </div>
       {isCollabOn && (
         <div className="w-1/3 xl:w-1/4 flex flex-col items-start justify-start p-6 space-y-12 h-full">
