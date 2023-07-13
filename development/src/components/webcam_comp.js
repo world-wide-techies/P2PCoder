@@ -210,63 +210,63 @@ export default function WebCamRecorder({
     // }
   }, [audioEnabled, videoEnabled, peerDetails]);
 
-  const callPeer = async (id) => {
-    try {
-      console.log(id);
-      const peer = new Peer({
-        initiator: true,
-        trickle: false,
+  // const callPeer = async (id) => {
+  //   try {
+  //     console.log(id);
+  //     const peer = new Peer({
+  //       initiator: true,
+  //       trickle: false,
 
-        stream: videoStream,
-      });
+  //       stream: videoStream,
+  //     });
 
-      peer.on("signal", (data) => {
-        socket.emit("callPeer", {
-          userToCall: id,
-          signalData: data,
-          from: sessionData.sessionName,
-        });
-        console.log(data);
-        console.log(sessionData.sessionName);
-      });
+  //     peer.on("signal", (data) => {
+  //       socket.emit("callPeer", {
+  //         userToCall: id,
+  //         signalData: data,
+  //         from: sessionData.sessionName,
+  //       });
+  //       console.log(data);
+  //       console.log(sessionData.sessionName);
+  //     });
 
-      peer.on("stream", (videoStream) => {
-        userVideoRef.current.srcObject = videoStream;
-      });
+  //     peer.on("stream", (videoStream) => {
+  //       userVideoRef.current.srcObject = videoStream;
+  //     });
 
-      socket.on("callAccepted", (signal) => {
-        setCallAccepted(true);
-        peer.signal(signal);
-      });
+  //     socket.on("callAccepted", (signal) => {
+  //       setCallAccepted(true);
+  //       peer.signal(signal);
+  //     });
 
-      connectionRef.current = peer;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     connectionRef.current = peer;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const answerCall = () => {
-    console.log("call answered");
-    setCallAccepted(true);
+  // const answerCall = () => {
+  //   console.log("call answered");
+  //   setCallAccepted(true);
 
-    const peer = new Peer({
-      initiator: false,
-      trickle: false,
+  //   const peer = new Peer({
+  //     initiator: false,
+  //     trickle: false,
 
-      stream: videoStream,
-    });
+  //     stream: videoStream,
+  //   });
 
-    peer.on("signal", (data) => {
-      socket.emit("answerCall", { signal: data, to: caller });
-    });
+  //   peer.on("signal", (data) => {
+  //     socket.emit("answerCall", { signal: data, to: caller });
+  //   });
 
-    peer.on("stream", (currentVideoStream) => {
-      userVideoRef.current.srcObject = currentVideoStream;
-    });
-    console.log(call.signal);
-    peer.signal(call.signal);
-    connectionRef.current = peer;
-  };
+  //   peer.on("stream", (currentVideoStream) => {
+  //     userVideoRef.current.srcObject = currentVideoStream;
+  //   });
+  //   console.log(call.signal);
+  //   peer.signal(call.signal);
+  //   connectionRef.current = peer;
+  // };
 
   const endCall = () => {
     setCallEnded(true);
