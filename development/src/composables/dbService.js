@@ -44,7 +44,7 @@ async function createSession(userSessionData) {
 }
 
 function useStoreSession() {
-  const [sessionDetails, setSessionDetials] = useState({});
+  const [sessionDetails, setSessionDetails] = useState({});
 
   async function getStoreSessionDetails(peerId) {
     const user = appAuth.currentUser;
@@ -74,7 +74,7 @@ function useStoreSession() {
     }
   }
 
-  return { sessionDetials, getStoreSessionDetails };
+  return { sessionDetails, getStoreSessionDetails };
 }
 
 async function addCollabCodeEditor(codeEditorData) {
