@@ -205,9 +205,9 @@ export default function WebCamRecorder({
     //   setCall({ isReceivingCall: true, from, signal });
     // });
 
-    if (peerDetails.collaboratorsName) {
-      // answerCall();
-    }
+    // if (peerDetails.collaboratorsName) {
+    //   // answerCall();
+    // }
   }, [audioEnabled, videoEnabled, peerDetails]);
 
   const callPeer = async (id) => {
