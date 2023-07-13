@@ -67,14 +67,14 @@ function useStoreSession() {
       const sessionData = await getDoc(userSession);
       onSnapshot(userSession, (querySnapShot) => {
         const docData = querySnapShot.data();
-        setStoreSession(docData);
+        setSessionDetials(docData);
       });
     } catch (error) {
       console.error("Error retrieving document: ", error);
     }
   }
 
-  return { storeSession, getStoreSessionDetails };
+  return { sessionDetials, getStoreSessionDetails };
 }
 
 async function addCollabCodeEditor(codeEditorData) {
