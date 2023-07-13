@@ -20,7 +20,7 @@ const Collab = ({ isCollabOn }) => {
   
   useEffect(() => {
     handleSession()
-  }, []);
+  }, [sessionDetails]);
 
   useEffect(() => {
     setStoreSession(sessionDetails);
