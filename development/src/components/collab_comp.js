@@ -16,7 +16,7 @@ const Collab = ({ isCollabOn }) => {
     getStoreSessionDetails(sessionData.peerSessionId);
    console.log(storeSession)
     setStoreSessionData(storeSession)
-    console.log("")
+    console.log("context", )
     ;
   }, [sessionData]);
 
