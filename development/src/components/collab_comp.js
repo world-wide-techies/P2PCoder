@@ -13,11 +13,8 @@ const Collab = ({ isCollabOn }) => {
   const { sessionDetails, getStoreSessionDetails } = useStoreSession();
   const user = appAuth.currentUser;
   
-  const handleJoinRoom = useCallback(() => {
-    console.log("Room emitted");
-    console.log("sessionData", storeSession.peerId)
-    console.log("useSession", peerDetails)
-    socket.emit("join-room", storeSession.peerId);
+  const handleSession = useCallback(() => {
+   
   }, [storeSession.peerId]);
   
   useEffect(() => {
