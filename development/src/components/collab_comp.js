@@ -19,7 +19,7 @@ const Collab = ({ isCollabOn }) => {
 
   useEffect(() => {
     setStoreSession(sessionDetails);
-    console.log("context", sessionData);
+    console.log("context", storeSession);
   }, [sessionDetails]);
 
   return (
