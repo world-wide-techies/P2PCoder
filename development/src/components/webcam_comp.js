@@ -152,9 +152,9 @@ export default function WebCamRecorder({
 
     // socket.on("me", (id) => setMe(id));
 
-    socket.on("callpeer", ({ from, signal }) => {
-      setCall({ isReceivingCall: true, from, signal });
-    });
+    // socket.on("callpeer", ({ from, signal }) => {
+    //   setCall({ isReceivingCall: true, from, signal });
+    // });
   }, []);
 
   useEffect(() => {
