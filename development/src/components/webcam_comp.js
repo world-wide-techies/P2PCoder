@@ -268,10 +268,10 @@ export default function WebCamRecorder({
   //   connectionRef.current = peer;
   // };
 
-  const endCall = () => {
-    setCallEnded(true);
-    connectionRef.current.destroy();
-  };
+  // const endCall = () => {
+  //   setCallEnded(true);
+  //   connectionRef.current.destroy();
+  // };
 
   return (
     <div className="w-full relative flex items-center align-middle bg-black rounded-3xl shadow-gray-800">
