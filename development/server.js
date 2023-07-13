@@ -33,7 +33,7 @@ const io = socketIO(server, {
 io.on("connection", (socket) => {
   console.log(`Socket Connected`, socket.id)
   socket.on("join-room", (roomId) => {
-    io.to(roomId).emit("user:joined", {roomId });
+    io.to(roomId).emit("user:joined", {roomId, id:socket.idd });
     socket.join(roomId);
     io.to(socket.id).emit("join-room", data)
     console.log(`Client joined room: ${roomId}`)
