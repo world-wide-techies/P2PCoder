@@ -9,7 +9,7 @@ export default function WebCamRecorder({
   peerDetails,
   isUser,
 }) {
-  const { sessionData, setSessionData, storeSessionData, setStoreSessionData } =
+  const { sessionData, setSessionData, storeSession, setStoreSession } =
   useSessionContext();
   const socket = io.connect("http://localhost:3001");
   const myVideoRef = useRef(null);
