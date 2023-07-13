@@ -44,7 +44,7 @@ async function createSession(userSessionData) {
 }
 
 function useStoreSession() {
-  const [session, setStoreSession] = useState({});
+  const [sessionDetails, Session] = useState({});
 
   async function getStoreSessionDetails(peerId) {
     const user = appAuth.currentUser;
