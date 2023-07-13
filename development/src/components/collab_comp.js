@@ -19,7 +19,7 @@ const Collab = ({ isCollabOn }) => {
   }, [sessionData]);
   
   useEffect(() => {
-   
+    handleSession()
   }, []);
 
   useEffect(() => {
