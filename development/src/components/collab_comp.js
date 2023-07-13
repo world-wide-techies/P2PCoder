@@ -1,7 +1,7 @@
 import React from "react";
 import CodingEditor from "./codingEditor";
 import { useSessionContext } from "@/composables/sessionContext";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect,  } from "react";
 import WebCamRecorder from "./webcam_comp";
 import { useStoreSession } from "@/composables/dbService";
 import { appAuth } from "@/composables/firebaseConfig/config";
