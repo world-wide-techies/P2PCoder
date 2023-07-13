@@ -7,10 +7,10 @@ import { useStoreSession } from "@/composables/dbService";
 import { appAuth } from "@/composables/firebaseConfig/config";
 
 const Collab = ({ isCollabOn }) => {
-  const { sessionData, setSessionData, storeSessionData, setStoreSessionData } =
+  const { sessionData, setSessionData, storeSession, setStoreSession } =
     useSessionContext();
 
-  const { storeSession, getStoreSessionDetails } = useStoreSession();
+  const { sessionDetails, getStoreSessionDetails } = useStoreSession();
   const user = appAuth.currentUser;
   useEffect(() => {
     getStoreSessionDetails(sessionData.peerSessionId);
