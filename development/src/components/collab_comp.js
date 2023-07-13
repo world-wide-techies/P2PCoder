@@ -17,7 +17,7 @@ const Collab = ({ isCollabOn }) => {
    console.log(storeSession)
     setSessionData({storeSession})
     console.log("context", sessionData)
-    ;
+    
   }, [sessionData, storeSession ]);
 
   return (
