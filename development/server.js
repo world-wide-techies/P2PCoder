@@ -48,7 +48,7 @@ io.on("connection", (socket) => {
     console.log("Client disconnected");
   });
 
-  socket.on("user;", (data) => {
+  socket.on("callPeer", (data) => {
     io.to(data.userToCall).emit("callPeer", {
       signal: data.signalData,
       from: data.from,
