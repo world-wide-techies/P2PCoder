@@ -67,7 +67,7 @@ function useStoreSession() {
       const sessionData = await getDoc(userSession);
       onSnapshot(userSession, (querySnapShot) => {
         const docData = querySnapShot.data();
-        setSessionDetials(docData);
+        setSessionDetails(docData);
       });
     } catch (error) {
       console.error("Error retrieving document: ", error);
