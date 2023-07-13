@@ -35,7 +35,7 @@ io.on("connection", (socket) => {
   socket.on("join-room", (roomId) => {
     io.to(roomId).emit("user:joined", {roomId });
     socket.join(roomId);
-    io.to(socket.id).emit("room:join", data)
+    io.to(socket.id).emit("join-room", data)
     console.log(`Client joined call: ${roomId}`)
 
     ;
