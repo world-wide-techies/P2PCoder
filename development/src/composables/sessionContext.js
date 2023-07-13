@@ -9,7 +9,7 @@ export const SessionContextProvider = ({ children }) => {
   const [storeSessionData, setStoreSessionData] = useState({});
 
   return (
-    <SessionContext.Provider value={{ sessionData, setSessionData }}>
+    <SessionContext.Provider value={{ sessionData, setSessionData, storeSessionData, setStoreSessionData}}>
       {children}
     </SessionContext.Provider>
   );
