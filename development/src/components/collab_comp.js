@@ -18,7 +18,7 @@ const Collab = ({ isCollabOn }) => {
     setStoreSessionData(storeSession)
     console.log("context", storeSessionData)
     ;
-  }, [sessionData]);
+  }, [sessionData, ]);
 
   return (
     <div className="w-full flex">
