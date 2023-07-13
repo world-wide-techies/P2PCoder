@@ -12,7 +12,7 @@ const Collab = ({ isCollabOn }) => {
   const user = appAuth.currentUser;
   useEffect(() => {
     console.log(user);
-    console.log(user)
+    console.log)
     getStoreSessionDetails(sessionData.peerSessionId);
   }, [sessionData]);
 
