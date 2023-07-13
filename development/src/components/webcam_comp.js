@@ -9,6 +9,8 @@ export default function WebCamRecorder({
   peerDetails,
   isUser,
 }) {
+  const { sessionData, setSessionData, storeSessionData, setStoreSessionData } =
+  useSessionContext();
   const socket = io.connect("http://localhost:3001");
   const myVideoRef = useRef(null);
   const userVideoRef = useRef(null);
@@ -29,7 +31,7 @@ export default function WebCamRecorder({
   const [callAccepted, setCallAccepted] = useState(false);
   const [idToCall, setIdToCall] = useState(false);
   const [me, setMe] = useState(false);
-  const { sessionData } = useSessionContext();
+ 
 
   const stopAudio = () => {
     try {
