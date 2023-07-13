@@ -14,7 +14,7 @@ const Collab = ({ isCollabOn }) => {
   const user = appAuth.currentUser;
   useEffect(() => {
     getStoreSessionDetails(sessionData.peerSessionId);
-    console.log(storeSession);sessionDetails
+    console.log(sessionDetails)
     setStoreSession(sessionDetails);
     console.log("context", sessionData);
   }, [sessionData, storeSession]);
