@@ -150,36 +150,6 @@ export default function WebCamRecorder({
   useEffect(() => {
     handleJoinRoom();
 
-    // socket.on("me", (id) => setMe(id));
-
-    // socket.on("callpeer", ({ from, signal }) => {
-    //   setCall({ isReceivingCall: true, from, signal });
-    // });
-  }, []);
-
-  useEffect(() => {
-    // console.log(socket);
-    // console.log(sessionData);
-    // console.log(peerDetails);
-
-    // socket.emit("join-call", sessionData.peerSessionId);
-    // getCall();
-
-    // socket.on("callpeer", ({ from, signal }) => {
-    //   setCall({ isReceivingCall: true, from, signal });
-    // });
-    // socket.on("callpeer", (data) => {
-    //   console.log(data);
-    //   setCall(data);
-    //   setRecievingCall(true);
-    //   setCaller(data.from);
-    //   setName(data.name);
-    //   setCallerSignal(data.signal);
-    // });
-
-    // socket.on("me", (id) => {
-    //   setMe(id);
-    // });
 
     if (audioEnabled) {
       startAudioStream();
