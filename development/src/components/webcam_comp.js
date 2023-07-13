@@ -144,7 +144,7 @@ export default function WebCamRecorder({
 
   useEffect(() => {
     socket.emit("join-room", sessionData.peerSessionId);
-    getCall();
+    
     // socket.on("me", (id) => setMe(id));
 
     socket.on("callpeer", ({ from, signal }) => {
