@@ -14,17 +14,13 @@ const Collab = ({ isCollabOn }) => {
   const user = appAuth.currentUser;
   useEffect(() => {
     getStoreSessionDetails(sessionData.peerSessionId);
-    console.log(sessionDetails)
-    setStoreSession(sessionDetails);
-    console.log("context", sessionData);
-  }, [ sessionDetails]);
+    console.log(sessionDetails);
+  }, [sessionDetails]);
 
   useEffect(() => {
-    getStoreSessionDetails(sessionData.peerSessionId);
-    console.log(sessionDetails)
     setStoreSession(sessionDetails);
     console.log("context", sessionData);
-  }, [ sessionDetails]);
+  }, [sessionDetails]);
 
   return (
     <div className="w-full flex">
