@@ -13,8 +13,8 @@ export const SessionContextProvider = ({ children }) => {
       value={{
         sessionData,
         setSessionData,
-        storeSessionData,
-        setStoreSessionData,
+        storeSession,
+        setStoreSession,
       }}
     >
       {children}
