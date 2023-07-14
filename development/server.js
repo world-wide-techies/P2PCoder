@@ -51,7 +51,7 @@ io.on("connection", (socket) => {
   socket.on("call-Peer", ({to, offer}) => {
     io.to(to).emit("callPeer", {
       signal: offer,
-      from: socket,
+      from: socket.id,
     });
     console.log(data.userToCall);
     console.log(data.signalData);
