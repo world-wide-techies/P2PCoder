@@ -152,6 +152,8 @@ export default function WebCamRecorder({
     socket.emit("join-room", room);
   }, [storeSession.peerId]);
 
+  
+
   useEffect(() => {
     handleJoinRoom();
     socket.on("user:joined", handleUserJoined)
