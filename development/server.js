@@ -47,7 +47,7 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("callEnded");
     console.log("Client disconnected");
   });
-
+  socket.on("call-peer", handleCallPeer)
   socket.on("callPeer", (data) => {
     io.to(data.userToCall).emit("callPeer", {
       signal: data.signalData,
