@@ -152,7 +152,7 @@ export default function WebCamRecorder({
 
   useEffect(() => {
     handleJoinRoom();
-    socket.on("incomming:call", handleIncommingCall)
+    socket.on("call-peer", handleIncommingCall)
     if (audioEnabled) {
       startAudioStream();
     } else {
