@@ -31,8 +31,7 @@ export default function WebCamRecorder({
   const [callAccepted, setCallAccepted] = useState(false);
   const [idToCall, setIdToCall] = useState(false);
   const [me, setMe] = useState(false);
- 
-
+ const room = 3
   const stopAudio = () => {
     try {
       audioStream.getTracks().forEach((track) => track.stop());
