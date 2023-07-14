@@ -145,7 +145,7 @@ export default function WebCamRecorder({
 
   const handleJoinRoom = useCallback(() => {
     console.log("Room emitted");
-    console.log("sessionData");
+
     console.log("useSession", room);
     socket.emit("join-room", room);
   }, [storeSession.peerId]);
