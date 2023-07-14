@@ -10,7 +10,7 @@ export default function WebCamRecorder({
   isUser,
 }) {
   const { sessionData, setSessionData, storeSession, setStoreSession } =
-  useSessionContext();
+    useSessionContext();
   const socket = io.connect("http://localhost:3001");
   const myVideoRef = useRef(null);
   const userVideoRef = useRef(null);
@@ -31,7 +31,7 @@ export default function WebCamRecorder({
   const [callAccepted, setCallAccepted] = useState(false);
   const [idToCall, setIdToCall] = useState(false);
   const [me, setMe] = useState(false);
- const room = 3
+  const room = 3;
   const stopAudio = () => {
     try {
       audioStream.getTracks().forEach((track) => track.stop());
@@ -145,14 +145,13 @@ export default function WebCamRecorder({
 
   const handleJoinRoom = useCallback(() => {
     console.log("Room emitted");
-    console.log("sessionData", )
-    console.log("useSession", peerDetails)
+    console.log("sessionData");
+    console.log("useSession", room);
     socket.emit("join-room", storeSession.peerId);
   }, [storeSession.peerId]);
 
   useEffect(() => {
     handleJoinRoom();
-
 
     if (audioEnabled) {
       startAudioStream();
