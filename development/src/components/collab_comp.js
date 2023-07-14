@@ -13,7 +13,7 @@ const Collab = ({ isCollabOn }) => {
   const { sessionDetails, getStoreSessionDetails } = useStoreSession();
   const user = appAuth.currentUser;
   
-  const handleSession =  useCallback  (() => {
+   const  handleSession =  useCallback  (() => {
     getStoreSessionDetails(sessionData.peerSessionId);
     console.log(sessionDetails);
   }, [sessionDetails]);
