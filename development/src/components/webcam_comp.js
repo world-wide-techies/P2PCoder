@@ -157,6 +157,8 @@ export default function WebCamRecorder({
     setRemoteSocketId(id);
   }, []);
 
+  const handleCallPeer = 
+
   useEffect(() => {
     handleJoinRoom();
     socket.on("user:joined", handleUserJoined)
