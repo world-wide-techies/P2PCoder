@@ -48,8 +48,8 @@ io.on("connection", (socket) => {
     console.log("Client disconnected");
   });
  
-  socket.on("call-Peer", ({to, }) => {
-    io.to(data.userToCall).emit("callPeer", {
+  socket.on("call-Peer", ({to, offer}) => {
+    io.to(to).emit("callPeer", {
       signal: data.signalData,
       from: data.from,
     });
