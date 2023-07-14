@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import CodingEditor from "./codingEditor";
 import { useSessionContext } from "@/composables/sessionContext";
-import { useEffect,  } from "react";
+import { useEffect } from "react";
 import WebCamRecorder from "./webcam_comp";
 import { useStoreSession } from "@/composables/dbService";
 import { appAuth } from "@/composables/firebaseConfig/config";
@@ -12,14 +12,14 @@ const Collab = ({ isCollabOn }) => {
 
   const { sessionDetails, getStoreSessionDetails } = useStoreSession();
   const user = appAuth.currentUser;
-  
-   const  handleSession =  useCallback  (() => {
-    getStoreSessionDetails(sessionData.peerSessionId);
+
+  const handleSession = useCallback(async () => {
+    await getStoreSessionDetails(sessionData.peerSessionId);
     console.log(sessionDetails);
   }, [sessionDetails]);
-  
+
   useEffect(() => {
-    handleSession()
+    handleSession();
   }, [sessionDetails]);
 
   useEffect(() => {
