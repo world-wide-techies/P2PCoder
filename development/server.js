@@ -54,7 +54,7 @@ io.on("connection", (socket) => {
       from: socket.id,
     });
     console.log(socket.id);
-    console.log(data.signalData);
+    console.log(offer);
   });
 
   socket.on("answerCall", (data) => {
