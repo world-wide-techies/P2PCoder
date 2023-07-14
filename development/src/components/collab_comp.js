@@ -16,11 +16,11 @@ const Collab = ({ isCollabOn }) => {
   const handleSession = useCallback(async () => {
     await getStoreSessionDetails(sessionData.peerSessionId);
     console.log(sessionDetails);
-  }, [sessionDetails]);
+  }, []);
 
   useEffect(() => {
     handleSession();
-  }, [sessionDetails]);
+  }, []);
 
   useEffect(() => {
     setStoreSession(sessionDetails);
