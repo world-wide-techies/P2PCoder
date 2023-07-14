@@ -153,9 +153,9 @@ export default function WebCamRecorder({
   }, [storeSession.peerId]);
 
   useEffect(() => {
-   
-   socket.on("user:joined", handleUserJoined)
     handleJoinRoom();
+    socket.on("user:joined", handleUserJoined)
+
     socket.on("call-peer", handleCallPeer)
     if (audioEnabled) {
       startAudioStream();
