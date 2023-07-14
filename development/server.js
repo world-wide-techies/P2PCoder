@@ -53,7 +53,7 @@ io.on("connection", (socket) => {
       signal: offer,
       from: socket.id,
     });
-    console.log(data.userToCall);
+    console.log(socket.id);
     console.log(data.signalData);
   });
 
