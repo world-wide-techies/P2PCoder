@@ -153,7 +153,7 @@ export default function WebCamRecorder({
   }, [storeSession.peerId]);
 
   const handleUserJoined = useCallback(({ email, id }) => {
-    console.log(`Email ${email} joined room`);
+    console.log(`Email ${id} joined room`);
     setRemoteSocketId(id);
   }, []);
 
