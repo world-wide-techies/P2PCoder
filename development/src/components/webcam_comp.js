@@ -187,7 +187,7 @@ export default function WebCamRecorder({
     // if (peerDetails.collaboratorsName) {
     //   // answerCall();
     // }
-  }, [audioEnabled, videoEnabled, handleJoinRoom]);
+  }, [audioEnabled, videoEnabled, peerDetails, handleJoinRoom]);
 
   // const callPeer = async (id) => {
   //   try {
