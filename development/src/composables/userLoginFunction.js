@@ -16,8 +16,7 @@ async function UserLogin(emailAddress, password) {
       return { loggedIn: true, message: user };
     }
   } catch (error) {
-    const errorMessage = error.message;
-    return { loggedIn: false, message: errorMessage };
+    throw error;
   }
 }
 

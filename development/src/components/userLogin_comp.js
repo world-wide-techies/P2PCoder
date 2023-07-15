@@ -73,11 +73,23 @@ function UserLoginComp({ onClose }) {
         const result = await UserLogin(emailAddress, password);
         if (result.loggedIn) {
           console.log("Logged in", result.message);
+          handleCloseLogin();
         } else {
           setErrorMessage(result.message);
         }
       } catch (error) {
-        setErrorMessage(error);
+        let customMessage;
+        if (error.code === "auth/user-not-found") {
+          customMessage = "No user with this email found.";
+        } else if (error.code === "auth/wrong-password") {
+          customMessage = "Wrong password provided.";
+        } else if (error.code === "auth/too-many-requests") {
+          customMessage =
+            "Too many unsuccessful login attempts. Please try again later.";
+        } else {
+          customMessage = "An error occurred during login.";
+        }
+        setErrorMessage(customMessage);
       }
     } else {
       if (validEmail !== true) {
