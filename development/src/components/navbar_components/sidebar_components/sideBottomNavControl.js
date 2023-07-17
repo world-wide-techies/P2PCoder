@@ -31,15 +31,22 @@ function SideBottomNavControl() {
     <div className="flex flex-col justify-start items-center space-y-2">
       {auth ? (
         btnNav.map((e, i) => {
-          return (
-            <button
-              key={i}
-              className="hover:bg-gray-200 dark:hover:bg-gray-700 w-16 h-16 flex items-center justify-center hover:rounded-lg"
-           onClick={signUserOut}
-           >
-              <Image src={e} width={35} height={35} alt={`nav_btn_icon${i}`} />
-            </button>
-          );
+          if (e.includes("logout")) {
+            return (
+              <button
+                key={i}
+                onClick={signUserOut}
+                className="hover:bg-gray-200 dark:hover:bg-gray-700 w-16 h-16 flex items-center justify-center hover:rounded-lg"
+              >
+                <Image
+                  src={e}
+                  width={35}
+                  height={35}
+                  alt={`nav_btn_icon${i}`}
+                />
+              </button>
+            );
+          }
         })
       ) : (
         <button className="hover:bg-gray-200 dark:hover:bg-gray-700 w-16 h-16 flex items-center justify-center hover:rounded-lg">
