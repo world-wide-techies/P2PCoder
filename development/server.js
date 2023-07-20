@@ -30,6 +30,25 @@ const io = socketIO(server, {
 //   });
 // });
 
+
+
+const rooms = {};
+
+io.on("connection", socket => {
+    socket.on("join room", roomID => {
+        if (rooms[roomID]) {
+            rooms[roomID].push(socket.id);
+        } else {
+            rooms[roomID] = [socket.id];
+        }
+        const otherUser = rooms[roomID].find(id => id !== socket.id);
+        if (otherUser) {
+            socket.emit("other user", otherUser);
+            socket.to(otherUser).emit("user joined", socket.id);
+        }
+    });
+  })
+
 server.listen(3001, () => {
   console.log("WebSocket server is running on port 3001");
 });
