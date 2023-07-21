@@ -210,10 +210,7 @@ export default function WebCamRecorder({
   
 
   
-  // const endCall = () => {
-  //   setCallEnded(true);
-  //   connectionRef.current.destroy();
-  // };
+ 
 
   return (
     <div className="w-full relative flex items-center align-middle bg-black rounded-3xl shadow-gray-800">
