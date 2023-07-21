@@ -158,7 +158,7 @@ export default function WebCamRecorder({
     });
 
     return () => {
-      second;
+      
     };
   }, [third]);
 
