@@ -160,7 +160,7 @@ export default function WebCamRecorder({
       otherUser.current = userID;
     });
 
-    socketRef.current.on("offer", handleRecieveCall);
+    socket.on("offer", handleRecieveCall);
 
     socketRef.current.on("answer", handleAnswer);
 
