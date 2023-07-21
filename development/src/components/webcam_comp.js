@@ -141,16 +141,14 @@ export default function WebCamRecorder({
     }
   };
 
-  async function getCall() {
-    await callPeer(sessionData.peerSessionId);
-  }
+  
 
-  const handleJoinRoom = useCallback(() => {
-    console.log("Room emitted");
+  // const handleJoinRoom = useCallback(() => {
+  //   console.log("Room emitted");
 
-    console.log("current room", room);
-    socket.emit("join-room", room);
-  }, [storeSession.peerId]);
+  //   console.log("current room", room);
+  //   socket.emit("join-room", room);
+  // }, [storeSession.peerId]);
 
 
 
