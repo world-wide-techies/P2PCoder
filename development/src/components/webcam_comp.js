@@ -32,6 +32,7 @@ export default function WebCamRecorder({
   const [idToCall, setIdToCall] = useState(false);
   const [me, setMe] = useState(false);
   const otherUser = useRef(null);
+  const userStream = useRef
 
   const [remoteSocketId, setRemoteSocketId] = useState(null);
   const room = 3;
@@ -95,7 +96,7 @@ export default function WebCamRecorder({
       .getUserMedia({ video: true })
       .then((stream) => {
         myVideoRef.current.srcObject = stream;
-        
+
         setVideoStream(stream);
       })
       .catch((err) => console.error(err));
