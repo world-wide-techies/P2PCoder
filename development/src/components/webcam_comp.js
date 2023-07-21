@@ -154,7 +154,7 @@ export default function WebCamRecorder({
 
     socket.on("other user", (userID) => {
       callUser(userID);
-      otherUser.current = userID;
+      peerVideoRef.current = userID;
     });
 
     return () => {
