@@ -206,64 +206,10 @@ export default function WebCamRecorder({
     // }
   }, [audioEnabled, videoEnabled, peerDetails, handleJoinRoom]);
 
-  // const callPeer = async (id) => {
-  //   try {
-  //     console.log(id);
-  //     const peer = new Peer({
-  //       initiator: true,
-  //       trickle: false,
+(data);
+  
 
-  //       stream: videoStream,
-  //     });
-
-  //     peer.on("signal", (data) => {
-  //       socket.emit("callPeer", {
-  //         userToCall: id,
-  //         signalData: data,
-  //         from: sessionData.sessionName,
-  //       });
-  //       console.log(data);
-  //       console.log(sessionData.sessionName);
-  //     });
-
-  //     peer.on("stream", (videoStream) => {
-  //       userVideoRef.current.srcObject = videoStream;
-  //     });
-
-  //     socket.on("callAccepted", (signal) => {
-  //       setCallAccepted(true);
-  //       peer.signal(signal);
-  //     });
-
-  //     connectionRef.current = peer;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // const answerCall = () => {
-  //   console.log("call answered");
-  //   setCallAccepted(true);
-
-  //   const peer = new Peer({
-  //     initiator: false,
-  //     trickle: false,
-
-  //     stream: videoStream,
-  //   });
-
-  //   peer.on("signal", (data) => {
-  //     socket.emit("answerCall", { signal: data, to: caller });
-  //   });
-
-  //   peer.on("stream", (currentVideoStream) => {
-  //     userVideoRef.current.srcObject = currentVideoStream;
-  //   });
-  //   console.log(call.signal);
-  //   peer.signal(call.signal);
-  //   connectionRef.current = peer;
-  // };
-
+  
   // const endCall = () => {
   //   setCallEnded(true);
   //   connectionRef.current.destroy();
