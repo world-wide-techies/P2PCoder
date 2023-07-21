@@ -32,7 +32,7 @@ export default function WebCamRecorder({
   const [idToCall, setIdToCall] = useState(false);
   const [me, setMe] = useState(false);
   const otherUser = useRef(null);
-  const userStream = useRef
+  const userStream = useRef(null);
 
   const [remoteSocketId, setRemoteSocketId] = useState(null);
   const room = 3;
