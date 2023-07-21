@@ -183,9 +183,7 @@ export default function WebCamRecorder({
       console.log("Enabled");
       startVideoStream();
 
-      // socket.on("me", (id) => {
-      //   setMe(id);
-      // });
+     
     } else {
       if (videoStream != null) {
         stopVideoCam();
@@ -197,13 +195,7 @@ export default function WebCamRecorder({
       setIsSession(false);
     }
 
-    // socket.on("callpeer", ({ from, signal }) => {
-    //   setCall({ isReceivingCall: true, from, signal });
-    // });
-
-    // if (peerDetails.collaboratorsName) {
-    //   // answerCall();
-    // }
+  
   }, [audioEnabled, videoEnabled, peerDetails, handleJoinRoom]);
 
 (data);
