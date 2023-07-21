@@ -171,7 +171,6 @@ export default function WebCamRecorder({
     handleJoinRoom();
     socket.on("user:joined", handleUserJoined)
 
-    // socket.on("call-peer", handleCallPeer)
     if (audioEnabled) {
       startAudioStream();
     } else {
