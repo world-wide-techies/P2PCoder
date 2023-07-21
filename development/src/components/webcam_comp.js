@@ -207,7 +207,7 @@ export default function WebCamRecorder({
             height: `350px`,
             objectFit: "cover",
           }}
-          ref={userVideoRef}
+          ref={peerVideoRef}
           autoPlay
           className="top-0 left-0 w-full h-full aspect-video rounded-2xl shadow-gray-800"
         />
