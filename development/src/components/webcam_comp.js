@@ -96,7 +96,7 @@ export default function WebCamRecorder({
       .getUserMedia({ video: true })
       .then((stream) => {
         myVideoRef.current.srcObject = stream;
-
+        userStream.
         setVideoStream(stream);
       })
       .catch((err) => console.error(err));
