@@ -189,9 +189,9 @@ export default function WebCamRecorder({
     } else {
       setIsSession(false);
     }
-  }, [audioEnabled, videoEnabled, peerDetails, handleJoinRoom]);
+  }, [audioEnabled, videoEnabled, peerDetails, ]);
 
-  data;
+ 
 
   return (
     <div className="w-full relative flex items-center align-middle bg-black rounded-3xl shadow-gray-800">
