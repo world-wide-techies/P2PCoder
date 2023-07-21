@@ -32,7 +32,7 @@ export default function WebCamRecorder({
   const [idToCall, setIdToCall] = useState(false);
   const [me, setMe] = useState(false);
 
-  const [remoteSocketId, setRemoteSocketId] = useState(null)
+  const [remoteSocketId, setRemoteSocketId] = useState(null);
   const room = 3;
   const stopAudio = () => {
     try {
@@ -141,8 +141,6 @@ export default function WebCamRecorder({
     }
   };
 
-  
-
   // const handleJoinRoom = useCallback(() => {
   //   console.log("Room emitted");
 
@@ -150,7 +148,19 @@ export default function WebCamRecorder({
   //   socket.emit("join-room", room);
   // }, [storeSession.peerId]);
 
-use
+  useEffect(() => {
+    socketRef.current = io.connect("/");
+    socketRef.current.emit("join room", props.match.params.roomID);
+
+    socketRef.current.on("other user", (userID) => {
+      callUser(userID);
+      otherUser.current = userID;
+    });
+
+    return () => {
+      second;
+    };
+  }, [third]);
 
   useEffect(() => {
     if (audioEnabled) {
@@ -163,8 +173,6 @@ use
     if (videoEnabled) {
       console.log("Enabled");
       startVideoStream();
-
-     
     } else {
       if (videoStream != null) {
         stopVideoCam();
@@ -175,15 +183,9 @@ use
     } else {
       setIsSession(false);
     }
-
-  
   }, [audioEnabled, videoEnabled, peerDetails, handleJoinRoom]);
 
-(data);
-  
-
-  
- 
+  data;
 
   return (
     <div className="w-full relative flex items-center align-middle bg-black rounded-3xl shadow-gray-800">
