@@ -160,7 +160,7 @@ export default function WebCamRecorder({
     return () => {
       
     };
-  }, [third]);
+  }, []);
 
   useEffect(() => {
     if (audioEnabled) {
