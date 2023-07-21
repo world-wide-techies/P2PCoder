@@ -150,17 +150,22 @@ export default function WebCamRecorder({
   // }, [storeSession.peerId]);
 
   useEffect(() => {
-  
     socket.emit("join room", sessionData.peerSessionId);
 
     socket.on("other user", (userID) => {
       callUser(userID);
       otherUser.current = userID;
     });
+    socketRef.current.on("user joined", (userID) => {
+      otherUser.current = userID;
+    });
 
-    return () => {
-      
-    };
+    socketRef.current.on("offer", handleRecieveCall);
+
+    socketRef.current.on("answer", handleAnswer);
+
+    socketRef.current.on("ice-candidate", handleNewICECandidateMsg);
+    return () => {};
   }, []);
 
   useEffect(() => {
