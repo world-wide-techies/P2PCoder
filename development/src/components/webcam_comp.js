@@ -191,7 +191,11 @@ export default function WebCamRecorder({
     }
   }, [audioEnabled, videoEnabled, peerDetails, ]);
 
- 
+  function callUser(userID) {
+    peerRef.current = createPeer(userID);
+    userStream.current.getTracks().forEach(track => peerRef.current.addTrack(track, userStream.current));
+}
+
 
   return (
     <div className="w-full relative flex items-center align-middle bg-black rounded-3xl shadow-gray-800">
