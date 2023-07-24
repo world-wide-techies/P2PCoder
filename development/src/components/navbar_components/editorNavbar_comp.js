@@ -17,7 +17,7 @@ function EditorNavBar() {
   const [auth, setAuth] = useState(true);
   const { theme, setTheme } = useTheme();
   const { items } = useTabContext();
-  const { currentUser, setCurrentUser } = useAuthContext()
+  const {  setCurrentUser } = useAuthContext()
 
   useEffect(() => {
     if (isUserSignedIn()) {
