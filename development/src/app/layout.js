@@ -15,6 +15,8 @@ export default function RootLayout({ children }) {
             <ThemeProvider attribute="class">{children}</ThemeProvider>
           </TabProvider>
         </SessionContextProvider>
+
+        <AuthProvider></AuthProvider>
       </body>
     </html>
   );
