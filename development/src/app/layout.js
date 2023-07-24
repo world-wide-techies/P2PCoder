@@ -11,13 +11,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${nohemi.variable} `}>
-        <AuthProvider>
+        
           <SessionContextProvider>
             <TabProvider>
               <ThemeProvider attribute="class">{children}</ThemeProvider>
             </TabProvider>
           </SessionContextProvider>
-        </AuthProvider>
+        
       </body>
     </html>
   );
