@@ -10,7 +10,7 @@ export const AuthContextProvider = ({ children }) => {
 
 
   useEffect(() => {
-appAuth
+appAuth.onAuthStateChanged
   
     return () => {
       second
