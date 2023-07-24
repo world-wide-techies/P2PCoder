@@ -15,5 +15,5 @@ export const SessionContextProvider = ({ children }) => {
 };
 
 export const useAuthContext = () => {
-  return useContext(SessionContext);
+  return useContext(AuthContext);
 };
