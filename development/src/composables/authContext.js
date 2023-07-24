@@ -7,6 +7,9 @@ export const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
 
+
+
+  
   return (
     <AuthContext.Provider value={{ sessionData, setSessionData }}>
       {children}
