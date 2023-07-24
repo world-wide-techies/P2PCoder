@@ -10,7 +10,7 @@ function CodingEditor({ peerid }) {
   const { items } = useTabContext();
   const [codes, setCodes] = useState("");
   const language = items.filter((e) => e.active)[0].ext;
- // const socket = io("http://localhost:3001");
+  const socket = io("http://localhost:3001");
 
   useEffect(() => {
     // socket.emit("join-room", peerid);
