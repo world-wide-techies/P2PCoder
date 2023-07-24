@@ -9,7 +9,7 @@ export const AuthContextProvider = ({ children }) => {
 
 
   useEffect(() => {
-    first
+appAuth
   
     return () => {
       second
