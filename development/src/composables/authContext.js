@@ -17,7 +17,7 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser }}>
+    <AuthContext.Provider value={ currentUser }>
       {children}
     </AuthContext.Provider>
   );
@@ -27,6 +27,3 @@ export const useAuthContext = () => {
   return useContext(AuthContext);
 };
 
-export const useTabContext = () => {
-    return useContext(TabContext);
-  };
