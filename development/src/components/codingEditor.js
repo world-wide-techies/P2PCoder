@@ -20,7 +20,7 @@ function CodingEditor({ peerid }) {
     // });
 
     return () => {
-      socket.off("text-update");
+     // socket.off("text-update");
     };
   }, [codes]);
 
