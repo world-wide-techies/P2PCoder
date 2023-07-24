@@ -13,11 +13,11 @@ function CodingEditor({ peerid }) {
  // const socket = io("http://localhost:3001");
 
   useEffect(() => {
-    socket.emit("join-room", peerid);
-    socket.on("text-update", (data) => {
-      items.filter((e) => e.active)[0].code = data;
-      setCodes(data);
-    });
+    // socket.emit("join-room", peerid);
+    // socket.on("text-update", (data) => {
+    //   items.filter((e) => e.active)[0].code = data;
+    //   setCodes(data);
+    // });
 
     return () => {
       socket.off("text-update");
