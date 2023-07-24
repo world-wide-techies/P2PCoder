@@ -5,7 +5,7 @@ import { appAuth } from "./firebaseConfig/config";
 
 export const AuthContext = createContext();
 
-export const AuthContextProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState("");
 
   useEffect(() => {
