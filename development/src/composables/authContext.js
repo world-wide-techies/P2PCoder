@@ -5,7 +5,7 @@ import { useContext, createContext } from 'react';
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const [sessionData, setSessionData] = useState({});
+  const [currentUser, setSessionData] = useState({});
 
   return (
     <AuthContext.Provider value={{ sessionData, setSessionData }}>
