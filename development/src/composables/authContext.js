@@ -8,9 +8,9 @@ export const SessionContextProvider = ({ children }) => {
   const [sessionData, setSessionData] = useState({});
 
   return (
-    <SessionContext.Provider value={{ sessionData, setSessionData }}>
+    <AuthContext.Provider value={{ sessionData, setSessionData }}>
       {children}
-    </SessionContext.Provider>
+    </AuthContext.Provider>
   );
 };
 
