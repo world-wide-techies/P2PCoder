@@ -1,23 +1,23 @@
-'use client';
-import { useState, useContext, useEffect } from 'react';
-import AuthNavControls from './authNavControls_comp';
-import Image from 'next/image';
-import moon from '../../../public/assets/onboardingIcons/moon.png';
-import sun from '../../../public/assets/onboardingIcons/sun.png';
-import { useTheme } from 'next-themes';
-import { useTabContext } from '@/composables/tabContext';
-import { Suspense } from 'react';
-import userIcon from '../../../public//assets/authNavBarControls/peers-2.png';
-import { isUserSignedIn } from '@/composables/verifySignedIn';
-import { appAuth } from '@/composables/firebaseConfig/config';
-import Link from 'next/link';
-import { useAuthContext } from '@/composables/authContext';
+"use client";
+import { useState, useContext, useEffect } from "react";
+import AuthNavControls from "./authNavControls_comp";
+import Image from "next/image";
+import moon from "../../../public/assets/onboardingIcons/moon.png";
+import sun from "../../../public/assets/onboardingIcons/sun.png";
+import { useTheme } from "next-themes";
+import { useTabContext } from "@/composables/tabContext";
+import { Suspense } from "react";
+import userIcon from "../../../public//assets/authNavBarControls/peers-2.png";
+import { isUserSignedIn } from "@/composables/verifySignedIn";
+import { appAuth } from "@/composables/firebaseConfig/config";
+import Link from "next/link";
+import { useAuthContext } from "@/composables/authContext";
 
 function EditorNavBar() {
   const [auth, setAuth] = useState(true);
   const { theme, setTheme } = useTheme();
   const { items } = useTabContext();
-  const { currentUser, setCurrentUser } = useAuthContext()
+  const { currentUser } = useAuthContext();
 
   useEffect(() => {
     if (isUserSignedIn()) {
@@ -65,22 +65,23 @@ function EditorNavBar() {
                   <Image alt="moon" src={moon} width={20} height={20} />
                 )}
               </button>
-              {!isUserSignedIn() && (items.length > 1 || items[0]?.title !== "Welcome") && (
-                <>
-                  <Link
-                    href={"/?view=signup"}
-                    className="ml-6 mr-3 py-3 px-6 rounded-lg bg-[#5F5BD7] text-white text-lg font-normal flex items-center"
-                  >
-                    Sign Up
-                  </Link>
-                  <Link
-                    href={"/?view=login"}
-                    className=" py-3 px-6 rounded-lg  text-lg font-normal flex items-center text-[#121212] bg-[#CDCDDA]"
-                  >
-                    Log In
-                  </Link>
-                </>
-              )}
+              {!isUserSignedIn() &&
+                (items.length > 1 || items[0]?.title !== "Welcome") && (
+                  <>
+                    <Link
+                      href={"/?view=signup"}
+                      className="ml-6 mr-3 py-3 px-6 rounded-lg bg-[#5F5BD7] text-white text-lg font-normal flex items-center"
+                    >
+                      Sign Up
+                    </Link>
+                    <Link
+                      href={"/?view=login"}
+                      className=" py-3 px-6 rounded-lg  text-lg font-normal flex items-center text-[#121212] bg-[#CDCDDA]"
+                    >
+                      Log In
+                    </Link>
+                  </>
+                )}
             </div>
           )}
         </div>
