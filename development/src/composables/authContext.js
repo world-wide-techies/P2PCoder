@@ -26,3 +26,7 @@ export const AuthContextProvider = ({ children }) => {
 export const useAuthContext = () => {
   return useContext(AuthContext);
 };
+
+export const useTabContext = () => {
+    return useContext(TabContext);
+  };
