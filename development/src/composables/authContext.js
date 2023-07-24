@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useContext, createContext } from 'react';
 
-export const SessionContext = createContext();
+export const AuthContext = createContext();
 
 export const SessionContextProvider = ({ children }) => {
   const [sessionData, setSessionData] = useState({});
