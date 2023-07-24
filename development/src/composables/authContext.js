@@ -4,7 +4,7 @@ import { useContext, createContext } from 'react';
 
 export const AuthContext = createContext();
 
-export const SessionContextProvider = ({ children }) => {
+export const AuthContextProvider = ({ children }) => {
   const [sessionData, setSessionData] = useState({});
 
   return (
