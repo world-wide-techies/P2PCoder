@@ -8,8 +8,15 @@ export const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
 
 
-
+  useEffect(() => {
+    first
   
+    return () => {
+      second
+    }
+  }, [third])
+  
+
   return (
     <AuthContext.Provider value={{ sessionData, setSessionData }}>
       {children}
