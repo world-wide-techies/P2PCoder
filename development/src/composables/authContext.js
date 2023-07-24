@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useContext, createContext } from 'react';
+import { appAuth } from './firebaseConfig/config';
 
 export const AuthContext = createContext();
 
