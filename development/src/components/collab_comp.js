@@ -9,9 +9,9 @@ const Collab = ({isCollabOn}) => {
   const { sessionData } = useSessionContext();
   const { storeSession, getStoreSessionDetails } = useStoreSession();
 
-  useEffect(() => {
-    getStoreSessionDetails(sessionData.peerSessionId);
-  }, [sessionData]);
+  // useEffect(() => {
+  //   getStoreSessionDetails(sessionData.peerSessionId);
+  // }, [sessionData]);
   
   return (
     <div className="w-full flex">
