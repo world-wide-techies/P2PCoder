@@ -33,7 +33,7 @@ function SideBottomNavControl() {
         btnNav.map((e, i) => {
           return (
             <button
-            onClick= {() => signUserOut()}
+            onClick= {(e) =>  e.preve signUserOut()}
               key={i}
               className="hover:bg-gray-200 dark:hover:bg-gray-700 w-16 h-16 flex items-center justify-center hover:rounded-lg"
             >
