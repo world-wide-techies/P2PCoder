@@ -149,7 +149,7 @@ export default function WebCamRecorder({
 
   useEffect(() => {
     socketRef.current = io.connect("http://localhost:3001");
-    socket.emit("join room", sessionData.peerSessionId);
+    socketRef.current.emit("join room", sessionData.peerSessionId);
 
     socket.on("other user", (userID) => {
       callUser(userID);
