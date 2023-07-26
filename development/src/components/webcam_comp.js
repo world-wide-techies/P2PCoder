@@ -230,7 +230,7 @@ function handleNegotiationNeededEvent(userID) {
           caller: socketRef.current.id,
           sdp: peerRef.current.localDescription
       };
-      socketRef.current.emit("offer", payload);
+      socket.emit("offer", payload);
   }).catch(e => console.log(e));
 }
 
