@@ -34,6 +34,7 @@ export default function WebCamRecorder({
   const [me, setMe] = useState(false);
   const otherUser = useRef(null);
   const userStream = useRef(null);
+  const peerRef = useRef()
 
   const [remoteSocketId, setRemoteSocketId] = useState(null);
   const room = 3;
