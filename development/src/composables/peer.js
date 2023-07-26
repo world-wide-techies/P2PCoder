@@ -33,4 +33,4 @@ function handleNegotiationNeededEvent(userID) {
     }).catch(e => console.log(e));
 }
 
-export { createPeer };
+export { createPeer, handleNegotiationNeededEvent};
