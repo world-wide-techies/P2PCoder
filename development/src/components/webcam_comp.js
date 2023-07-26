@@ -199,6 +199,19 @@ export default function WebCamRecorder({
     userStream.current.getTracks().forEach(track => peerRef.current.addTrack(track, userStream.current));
 }
 
+function handleNegotiationNeededEvent(userID) {
+  peerRef.current.createOffer().then(offer => {
+      return peerRef.current.setLocalDescription(offer);
+  }).then(() => {
+      const payload = {
+          target: userID,
+          caller: socketRef.current.id,
+          sdp: peerRef.current.localDescription
+      };
+      socketRef.current.emit("offer", payload);
+  }).catch(e => console.log(e));
+}
+
 
   return (
     <div className="w-full relative flex items-center align-middle bg-black rounded-3xl shadow-gray-800">
