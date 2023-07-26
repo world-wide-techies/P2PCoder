@@ -163,7 +163,7 @@ export default function WebCamRecorder({
 
     socketRef.current.on("answer", handleAnswer);
 
-    socketRef.on("ice-candidate", handleNewICECandidateMsg);
+    socketRef.current.on("ice-candidate", handleNewICECandidateMsg);
     return () => {};
   }, []);
 
