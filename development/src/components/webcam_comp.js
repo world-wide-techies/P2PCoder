@@ -230,7 +230,7 @@ export default function WebCamRecorder({
           caller: socketRef.current.id,
           sdp: peerRef.current.localDescription,
         };
-        socket.emit("offer", payload);
+        socketRef.current.emit("offer", payload);
       })
       .catch((e) => console.log(e));
   }
