@@ -155,11 +155,11 @@ export default function WebCamRecorder({
       callUser(userID);
       otherUser.current = userID;
     });
-    socket.on("user joined", (userID) => {
+    socket.current.on("user joined", (userID) => {
       otherUser.current = userID;
     });
 
-    socket.on("offer", handleRecieveCall);
+    socket.current.on("offer", handleRecieveCall);
 
     socket.on("answer", handleAnswer);
 
