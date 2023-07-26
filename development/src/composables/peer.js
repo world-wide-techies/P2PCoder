@@ -19,4 +19,4 @@ function createPeer(userID) {
   return peer;
 }
 
-export { create };
+export { createPeer };
