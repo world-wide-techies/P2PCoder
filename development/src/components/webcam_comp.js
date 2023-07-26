@@ -34,7 +34,7 @@ export default function WebCamRecorder({
   const [me, setMe] = useState(false);
   const otherUser = useRef();
   const userStream = useRef();
-  const peerRef = useRef()
+  const peerRef = useRef();
   const socketRef = useRef();
 
   const [remoteSocketId, setRemoteSocketId] = useState(null);
@@ -99,7 +99,7 @@ export default function WebCamRecorder({
       .getUserMedia({ video: true })
       .then((stream) => {
         myVideoRef.current.srcObject = stream;
-        userStream.current = stream
+        userStream.current = stream;
         setVideoStream(stream);
       })
       .catch((err) => console.error(err));
@@ -148,8 +148,7 @@ export default function WebCamRecorder({
   };
 
   useEffect(() => {
-   
-    socketRef. = io.connect("http://localhost:3001")
+    socketRef.current = io.connect("http://localhost:3001");
     socket.emit("join room", sessionData.peerSessionId);
 
     socket.on("other user", (userID) => {
@@ -189,48 +188,52 @@ export default function WebCamRecorder({
     } else {
       setIsSession(false);
     }
-  }, [audioEnabled, videoEnabled, peerDetails, ]);
+  }, [audioEnabled, videoEnabled, peerDetails]);
 
   function callUser(userID) {
     peerRef.current = createPeer(userID);
-    userStream.current.getTracks().forEach(track => peerRef.current.addTrack(track, userStream.current));
-}
+    userStream.current
+      .getTracks()
+      .forEach((track) => peerRef.current.addTrack(track, userStream.current));
+  }
 
-function createPeer(userID) {
-  const peer = new RTCPeerConnection({
-    iceServers: [
-      {
-        urls: "stun:stun.stunprotocol.org",
-      },
-      {
-        urls: "turn:numb.viagenie.ca",
-        credential: "muazkh",
-        username: "webrtc@live.com",
-      },
-    ],
-  });
+  function createPeer(userID) {
+    const peer = new RTCPeerConnection({
+      iceServers: [
+        {
+          urls: "stun:stun.stunprotocol.org",
+        },
+        {
+          urls: "turn:numb.viagenie.ca",
+          credential: "muazkh",
+          username: "webrtc@live.com",
+        },
+      ],
+    });
 
-  peer.onicecandidate = handleICECandidateEvent;
-  peer.ontrack = handleTrackEvent;
-  peer.onnegotiationneeded = () => handleNegotiationNeededEvent(userID);
+    peer.onicecandidate = handleICECandidateEvent;
+    peer.ontrack = handleTrackEvent;
+    peer.onnegotiationneeded = () => handleNegotiationNeededEvent(userID);
 
-  return peer;
-}
+    return peer;
+  }
 
-
-function handleNegotiationNeededEvent(userID) {
-  peerRef.current.createOffer().then(offer => {
-      return peerRef.current.setLocalDescription(offer);
-  }).then(() => {
-      const payload = {
+  function handleNegotiationNeededEvent(userID) {
+    peerRef.current
+      .createOffer()
+      .then((offer) => {
+        return peerRef.current.setLocalDescription(offer);
+      })
+      .then(() => {
+        const payload = {
           target: userID,
           caller: socketRef.current.id,
-          sdp: peerRef.current.localDescription
-      };
-      socket.emit("offer", payload);
-  }).catch(e => console.log(e));
-}
-
+          sdp: peerRef.current.localDescription,
+        };
+        socket.emit("offer", payload);
+      })
+      .catch((e) => console.log(e));
+  }
 
   return (
     <div className="w-full relative flex items-center align-middle bg-black rounded-3xl shadow-gray-800">
