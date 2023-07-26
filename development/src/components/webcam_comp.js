@@ -161,7 +161,7 @@ export default function WebCamRecorder({
 
     socketRef.current.on("offer", handleRecieveCall);
 
-    socketRef.on("answer", handleAnswer);
+    socketRef.current.on("answer", handleAnswer);
 
     socketRef.on("ice-candidate", handleNewICECandidateMsg);
     return () => {};
