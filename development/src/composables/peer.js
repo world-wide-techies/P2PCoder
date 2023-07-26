@@ -19,4 +19,18 @@ function createPeer(userID) {
   return peer;
 }
 
+
+function handleNegotiationNeededEvent(userID) {
+    peerRef.current.createOffer().then(offer => {
+        return peerRef.current.setLocalDescription(offer);
+    }).then(() => {
+        const payload = {
+            target: userID,
+            caller: socketRef.current.id,
+            sdp: peerRef.current.localDescription
+        };
+        socketRef.current.emit("offer", payload);
+    }).catch(e => console.log(e));
+}
+
 export { createPeer };
