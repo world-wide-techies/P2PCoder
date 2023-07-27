@@ -107,7 +107,7 @@ io.on("connection", (socket) => {
     console.log(`Socket Connected`, socket.id)
     if (rooms[roomID]) {
       rooms[roomID].push(socket.id);
-      console.log(`Socket Connected`, socket.id)
+      console.log(roomId)
     } else {
       rooms[roomID] = [socket.id];
     }
