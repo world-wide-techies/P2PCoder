@@ -285,7 +285,7 @@ export default function WebCamRecorder({
   }
 
   function handleTrackEvent(e) {
-    partnerVideo.current.srcObject = e.streams[0];
+    partnerVideoRef.current.srcObject = e.streams[0];
   }
 
   return (
