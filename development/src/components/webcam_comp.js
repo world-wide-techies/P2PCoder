@@ -235,7 +235,7 @@ export default function WebCamRecorder({
   }
 
   function handleRecieveCall(incoming) {
-    setCallAccepted()
+    setCallAccepted(true)
     peerRef.current = createPeer();
     const desc = new RTCSessionDescription(incoming.sdp);
     peerRef.current
@@ -301,7 +301,7 @@ export default function WebCamRecorder({
         muted
         className="top-0 left-0 w-full h-full aspect-video rounded-2xl shadow-gray-800"
       />
-      {callAccepted && !callEnded && (
+      {callAccepted  && (
         <video
           style={{
             width: `50%`,
