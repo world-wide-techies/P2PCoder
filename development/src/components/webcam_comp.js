@@ -255,6 +255,9 @@ export default function WebCamRecorder({
     })
 }
 
+
+
+
   return (
     <div className="w-full relative flex items-center align-middle bg-black rounded-3xl shadow-gray-800">
       <video
