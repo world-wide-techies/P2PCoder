@@ -256,7 +256,10 @@ export default function WebCamRecorder({
 }
 
 
-
+function handleAnswer(message) {
+  const desc = new RTCSessionDescription(message.sdp);
+  peerRef.current.setRemoteDescription(desc).catch(e => console.log(e));
+}
 
   return (
     <div className="w-full relative flex items-center align-middle bg-black rounded-3xl shadow-gray-800">
