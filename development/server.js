@@ -47,7 +47,7 @@
 //     socket.broadcast.emit("callEnded");
 //     console.log("Client disconnected");
 //   });
- 
+
 //   socket.on("call-Peer", ({to, offer}) => {
 //     io.to(to).emit("incoming-call", {
 //       signal: offer,
@@ -67,11 +67,6 @@
 // server.listen(3001, () => {
 //   console.log("WebSocket server is running on port 3001");
 // });
-
-
-
-
-
 
 const http = require("http");
 const express = require("express");
@@ -119,6 +114,18 @@ io.on("connection", (socket) => {
       socket.emit("other user", otherUser);
       socket.to(otherUser).emit("user joined", socket.id);
     }
+  });
+
+  socket.on("offer", (payload) => {
+    io.to(payload.target).emit("offer", payload);
+  });
+
+  socket.on("answer", (payload) => {
+    io.to(payload.target).emit("answer", payload);
+  });
+
+  socket.on("ice-candidate", (incoming) => {
+    io.to(incoming.target).emit("ice-candidate", incoming.candidate);
   });
 });
 
