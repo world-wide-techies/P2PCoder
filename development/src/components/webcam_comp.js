@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import Peer from "simple-peer";
 import { useSessionContext } from "@/composables/sessionContext";
-import { createPeer } from "@/composables/peer";
 
 export default function WebCamRecorder({
   onBlobChanged,
