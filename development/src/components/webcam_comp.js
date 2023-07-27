@@ -235,6 +235,7 @@ export default function WebCamRecorder({
   }
 
   function handleRecieveCall(incoming) {
+    setCallAccepted()
     peerRef.current = createPeer();
     const desc = new RTCSessionDescription(incoming.sdp);
     peerRef.current
