@@ -235,31 +235,58 @@ export default function WebCamRecorder({
       .catch((e) => console.log(e));
   }
 
-
   function handleRecieveCall(incoming) {
     peerRef.current = createPeer();
     const desc = new RTCSessionDescription(incoming.sdp);
-    peerRef.current.setRemoteDescription(desc).then(() => {
-        userStream.current.getTracks().forEach(track => peerRef.current.addTrack(track, userStream.current));
-    }).then(() => {
+    peerRef.current
+      .setRemoteDescription(desc)
+      .then(() => {
+        userStream.current
+          .getTracks()
+          .forEach((track) =>
+            peerRef.current.addTrack(track, userStream.current)
+          );
+      })
+      .then(() => {
         return peerRef.current.createAnswer();
-    }).then(answer => {
+      })
+      .then((answer) => {
         return peerRef.current.setLocalDescription(answer);
-    }).then(() => {
+      })
+      .then(() => {
         const payload = {
-            target: incoming.caller,
-            caller: socketRef.current.id,
-            sdp: peerRef.current.localDescription
-        }
+          target: incoming.caller,
+          caller: socketRef.current.id,
+          sdp: peerRef.current.localDescription,
+        };
         socketRef.current.emit("answer", payload);
-    })
-}
+      });
+  }
 
+  function handleAnswer(message) {
+    const desc = new RTCSessionDescription(message.sdp);
+    peerRef.current.setRemoteDescription(desc).catch((e) => console.log(e));
+  }
 
-function handleAnswer(message) {
-        const desc = new RTCSessionDescription(message.sdp);
-        peerRef.current.setRemoteDescription(desc).catch(e => console.log(e));
+  function handleICECandidateEvent(e) {
+    if (e.candidate) {
+      const payload = {
+        target: otherUser.current,
+        candidate: e.candidate,
+      };
+      socketRef.current.emit("ice-candidate", payload);
     }
+  }
+
+  function handleNewICECandidateMsg(incoming) {
+    const candidate = new RTCIceCandidate(incoming);
+
+    peerRef.current.addIceCandidate(candidate).catch((e) => console.log(e));
+  }
+
+  function handleTrackEvent(e) {
+    partnerVideo.current.srcObject = e.streams[0];
+  }
 
   return (
     <div className="w-full relative flex items-center align-middle bg-black rounded-3xl shadow-gray-800">
