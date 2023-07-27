@@ -11,7 +11,7 @@ export default function WebCamRecorder({
 }) {
   const { sessionData, setSessionData, storeSession, setStoreSession } =
     useSessionContext();
-
+  socketRef.current = io.connect("http://localhost:3001");
   const myVideoRef = useRef(null);
   const partnerVideoRef = useRef(null);
   const connectionRef = useRef(null);
@@ -34,7 +34,7 @@ export default function WebCamRecorder({
   const otherUser = useRef();
   const userStream = useRef();
   const peerRef = useRef();
-  const socketRef = useRef();
+  //const socketRef = useRef();
 
   const [remoteSocketId, setRemoteSocketId] = useState(null);
   const room = 3;
