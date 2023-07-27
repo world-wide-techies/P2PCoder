@@ -255,6 +255,26 @@ export default function WebCamRecorder({
     })
 }
 
+function handleICECandidateEvent(e) {
+  if (e.candidate) {
+      const payload = {
+          target: otherUser.current,
+          candidate: e.candidate,
+      }
+      socketRef.current.emit("ice-candidate", payload);
+  }
+}
+
+function handleNewICECandidateMsg(incoming) {
+  const candidate = new RTCIceCandidate(incoming);
+
+  peerRef.current.addIceCandidate(candidate)
+      .catch(e => console.log(e));
+}
+
+function handleTrackEvent(e) {
+  partnerVideo.current.srcObject = e.streams[0];
+};
 
 function handleAnswer(message) {
   const desc = new RTCSessionDescription(message.sdp);
