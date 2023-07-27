@@ -235,6 +235,26 @@ export default function WebCamRecorder({
       .catch((e) => console.log(e));
   }
 
+
+  function handleRecieveCall(incoming) {
+    peerRef.current = createPeer();
+    const desc = new RTCSessionDescription(incoming.sdp);
+    peerRef.current.setRemoteDescription(desc).then(() => {
+        userStream.current.getTracks().forEach(track => peerRef.current.addTrack(track, userStream.current));
+    }).then(() => {
+        return peerRef.current.createAnswer();
+    }).then(answer => {
+        return peerRef.current.setLocalDescription(answer);
+    }).then(() => {
+        const payload = {
+            target: incoming.caller,
+            caller: socketRef.current.id,
+            sdp: peerRef.current.localDescription
+        }
+        socketRef.current.emit("answer", payload);
+    })
+}
+
   return (
     <div className="w-full relative flex items-center align-middle bg-black rounded-3xl shadow-gray-800">
       <video
