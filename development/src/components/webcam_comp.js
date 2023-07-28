@@ -298,7 +298,7 @@ export default function WebCamRecorder({
     <div className="w-full relative flex items-center align-middle bg-black rounded-3xl shadow-gray-800">
       <video
         style={{
-          width: callAccepted ? `50%` : `100%`,
+          width:  `50%` ,
           height: `350px`,
           objectFit: "cover",
         }}
@@ -307,17 +307,18 @@ export default function WebCamRecorder({
         muted
         className="top-0 left-0 w-full h-full aspect-video rounded-2xl shadow-gray-800"
       />
-
-      <video
-        style={{
-          width: `50%`,
-          height: `350px`,
-          objectFit: "cover",
-        }}
-        ref={partnerVideoRef}
-        autoPlay
-        className="top-0 left-0 w-full h-full aspect-video rounded-2xl shadow-gray-800"
-      />
+      
+        <video
+          style={{
+            width: `50%`,
+            height: `350px`,
+            objectFit: "cover",
+          }}
+          ref={partnerVideoRef}
+          autoPlay
+          className="top-0 left-0 w-full h-full aspect-video rounded-2xl shadow-gray-800"
+        />
+    
 
       <div className="absolute z-50 inset-0 bg-opacity-5 w-full">
         <div className="bottom-0 absolute flex justify-between text-center items-center w-[80%] mb-3 ml-12">
