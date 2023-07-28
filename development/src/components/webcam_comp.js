@@ -11,7 +11,7 @@ export default function WebCamRecorder({
 }) {
   const { sessionData, setSessionData, storeSession, setStoreSession } =
     useSessionContext();
- // const socket = io.connect("http://localhost:3001");
+  // const socket = io.connect("http://localhost:3001");
   const myVideoRef = useRef(null);
   const partnerVideoRef = useRef(null);
   const connectionRef = useRef(null);
@@ -147,31 +147,29 @@ export default function WebCamRecorder({
   };
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(stream => {
-      userVideo.current.srcObject = stream;
-      userStream.current = stream;
-    
-    
-    })
-   
-    socketRef.current = io.connect("http://localhost:3001");
-    
-    socketRef.current.emit("join room", sessionData.peerSessionId);
+    navigator.mediaDevices
+      .getUserMedia({ audio: true, video: true })
+      .then((stream) => {
+        userVideo.current.srcObject = stream;
+        userStream.current = stream;
+        socketRef.current = io.connect("http://localhost:3001");
 
-    socketRef.current.on("other user", (userID) => {
-      callUser(userID);
-      otherUser.current = userID;
-    });
-    socketRef.current.on("user joined", (userID) => {
-      otherUser.current = userID;
-    });
+        socketRef.current.emit("join room", sessionData.peerSessionId);
 
-    socketRef.current.on("offer", handleRecieveCall);
+        socketRef.current.on("other user", (userID) => {
+          callUser(userID);
+          otherUser.current = userID;
+        });
+        socketRef.current.on("user joined", (userID) => {
+          otherUser.current = userID;
+        });
 
-    socketRef.current.on("answer", handleAnswer);
+        socketRef.current.on("offer", handleRecieveCall);
 
-    socketRef.current.on("ice-candidate", handleNewICECandidateMsg);
-   
+        socketRef.current.on("answer", handleAnswer);
+
+        socketRef.current.on("ice-candidate", handleNewICECandidateMsg);
+      });
   }, []);
 
   useEffect(() => {
