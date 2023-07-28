@@ -200,7 +200,7 @@ export default function WebCamRecorder({
 
         socketRef.current.on("ice-candidate", handleNewICECandidateMsg);
       });
-  }, []);
+  }, [sessionData.peerSessionId]);
 
   function createPeer(userID) {
     const peer = new RTCPeerConnection({
