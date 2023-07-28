@@ -138,7 +138,7 @@ export default function WebCamRecorder({
       console.log("one or more streams are not active");
     }
   };
-
+console.log("connected")
   const stopRecording = () => {
     if (recorder && recorder.state !== "inactive") {
       recorder.stop();
