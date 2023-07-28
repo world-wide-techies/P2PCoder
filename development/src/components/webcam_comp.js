@@ -290,7 +290,7 @@ export default function WebCamRecorder({
     peerRef.current.addIceCandidate(candidate).catch((e) => console.log(e));
   }
 
-  console.log(VideoRef)
+  console.log(myVideoRef);
   console.log(partnerVideoRef);
   function handleTrackEvent(e) {
     partnerVideoRef.current.srcObject = e.streams[0];
