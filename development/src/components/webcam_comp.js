@@ -147,7 +147,12 @@ export default function WebCamRecorder({
   };
 
   useEffect(() => {
-   
+    navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(stream => {
+      userVideo.current.srcObject = stream;
+      userStream.current = stream;
+    
+    
+    })
    
     socketRef.current = io.connect("http://localhost:3001");
     
