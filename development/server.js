@@ -106,7 +106,7 @@ io.on("connection", (socket) => {
   console.log(`Socket Connected`, socket.id);
   socket.on("join room", (roomID) => {
     console.log(`client join room`, roomID);
-    
+
     if (rooms[roomID]) {
       rooms[roomID].push(socket.id);
       console.log(roomID);
