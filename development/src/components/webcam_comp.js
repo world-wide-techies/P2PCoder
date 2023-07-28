@@ -163,7 +163,7 @@ export default function WebCamRecorder({
     socketRef.current.on("answer", handleAnswer);
 
     socketRef.current.on("ice-candidate", handleNewICECandidateMsg);
-    return () => {};
+   
   }, []);
 
   useEffect(() => {
