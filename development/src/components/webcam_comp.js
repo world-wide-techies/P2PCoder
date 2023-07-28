@@ -146,8 +146,6 @@ export default function WebCamRecorder({
     }
   };
 
- 
-
   useEffect(() => {
     if (audioEnabled) {
       startAudioStream();
@@ -177,6 +175,32 @@ export default function WebCamRecorder({
       .getTracks()
       .forEach((track) => peerRef.current.addTrack(track, userStream.current));
   }
+
+  useEffect(() => {
+    navigator.mediaDevices
+      .getUserMedia({ audio: true, video: true })
+      .then((stream) => {
+        myVideoRef.current.srcObject = stream;
+        userStream.current = stream;
+        socketRef.current = io.connect("http://localhost:3001");
+
+        socketRef.current.emit("join room", sessionData.peerSessionId);
+
+        socketRef.current.on("other user", (userID) => {
+          callUser(userID);
+          otherUser.current = userID;
+        });
+        socketRef.current.on("user joined", (userID) => {
+          otherUser.current = userID;
+        });
+
+        socketRef.current.on("offer", handleRecieveCall);
+
+        socketRef.current.on("answer", handleAnswer);
+
+        socketRef.current.on("ice-candidate", handleNewICECandidateMsg);
+      });
+  }, []);
 
   function createPeer(userID) {
     const peer = new RTCPeerConnection({
