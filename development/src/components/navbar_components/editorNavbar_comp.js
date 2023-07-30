@@ -11,12 +11,13 @@ import userIcon from '../../../public//assets/authNavBarControls/peers-2.png';
 import { isUserSignedIn } from '@/composables/verifySignedIn';
 import { appAuth } from '@/composables/firebaseConfig/config';
 import Link from 'next/link';
+import { useAuthContext } from '@/composables/authContext';
 
 function EditorNavBar() {
   const [auth, setAuth] = useState(true);
   const { theme, setTheme } = useTheme();
   const { items } = useTabContext();
-  const { currentUser } = useAuth()
+  const { currentUser } = useAuthContext()
 
   useEffect(() => {
     if (isUserSignedIn()) {
