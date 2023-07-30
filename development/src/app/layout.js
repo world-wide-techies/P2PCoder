@@ -10,11 +10,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${nohemi.variable} `}>
+       
+      <AuthProviderProvider>
         <SessionContextProvider>
           <TabProvider>
             <ThemeProvider attribute="class">{children}</ThemeProvider>
           </TabProvider>
         </SessionContextProvider>
+        </AuthProviderProvider>
       </body>
     </html>
   );
