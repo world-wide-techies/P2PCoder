@@ -5,7 +5,7 @@ import { nohemi } from "@/app/localFont";
 import { ThemeProvider } from "next-themes";
 import { TabProvider } from "@/composables/tabContext";
 import { SessionContextProvider } from "@/composables/sessionContext";
-import { AuthProvider } from "@/composables/authContext";
+//import { AuthProvider } from "@/composables/authContext";
 
 export default function RootLayout({ children }) {
   return (
