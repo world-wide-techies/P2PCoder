@@ -19,13 +19,7 @@ function EditorNavBar() {
   const { items } = useTabContext();
   //const { currentUser } = useAuthContext();
 
-  useEffect(() => {
-    if (isUserSignedIn()) {
-      setAuth(true);
-    } else {
-      setAuth(false);
-    }
-  }, [appAuth]);
+
 
   return (
     <main className="font-nohemi">
