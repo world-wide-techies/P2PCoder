@@ -1,299 +1,91 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import React from "react";
+import CodingEditor from "./codingEditor";
+import { useSessionContext } from "@/composables/sessionContext";
+import { useEffect } from "react";
+import WebCamRecorder from "./webcam_comp";
+import { useStoreSession } from "@/composables/dbService";
 
-export default function WebCamRecorder({ onBlobChanged, peername, isUser }) {
-  const videoRef = useRef(null);
-  const [videoStream, setVideoStream] = useState(null);
-  const [audioStream, setAudioStream] = useState(null);
-  const [recorder, setRecorder] = useState(null);
-  const [isRecording, setIsRecording] = useState(false);
-  const [audioEnabled, setAudioEnabled] = useState(false);
-  const [videoEnabled, setVideoEnabled] = useState(false);
-  const [isSession, setIsSession] = useState(false);
-  const [blob, setBlob] = useState(false);
+const Collab = ({isCollabOn}) => {
+  const { sessionData } = useSessionContext();
+  const { storeSession, getStoreSessionDetails } = useStoreSession();
 
-  const stopAudio = () => {
-    try {
-      audioStream.getTracks().forEach((track) => track.stop());
-      setAudioStream(null);
-      setAudioEnabled(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const micActivate = () => {
-    try {
-      if (audioStream && audioEnabled) {
-        stopAudio();
-      } else {
-        if (audioStream == null) {
-          setAudioEnabled(true);
-        } else if (!audioEnabled) {
-          stopAudio();
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const stopVideoCam = () => {
-    try {
-      videoStream.getTracks().forEach((track) => track.stop());
-      setVideoStream(null);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const videoActivate = () => {
-    try {
-      if (videoStream && videoEnabled) {
-        stopVideoCam();
-        setVideoEnabled(!videoEnabled);
-        setVideoStream(null);
-      } else {
-        startVideoStream();
-        setVideoEnabled(!videoEnabled);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const startAudioStream = useCallback(() => {
-    navigator.mediaDevices
-      .getUserMedia({ audio: true })
-      .then((stream) => {
-        setAudioStream(stream);
-      })
-      .catch((err) => console.error(err));
-  }, []);
-  const startVideoStream = useCallback(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then((stream) => {
-        videoRef.current.srcObject = stream;
-        setVideoStream(stream);
-      })
-      .catch((err) => console.error(err));
-  }, [videoEnabled]);
-  const makeRecording = () => {
-    if (isRecording) {
-      stopRecording();
-    } else {
-      startRecording();
-    }
-  };
-  const startRecording = () => {
-    if (audioStream && videoStream) {
-      let mediaStream = new MediaStream();
-      videoStream.getTracks().forEach((track) => mediaStream.addTrack(track));
-      audioStream.getTracks().forEach((track) => mediaStream.addTrack(track));
-
-      const options = { mimeType: "video/webm" };
-      const newRecorder = new MediaRecorder(mediaStream, options);
-      setRecorder(newRecorder);
-      setIsRecording(true);
-
-      const chunks = [];
-      newRecorder.ondataavailable = (event) => {
-        chunks.push(event.data);
-      };
-      newRecorder.onstop = () => {
-        const blob = new Blob(chunks, { type: "video/webm" });
-        onBlobChanged(blob);
-        setBlob(true);
-        setAudioEnabled(false);
-        setVideoEnabled(false);
-      };
-      newRecorder.start();
-    } else {
-      console.log(audioStream, videoStream);
-      console.log("one or more streams are not active");
-    }
-  };
-
-  const stopRecording = () => {
-    if (recorder && recorder.state !== "inactive") {
-      recorder.stop();
-      setIsRecording(false);
-    }
-  };
   useEffect(() => {
-    if (audioEnabled) {
-      startAudioStream();
-    } else {
-      if (audioStream != null) {
-        stopAudio();
-      }
-    }
-    if (videoEnabled) {
-      console.log("Enabled");
-      startVideoStream();
-    } else {
-      if (videoStream != null) {
-        stopVideoCam();
-      }
-    }
-    if (audioEnabled && videoEnabled) {
-      setIsSession(true);
-    } else {
-      setIsSession(false);
-    }
-  }, [audioEnabled, videoEnabled]);
-
+    getStoreSessionDetails(sessionData.peerSessionId);
+  }, [sessionData]);
+  
   return (
-    <div className="w-full relative flex items-center align-middle bg-black rounded-3xl shadow-gray-800">
-      <video
-        style={{
-          width: `100%`,
-          height: `350px`,
-          objectFit: "cover",
-        }}
-        ref={videoRef}
-        autoPlay
-        className="top-0 left-0 w-full h-full aspect-video rounded-2xl shadow-gray-800"
-      />
-      <div className="absolute z-50 inset-0 bg-opacity-5 w-full">
-        <div className="bottom-0 absolute flex justify-between text-center items-center w-[80%] mb-3 ml-12">
-          {isUser ? (
-            <div className=" flex justify-start text-center items-center space-x-4">
-              <button
-                className={
-                  audioEnabled
-                    ? `border-white border-[1px] p-2 rounded-full hover:bg-gray-200 group`
-                    : `border-white border-[1px] p-2 rounded-full hover:bg-gray-200 bg-red-600 group`
-                }
-                onClick={micActivate}
+    <div className="w-full flex">
+      <div className={isCollabOn ? "w-2/3 xl:w-3/4" : "w-[95vw]"}>
+        <CodingEditor peerid={storeSession.peerId} />
+      </div>
+      {isCollabOn && (
+        <div className="w-1/3 xl:w-1/4 flex flex-col items-start justify-start p-6 space-y-12 h-full">
+          <div>
+            <p className="text-gray-400">Peer Session ID</p>
+            <div className="flex space-x-3 items-center">
+              <p className="text-2xl font-bold text-gray-400">
+                {storeSession.peerId}
+              </p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-5 h-5 hover:cursor-pointer hover:text-blue-500"
               >
-                {audioEnabled ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-5 h-5 text-white group-hover:text-black"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-5 h-5 text-white group-hover:text-black"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"
-                    />
-                  </svg>
-                )}
-              </button>
-              <button
-                className={
-                  videoEnabled
-                    ? `border-white border-[1px] p-2 rounded-full hover:bg-gray-200 group`
-                    : `border-white border-[1px] p-2 rounded-full hover:bg-gray-200 bg-red-600 group`
-                }
-                onClick={videoActivate}
-              >
-                {!videoEnabled ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-5 h-5 text-white group-hover:text-black"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M12 18.75H4.5a2.25 2.25 0 01-2.25-2.25V9m12.841 9.091L16.5 19.5m-1.409-1.409c.407-.407.659-.97.659-1.591v-9a2.25 2.25 0 00-2.25-2.25h-9c-.621 0-1.184.252-1.591.659m12.182 12.182L2.909 5.909M1.5 4.5l1.409 1.409"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-5 h-5 text-white group-hover:text-black"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"
-                    />
-                  </svg>
-                )}
-              </button>
-              {isSession ? (
-                <button
-                  className={
-                    !isRecording
-                      ? `border-white border-[1px] p-3 rounded-full hover:bg-gray-200 group`
-                      : `border-white border-[1px] p-3 rounded-full hover:bg-gray-200 bg-red-600`
-                  }
-                  onClick={() => {
-                    makeRecording();
-                  }}
-                >
-                  {isRecording ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="w-7 h-7"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M5.25 7.5A2.25 2.25 0 017.5 5.25h9a2.25 2.25 0 012.25 2.25v9a2.25 2.25 0 01-2.25 2.25h-9a2.25 2.25 0 01-2.25-2.25v-9z"
-                      />
-                    </svg>
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="w-7 h-7 text-white group-hover:text-black"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"
-                      />
-                    </svg>
-                  )}
-                </button>
-              ) : (
-                <div></div>
-              )}
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z"
+                />
+              </svg>
             </div>
-          ) : (
-            <div></div>
-          )}
-          <div //className="bg-gray-500 p-3 py-1 rounded-2xl"
-            className={`bg-gray-500 p-3 py-1 rounded-2xl ${
-              !peername && `italic text-sm  font-extralight  text-gray-300`
-            }`}
-          >
-            <p>{peername ? peername : "Awaiting user..."}</p>
+          </div>
+          <div className="space-y-6">
+            <WebCamRecorder
+              onBlobChanged={() => {}}
+              peername={storeSession.collaboratorName}
+              isUser={false}
+            />
+            <WebCamRecorder
+              onBlobChanged={() => {}}
+              peername={storeSession.codersName}
+              isUser={true}
+            />
+          </div>
+          <div className="flex items-center w-full justify-center">
+            <button
+              onClick={() => {}}
+              className="bg-gray-800 p-2 rounded-2xl hover:bg-gray-700"
+            >
+              <svg
+                width="41"
+                height="41"
+                viewBox="0 0 41 41"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g id="call">
+                  <g id="vuesax/linear/call">
+                    <g id="call_2">
+                      <g id="call_3">
+                        <path
+                          id="Vector"
+                          d="M6.83444 23.8374C6.52512 23.5492 6.27127 23.1842 6.09807 22.7499C5.92487 22.3156 5.80888 21.8544 5.76613 21.349C5.69448 20.4956 5.79175 19.7194 6.06535 18.9951C6.33095 18.2794 6.73968 17.6168 7.30014 17.0154C8.11682 16.139 9.19575 15.3946 10.5375 14.7989C11.8793 14.2031 13.3671 13.7435 14.993 13.4285C16.6355 13.113 18.3073 12.9211 20.025 12.8522C21.7432 12.7999 23.4244 12.8735 25.0684 13.0731C26.7045 13.2814 28.2124 13.627 29.5676 14.1194C30.9314 14.6197 32.0601 15.2862 32.9537 16.1189C33.538 16.6634 34.0004 17.2869 34.3237 17.9735C34.6557 18.6681 34.8326 19.443 34.8378 20.2987C34.8667 21.353 34.5726 22.2026 33.9801 22.8385C33.7559 23.079 33.4802 23.2716 33.1769 23.3903C32.8656 23.5176 32.5268 23.5711 32.1593 23.5176L27.4922 22.8928C27.1333 22.8473 26.8316 22.7748 26.5705 22.676C26.318 22.5852 26.0975 22.46 25.9343 22.3079C25.7281 22.1157 25.5779 21.8634 25.4924 21.559C25.3988 21.2631 25.3448 20.9077 25.3307 20.5094L25.2604 19.2238C25.254 19.0413 25.1823 18.8942 25.0449 18.7661C24.9761 18.702 24.908 18.6546 24.8232 18.6077C24.7305 18.5694 24.6549 18.5472 24.5873 18.5163C24.1597 18.4068 23.542 18.3288 22.7429 18.2905C21.9358 18.2608 21.0961 18.2489 20.2244 18.2713C19.3367 18.311 18.4993 18.3654 17.6883 18.4605C16.8939 18.555 16.2919 18.6843 15.865 18.8323C15.8078 18.8592 15.734 18.8868 15.6522 18.9229C15.5623 18.9676 15.4897 19.0283 15.4176 19.1057C15.2815 19.2517 15.229 19.4115 15.2354 19.594L15.2713 20.8475C15.286 21.2625 15.257 21.6208 15.176 21.9145C15.1121 22.2242 14.9881 22.4779 14.788 22.6927C14.6358 22.856 14.4413 22.9958 14.1879 23.1127C13.9344 23.2297 13.6385 23.3232 13.2923 23.4019L8.62298 24.3643C8.26015 24.4436 7.9356 24.4301 7.63272 24.3245C7.33786 24.2102 7.07501 24.0616 6.83444 23.8374Z"
+                          fill="#EC6C6A"
+                        />
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </button>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
-}
+};
+
+export default Collab;
