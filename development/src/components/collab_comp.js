@@ -12,6 +12,7 @@ const Collab = ({isCollabOn}) => {
   useEffect(() => {
     getStoreSessionDetails(sessionData.peerSessionId);
   }, [sessionData]);
+  
   return (
     <div className="w-full flex">
       <div className={isCollabOn ? "w-2/3 xl:w-3/4" : "w-[95vw]"}>
