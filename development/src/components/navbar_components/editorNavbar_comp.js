@@ -14,18 +14,12 @@ import Link from "next/link";
 //import { useAuthContext } from "@/composables/authContext";
 
 function EditorNavBar() {
-  const [auth, setAuth] = useState(true);
+  
   const { theme, setTheme } = useTheme();
   const { items } = useTabContext();
   //const { currentUser } = useAuthContext();
 
-  useEffect(() => {
-    if (isUserSignedIn()) {
-      setAuth(true);
-    } else {
-      setAuth(false);
-    }
-  }, [appAuth]);
+ 
 
   return (
     <main className="font-nohemi">
