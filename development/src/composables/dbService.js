@@ -44,7 +44,7 @@ async function createSession(userSessionData) {
 }
 
 function useStoreSession() {
-  const [sessionDetails, setSessionDetails] = useState({});
+  const [storeSession, setStoreSession] = useState({});
 
   async function getStoreSessionDetails(peerId) {
     const user = appAuth.currentUser;
@@ -67,14 +67,14 @@ function useStoreSession() {
       const sessionData = await getDoc(userSession);
       onSnapshot(userSession, (querySnapShot) => {
         const docData = querySnapShot.data();
-        setSessionDetails(docData);
+        setStoreSession(docData);
       });
     } catch (error) {
       console.error("Error retrieving document: ", error);
     }
   }
 
-  return { sessionDetails, getStoreSessionDetails };
+  return { storeSession, getStoreSessionDetails };
 }
 
 async function addCollabCodeEditor(codeEditorData) {
