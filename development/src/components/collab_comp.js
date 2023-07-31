@@ -5,14 +5,14 @@ import { useEffect } from "react";
 import WebCamRecorder from "./webcam_comp";
 import { useStoreSession } from "@/composables/dbService";
 
-const Collab = ({isCollabOn}) => {
+const Collab = ({ isCollabOn }) => {
   const { sessionData } = useSessionContext();
   const { storeSession, getStoreSessionDetails } = useStoreSession();
 
   useEffect(() => {
     getStoreSessionDetails(sessionData.peerSessionId);
   }, [sessionData]);
-  
+
   return (
     <div className="w-full flex">
       <div className={isCollabOn ? "w-2/3 xl:w-3/4" : "w-[95vw]"}>
