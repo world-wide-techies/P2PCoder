@@ -11,15 +11,21 @@ import userIcon from "../../../public//assets/authNavBarControls/peers-2.png";
 import { isUserSignedIn } from "@/composables/verifySignedIn";
 import { appAuth } from "@/composables/firebaseConfig/config";
 import Link from "next/link";
-import { useAuthContext } from "@/composables/authContext";
+//import { useAuthContext } from "@/composables/authContext";
 
 function EditorNavBar() {
   const [auth, setAuth] = useState(true);
   const { theme, setTheme } = useTheme();
   const { items } = useTabContext();
-  const { currentUser } = useAuthContext();
+  //const { currentUser } = useAuthContext();
 
-
+  useEffect(() => {
+    if (isUserSignedIn()) {
+      setAuth(true);
+    } else {
+      setAuth(false);
+    }
+  }, [appAuth]);
 
   return (
     <main className="font-nohemi">
@@ -28,7 +34,7 @@ function EditorNavBar() {
           <h1 className="dark:text-white text-[#5F5BD7] uppercase font-bold text-4xl">
             Carai
           </h1>
-          {currentUser ? (
+          {auth ? (
             <div className="flex justify-end space-x-4 items-center">
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
