@@ -28,7 +28,7 @@ function EditorNavBar() {
           <h1 className="dark:text-white text-[#5F5BD7] uppercase font-bold text-4xl">
             Carai
           </h1>
-          {auth ? (
+          {currentUser ? (
             <div className="flex justify-end space-x-4 items-center">
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
