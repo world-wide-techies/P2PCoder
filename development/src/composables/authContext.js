@@ -9,13 +9,19 @@ export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState("");
 
   useEffect(() => {
+    const persistUser = localStorage.getItem("user");
+
+    setCurrentUser(JSON.parse(persistUser));
+  }, []);
+
+  useEffect(() => {
     appAuth.onAuthStateChanged((user) => {
       setCurrentUser(user);
     });
   }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser}}>
+    <AuthContext.Provider value={{ currentUser }}>
       {children}
     </AuthContext.Provider>
   );
@@ -24,5 +30,3 @@ export const AuthProvider = ({ children }) => {
 export const useAuthContext = () => {
   return useContext(AuthContext);
 };
-
-
