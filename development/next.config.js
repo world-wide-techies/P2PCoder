@@ -4,8 +4,8 @@ const nextConfig = {
   webpack: (config, { dev, isServer }) => {
     if (!isServer) {
       config.plugins.push(new MonacoWebpackPlugin());
-      return config;
     }
+    return config;
   },
 };
 
